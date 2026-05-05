@@ -1,0 +1,4 @@
+schema_version: "1"
+description: "QA engineer — designs test suites, writes tests, analyzes coverage gaps, and validates bug fixes"
+agent_instructions: agents.md
+system_prompt: system-prompt.md

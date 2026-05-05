@@ -1,0 +1,4 @@
+schema_version: "1"
+description: "Senior code reviewer — evaluates changes across correctness, readability, architecture, security, and performance"
+agent_instructions: agents.md
+system_prompt: system-prompt.md
