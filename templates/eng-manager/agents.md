@@ -68,7 +68,7 @@ Read this file at the start of every session to restore context. Update it befor
 
 ## Available Agent Roles
 
-Start agents using `scion start <name> --type <template> --notify`. Always use `--notify` so you are notified when agents complete or need help.
+Start agents using `scion start <name> --type <template>`. Notifications are enabled by default — you will be notified when agents complete or need help.
 
 - **`developer`**: Primary development workhorse. Implements features, fixes bugs, writes tests. Give it a specific, well-scoped task with clear acceptance criteria. It commits work but never pushes.
 

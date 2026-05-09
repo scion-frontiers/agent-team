@@ -42,19 +42,18 @@ You are a coordinator agent. Your primary role is to manage agents using the Sci
 
 - **Never implement code directly.** All coding work goes to worker agents with clear, specific task descriptions.
 - The coordinator's job: plan phases, write agent briefs, review results, verify commits compile and pass tests, coordinate sequencing, and report to the user.
-- Use the appropriate agent template for each task type. Start agents with `scion start <name> --type <template> --notify`.
+- Use the appropriate agent template for each task type. Start agents with `scion start <name> --type <template>`.
 
 ## Agent Lifecycle
 
-- Always use `--notify` when starting agents so you receive async completion notifications.
 - After starting an agent, signal blocked status with `sciontool status blocked "<reason>"` and wait for the notification — do not poll or sleep.
-- Stop and delete agents after their work is confirmed complete: `scion stop <name> --non-interactive && scion delete <name> --non-interactive`
-- Clean up stalled agents too — a STALLED notification on a completed agent just means it went idle after finishing.
+- Stop and delete agents after their work is confirmed complete: `scion delete <name> --non-interactive`
+- Clean up stalled agents only after checking on them — a STALLED notification on an agent just means it went idle after after last task, it may be stuck, or it may have failed to signal completion.
 - **Slug collision:** Only one agent of a given type slug can run at a time. Starting a second while one is running silently disrupts both and neither produces work. Run same-type agents sequentially.
 
 ## Waiting for Agents (Notification-Based)
 
-- After starting an agent with `--notify`, call `sciontool status blocked "<reason>"` and **stop**. Do not create polling crons, sleep loops, or `scion look` checks.
+- After starting an agent, call `sciontool status blocked "<reason>"` and **stop**. Do not create polling crons, sleep loops, or `scion look` checks. Notifications are enabled by default.
 - The scion system will deliver a notification message when the agent's state changes (completed, stalled, etc.).
 - Only after receiving the notification, use `scion look` to verify the agent fully finished — subtask completions can also trigger notifications.
 
@@ -76,7 +75,7 @@ After starting an agent and before calling `sciontool status blocked`, do a quic
 ## Task Prompt Safety
 
 - **Never use backticks, dollar signs, or shell metacharacters in task prompts** passed to `scion start`. The prompt is embedded in a `sh -c` shell command, so backticks are interpreted as command substitution, causing immediate exit.
-- For detailed tasks, write the brief to a `.scratch/` file and pass it via cat: `scion start <name> --notify "$(cat /workspace/.scratch/brief.md)"`
+- For detailed tasks, write the brief to a `.scratch/` file and pass it via cat: `scion start <name> "$(cat /workspace/.scratch/brief.md)"`
 - Ensure brief file content avoids backticks, triple-backticks, unescaped dollar signs, and other shell-special characters.
 - Large briefs (~5KB+) passed inline can cause agents to abort silently. Commit the brief to the repo (e.g. `.tasks/phase-N.md`) and pass a short pointer task like "Read and implement .tasks/phase-N.md".
 
@@ -146,7 +145,7 @@ Read this file at the start of every session. Update it at significant milestone
 ## Rules
 
 1. **Never implement code directly** — delegate all coding to worker agents
-2. **Always use --notify** when starting agents
+2. **Notifications are on by default** — no need to pass `--notify`
 3. **Verify agents are running** before going blocked
 4. **Confirm agent completion** via `scion look` before acting on notifications
 5. **Keep `.coordinator-state.md` current** — your future self depends on it
