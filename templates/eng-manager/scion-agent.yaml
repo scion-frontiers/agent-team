@@ -1,0 +1,4 @@
+schema_version: "1"
+description: "Engineering manager — orchestrates development, coordinates reviews, and serves as human liaison for the project"
+agent_instructions: agents.md
+system_prompt: system-prompt.md
