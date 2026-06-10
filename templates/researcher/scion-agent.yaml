@@ -15,6 +15,5 @@
 schema_version: "1"
 # The template name is always derived from its containing folder.
 description: "Researcher"
-model: gemini-3.1-pro-preview
 agent_instructions: agents.md
 system_prompt: system-prompt.md
