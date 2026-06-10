@@ -62,6 +62,22 @@ When implementing the proxy server, keep these battle-tested lessons in mind:
 - **Build Asset Hashing**: Ensure that all related assets (HTML, CSS, JS) are uploaded as a complete set. Incomplete uploads or mismatched hashes will lead to 404 errors that browsers may misleadingly report as MIME type mismatches.
 - **JWT Audience**: The JWT audience for IAP on Cloud Run follows this pattern: `/projects/PROJECT_NUMBER/locations/REGION/services/SERVICE_NAME`. This is different from load-balancer-based IAP configurations.
 
-## Skill Boundaries
+## Reference Implementation
 
-This skill defines the **architecture and deployment procedure**. It does not provide the implementation code for the proxy server itself. The agent is responsible for writing the server code (e.g., in Go or Python) based on these requirements.
+A complete, battle-tested Go implementation is included in the `scripts/` directory alongside this skill:
+
+- **`scripts/main.go`** — The proxy server. Handles GCS object fetching, MIME type fallback, H2C support, configurable path stripping, and root redirect.
+- **`scripts/Dockerfile`** — Multi-stage build producing a minimal distroless image.
+- **`scripts/go.mod` / `scripts/go.sum`** — Go module dependencies.
+- **`scripts/README.md`** — Configuration reference and deployment commands.
+
+### Configuration (Environment Variables)
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `GCS_BUCKET` | **Yes** | — | GCS bucket name to serve from |
+| `STRIP_PREFIX` | No | `/<GCS_BUCKET>` | URL prefix to strip before mapping to GCS object name |
+| `ROOT_REDIRECT` | No | `/index.html` | Where to redirect bare `/` requests |
+| `PORT` | No | `8080` | Listen port (Cloud Run sets this automatically) |
+
+To deploy, copy the `scripts/` directory contents into your project, then use `gcloud builds submit` and `gcloud run deploy` as described in the Deployment Pattern section above.
