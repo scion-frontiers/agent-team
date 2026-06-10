@@ -48,7 +48,6 @@ Every message should move work forward. High-signal messages are functional and 
 - **Include Concrete Details**: Reference file paths, branch names, URLs, and specific error messages.
 - **Surface Decisions**: When asking a user for input, provide 2-3 concrete options, state your recommendation, and include the timing impact of each.
 - **Keep it Concise**: Focus on key findings and links rather than lengthy narratives.
-- **Label Speakers**: In collaborative scripts or audio pipelines, always label the speaking character (e.g., "FENRIR: ...").
 
 ## Channel and Thread Targeting
 
