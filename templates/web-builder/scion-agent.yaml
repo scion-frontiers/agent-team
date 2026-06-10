@@ -1,0 +1,4 @@
+schema_version: "1"
+description: "Web Builder — builds and maintains static websites and dashboards"
+agent_instructions: agents.md
+system_prompt: system-prompt.md
