@@ -129,8 +129,6 @@ If an agent is stuck (blocked, stalled, or hit a transient error), **try messagi
   scion message <agent> --raw "clear"
   scion message <agent> --raw "ENTER"
   ```
-- **v2 Briefs:** If a first fix fails, write a v2 brief that includes what the previous agent did and why it wasn't sufficient. This gives the next agent essential context.
-
 ## Autonomy & Progress
 
 - **Never block on user availability.** You are the project driver — make decisions, keep moving.
@@ -142,21 +140,21 @@ If an agent is stuck (blocked, stalled, or hit a transient error), **try messagi
 - When a first fix attempt doesn't fully resolve an issue, write a **v2 brief** that includes what the previous agent did and why it wasn't sufficient. This gives the next agent essential context.
 - User feedback during an ongoing fix (like "I'm still seeing X") should be forwarded to the running agent via `scion message` if it's still active.
 
-## PR Workflow & Fork Lifecycle
+## PR Workflow
 
-The staging fork environment uses a 4-phase model for contributions:
-1. **Implement & Staging PR:** Developer opens a PR on the staging fork (e.g. `ptone/scion`).
-2. **Review & Revise:** Coordinate reviews and fixes on the staging branch.
-3. **Upstream Submission:** Once approved, provide a **Compare URL** to the user to open the upstream PR manually. Format: `https://github.com/GoogleCloudPlatform/scion/compare/main...ptone:<branch-name>`.
-4. **Merge & Cleanup:** After the upstream PR merges, delete the branch and the agents.
-
-**Crucial:** Do NOT attempt to create PRs on upstream directly. Always use the Compare URL pattern to hand off the final step to the user.
+- After an agent completes work, ensure it has committed, pushed, and created a PR.
+- Report the PR URL back to the user via `scion message`.
+- For rebases: Hub-cloned agent branches may not share a merge-base with main. Use `git rebase --onto origin/main <base-commit> <branch>` with the actual divergence point.
 
 ## Workspace Hygiene
 
 - **Delete Finished Agents:** Always `scion delete` agents when their work is confirmed. Never just `scion stop`, as stopped containers continue holding broker slots.
 - **Git Hygiene:** Do NOT commit binary images, screenshots, test artifacts, or coordinator state files (`.coordinator-state.md`). These bloat the repository and pollute the history.
-- **Scion Process:** For detailed workflow, sizing, and convention rules, refer to the `scion-process` skill if available.
+
+## `scion look` Limitations
+
+- `scion look` works while the agent is running but fails after it stops (docker exec error on stopped containers).
+- After an agent stops, use `git log --oneline` and `git diff` to verify what was committed instead.
 
 ## State Management
 
@@ -192,6 +190,6 @@ Read this file at the start of every session. Update it at significant milestone
 5. **Brief via shared scratchpad** — avoid long inline prompts and local `.scratch/` files for agents.
 6. **Include required sections** in every brief (Key Locations, Communication, Blocked signaling).
 7. **Instruct agents to commit incrementally** after each logical phase.
-8. **Use the Compare URL pattern** for upstream submissions; never attempt direct upstream PRs.
-9. **Keep `.coordinator-state.md` current** — your future self depends on it.
-10. **Delete finished agents** immediately to free broker slots.
+8. **Keep `.coordinator-state.md` current** — your future self depends on it.
+9. **Delete finished agents** immediately to free broker slots.
+10. **Scope tasks tightly** — one logical feature or fix per agent.
