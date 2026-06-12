@@ -17,3 +17,5 @@ schema_version: "1"
 description: "Researcher"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+harness_config: gemini
+model: pro
