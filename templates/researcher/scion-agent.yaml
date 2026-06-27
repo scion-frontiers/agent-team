@@ -19,3 +19,7 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 harness_config: gemini
 model: pro
+
+skills:
+  - uri: "gh://ptone/teamv1/scion-messaging"
+  - uri: "gh://ptone/teamv1/agent-status-signals"

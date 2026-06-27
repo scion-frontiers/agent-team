@@ -16,3 +16,7 @@ schema_version: "1"
 description: "Documentation writer — keeps docs aligned with code and consistent with project style"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+
+skills:
+  - uri: "gh://ptone/teamv1/scion-messaging"
+  - uri: "gh://ptone/teamv1/agent-status-signals"

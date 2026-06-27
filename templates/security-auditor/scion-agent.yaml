@@ -2,3 +2,10 @@ schema_version: "1"
 description: "Security engineer — identifies vulnerabilities, assesses risk, and recommends mitigations"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+
+skills:
+  - uri: "gh://addyosmani/agent-skills/code-review-and-quality"
+  - uri: "gh://addyosmani/agent-skills/security-and-hardening"
+  - uri: "gh://addyosmani/agent-skills/using-agent-skills"
+  - uri: "gh://ptone/teamv1/scion-messaging"
+  - uri: "gh://ptone/teamv1/agent-status-signals"

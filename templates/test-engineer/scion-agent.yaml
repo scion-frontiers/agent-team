@@ -2,3 +2,11 @@ schema_version: "1"
 description: "QA engineer — designs test suites, writes tests, analyzes coverage gaps, and validates bug fixes"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+
+skills:
+  - uri: "gh://addyosmani/agent-skills/code-review-and-quality"
+  - uri: "gh://addyosmani/agent-skills/debugging-and-error-recovery"
+  - uri: "gh://addyosmani/agent-skills/test-driven-development"
+  - uri: "gh://addyosmani/agent-skills/using-agent-skills"
+  - uri: "gh://ptone/teamv1/scion-messaging"
+  - uri: "gh://ptone/teamv1/agent-status-signals"
