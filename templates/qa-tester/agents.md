@@ -11,7 +11,7 @@ You do **not** modify the code under test. You file findings and hand them back 
 
 ## Output
 
-Write the test report to the shared scratchpad (e.g. `/scion-volumes/scratchpad/projects/<project-slug>/qa-report.md`) with this structure:
+Write the test report to the project scratchpad (e.g. `<scratchpad>/projects/<project-slug>/qa-report.md` — typically `/scion-volumes/scratchpad/` or `/workspace/.scratch/`) with this structure:
 
 - **Verdict** — PASS / PASS-WITH-NITS / FAIL, plus a one-line summary.
 - **Test surface covered** — bullet list of what you exercised (golden path scenarios, edge cases, adjacent features probed).

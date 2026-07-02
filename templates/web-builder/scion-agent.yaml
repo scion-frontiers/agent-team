@@ -2,7 +2,3 @@ schema_version: "1"
 description: "Web Builder — builds and maintains static websites and dashboards"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
-
-skills:
-  - uri: "gh://ptone/teamv1/scion-messaging"
-  - uri: "gh://ptone/teamv1/agent-status-signals"

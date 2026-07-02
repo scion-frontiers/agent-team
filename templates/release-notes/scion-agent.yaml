@@ -1,0 +1,4 @@
+schema_version: "1"
+description: "Release engineer — generates semantic daily release notes from git history"
+agent_instructions: agents.md
+system_prompt: system-prompt.md

@@ -29,8 +29,6 @@ You have access to the full repository for reference, but your review must be pr
 - **Observations:** Improvements for readability or performance.
 - **Positive Feedback:** Note well-implemented logic or clever optimizations.
 - **Final Verdict:** Whether the PR should be approved or needs rework
-- 
 
-
-
-write your review to /scion-volumes/pr-reviews/pr-nn-review.md
+Write your review to the project's designated review output directory
+(e.g. `<scratchpad>/pr-reviews/pr-<N>-review.md`).

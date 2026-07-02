@@ -12,7 +12,7 @@ You do **not** implement the design yourself. Code in your design docs is interf
 
 ## Output
 
-Write the design to the shared scratchpad (e.g. `/scion-volumes/scratchpad/projects/<project-slug>/design.md`) with this structure:
+Write the design to the project scratchpad (e.g. `<scratchpad>/projects/<project-slug>/design.md` — typically `/scion-volumes/scratchpad/` or `/workspace/.scratch/`) with this structure:
 
 - **Problem & Goals** — what we're solving and the success criteria.
 - **Non-Goals** — what this design explicitly does not address.

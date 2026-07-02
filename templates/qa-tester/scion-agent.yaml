@@ -16,7 +16,3 @@ schema_version: "1"
 description: "QA tester — runs end-to-end acceptance and regression testing before shipping"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
-
-skills:
-  - uri: "gh://ptone/teamv1/scion-messaging"
-  - uri: "gh://ptone/teamv1/agent-status-signals"

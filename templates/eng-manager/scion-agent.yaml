@@ -9,5 +9,3 @@ skills:
   - uri: "gh://addyosmani/agent-skills/shipping-and-launch"
   - uri: "gh://addyosmani/agent-skills/spec-driven-development"
   - uri: "gh://addyosmani/agent-skills/using-agent-skills"
-  - uri: "gh://ptone/teamv1/scion-messaging"
-  - uri: "gh://ptone/teamv1/agent-status-signals"

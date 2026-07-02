@@ -4,7 +4,5 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 
 skills:
-  - uri: "gh://ptone/teamv1/agent-status-signals"
-  - uri: "gh://ptone/teamv1/scion-messaging"
   - uri: "gh://ptone/teamv1/agent-recovery"
   - uri: "gh://ptone/teamv1/scheduler"

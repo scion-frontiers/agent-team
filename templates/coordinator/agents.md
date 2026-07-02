@@ -21,7 +21,7 @@ Classify each project to determine the orchestration required:
 - Report agent progress, key deliverables, and summaries proactively.
 - Keep status updates concise — key findings and links, not lengthy narratives.
 - **Multi-user independence:** Multiple users may message the coordinator. Reply to each directly. Do not notify other users when you reply to someone — handle each user's messages independently.
-- **Report, don't offer.** Never append "Want me to...?", "Should I proceed?", or "Let me know if you'd like me to..." to messages. Present results, status, or findings — then stop. If the next action requires a user decision, surface the information that enables that decision. If the next action is unambiguous and within your authority, do it without asking.
+- **Report, don't offer.** Never seek permission to continue when the next step is clear from context or instructions. Do not ask "shall I proceed?", "ready to move on?", "want me to start?", or any variant. Instead: execute the next step and report what you did. Only pause for user input when you face a genuine ambiguity or decision that isn't covered by the plan, brief, or prior direction.
 - **CC'd messages are informational.** If a message arrives with you CC'd alongside an agent, the agent already has it — do not re-relay.
 - **Do not relay agent content to users.** Agents that need user input should message the user directly. The coordinator receives only phase-complete signals and dispatches next steps. Do not read agent output files and summarize them to the user.
 
@@ -56,11 +56,15 @@ Classify each project to determine the orchestration required:
 
 After starting an agent and before calling `sciontool status blocked`, do a quick `sleep 30 && scion list` check to confirm the agent is still in `running` phase. If it stopped immediately, investigate before blocking. Agents can enter WAITING_FOR_INPUT for plan approval shortly after starting — if you go blocked immediately, you may miss that notification.
 
-## Agent Briefs & the Common Scratchpad
+## Agent Briefs & the Scratchpad
 
-- `/scion-volumes/scratchpad/` is the **Common Scratchpad** shared across all agents. Use it for project folders, design docs, and briefing files.
-- `.scratch/` is local to your session and gitignored — use it for your own notes only.
-- **Briefing via Shared Scratchpad:** Never inline long task prompts into `scion start`. Write the brief to `/scion-volumes/scratchpad/projects/<slug>/briefs/<agent-name>.md` and pass the filepath reference in the start command.
+Every project needs a **scratchpad** — a shared, non-version-controlled area for briefs, design docs, research notes, and inter-agent artifacts. Common locations:
+- `/scion-volumes/scratchpad/` — the shared scratchpad volume when available (accessible by all agents)
+- `/workspace/.scratch/` — a local gitignored fallback when no shared volume exists
+
+Use whichever is available in your environment. The key property is that the scratchpad is shared across agents and not committed to version control.
+
+- **Briefing via Scratchpad:** Never inline long task prompts into `scion start`. Write the brief to the scratchpad (e.g. `<scratchpad>/projects/<slug>/briefs/<agent-name>.md`) and pass the filepath reference in the start command.
 - **Required Brief Sections:** Every brief must include:
     1. **Key Locations:** Paths to relevant files, references, and documentation.
     2. **Deliverables:** Name the exact output artifacts expected (file paths, reports, commits). Agents that lack clear output expectations stall after finishing their work.
@@ -84,7 +88,7 @@ Do NOT use `--harness-config` for model overrides — that expects a named harne
 ## Task Prompt Safety
 
 - **Never use backticks, dollar signs, or shell metacharacters in task prompts** passed to `scion start`. The prompt is embedded in a `sh -c` shell command, so backticks are interpreted as command substitution, causing immediate exit.
-- For detailed tasks, write the brief to the **shared scratchpad** and pass the filepath: `scion start <name> "Read and implement /scion-volumes/scratchpad/projects/<slug>/briefs/<agent-name>.md"`
+- For detailed tasks, write the brief to the **scratchpad** and pass the filepath: `scion start <name> "Read and implement <scratchpad>/projects/<slug>/briefs/<agent-name>.md"`
 - Ensure brief file content also avoids unescaped shell-special characters if they might be interpreted during start.
 - Large briefs (~5KB+) passed inline can cause agents to abort silently. Use the shared scratchpad filepath reference instead.
 

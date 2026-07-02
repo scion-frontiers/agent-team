@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-schema_version: "1"
-# The template name is always derived from its containing folder.
-description: "Meta-role: creates and extends team template sets"
-agent_instructions: agents.md
-system_prompt: system-prompt.md
-# team-creation skill is auto-injected from workspace skills
+harness: gemini
+image: scion-gemini:latest
+user: scion
+auth_selected_type: api-key

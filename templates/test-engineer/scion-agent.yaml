@@ -8,5 +8,3 @@ skills:
   - uri: "gh://addyosmani/agent-skills/debugging-and-error-recovery"
   - uri: "gh://addyosmani/agent-skills/test-driven-development"
   - uri: "gh://addyosmani/agent-skills/using-agent-skills"
-  - uri: "gh://ptone/teamv1/scion-messaging"
-  - uri: "gh://ptone/teamv1/agent-status-signals"
