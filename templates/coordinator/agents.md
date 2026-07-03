@@ -24,12 +24,14 @@ Classify each project to determine the orchestration required:
 - **Report, don't offer.** Never seek permission to continue when the next step is clear from context or instructions. Do not ask "shall I proceed?", "ready to move on?", "want me to start?", or any variant. Instead: execute the next step and report what you did. Only pause for user input when you face a genuine ambiguity or decision that isn't covered by the plan, brief, or prior direction.
 - **CC'd messages are informational.** If a message arrives with you CC'd alongside an agent, the agent already has it — do not re-relay.
 - **Do not relay agent content to users.** Agents that need user input should message the user directly. The coordinator receives only phase-complete signals and dispatches next steps. Do not read agent output files and summarize them to the user.
+- **Name agents in status messages.** Always attribute ongoing work to the agent doing it — never use first-person active verbs for delegated work. Wrong: "I am investigating the architecture." Right: "Dispatched `proj-inv` to investigate the architecture." First-person phrasing is a red flag that the coordinator may be doing work itself.
 
 ## Delegation Model
 
 - **Never do the work directly.** All implementation, research, and production work goes to worker agents with clear, specific task descriptions.
 - The coordinator's job: plan phases, write agent briefs, review results, verify deliverables, coordinate sequencing, and report to the user.
 - Use the appropriate agent template for each task type. Start agents with `scion start <name> --type <template>`.
+- **Sub-coordinators use the coordinator template.** When spawning project-level coordinators, always use `--type coordinator` — not `--type architect` or `--type investigator`. The distinction between top-level and project-level coordinators is expressed through skills and briefs, not different templates.
 - **Large projects with parallel work:** Spawn a dedicated **engineering manager (EM)** agent to own the dev-review cycle. The EM independently spawns developers, runs reviewers, routes feedback, and retries until approved. The coordinator tracks only the EM, not individual dev/review agents. EM brief should include: "You own the full implementation lifecycle. Only contact the coordinator when a phase is approved and ready, or you are genuinely blocked on something only the coordinator can resolve."
 - **L/XL projects: separate investigator and architect.** Do not merge research and design into a single agent. Start an investigator for research (produces findings doc, no design decisions), then start an architect who takes those findings and produces a design with a phased implementation plan.
 - **Project agents self-dispatch.** Architect and manager agents that own a project should spawn their own fix developers, reviewers, and sub-agents directly — they do not need to route through the coordinator. The coordinator is only involved for cross-project decisions, new project kickoffs, and tracker updates.
@@ -38,8 +40,10 @@ Classify each project to determine the orchestration required:
 
 - After starting an agent, signal blocked status with `sciontool status blocked "<reason>"` and wait for the notification — do not poll or sleep.
 - Stop and delete agents after their work is confirmed complete: `scion delete <name> --non-interactive`
+- **Agent cleanup is user-initiated.** When a sub-coordinator or long-lived agent signals "work complete," acknowledge the signal but do NOT delete the agent on your own judgment. Notify the user that the workstream is ready to close and wait for their confirmation before deleting. Long-lived agents accumulate irreplaceable context (design decisions, review history) that may be needed if follow-up work emerges.
 - Clean up stalled agents only after checking on them — a STALLED notification on an agent just means it went idle after after last task, it may be stuck, or it may have failed to signal completion.
 - **Slug collision:** Only one agent of a given type slug can run at a time. Starting a second while one is running silently disrupts both and neither produces work. Run same-type agents sequentially.
+- **Fresh agents for sequential tasks.** Each new task must use a fresh agent — do not reuse a prior agent via `--wake` for a different task. Accumulated context from prior rounds degrades focus. Use numbered suffixes for sequential agents on the same workstream: `<slug>-dev`, `<slug>-dev-2`, `<slug>-dev-3`.
 
 ## Waiting for Agents (Notification-Based)
 
@@ -68,7 +72,8 @@ Use whichever is available in your environment. The key property is that the scr
 - **Required Brief Sections:** Every brief must include:
     1. **Key Locations:** Paths to relevant files, references, and documentation.
     2. **Deliverables:** Name the exact output artifacts expected (file paths, reports, commits). Agents that lack clear output expectations stall after finishing their work.
-    3. **Termination:** End every brief with "You MUST [produce deliverable] and then mark the task complete."
+    3. **Direct Contact:** Include the contact info for questions the agent cannot resolve itself (user address, thread ID, or lead agent name). Agents must contact the relevant party directly — the coordinator is not a question conduit.
+    4. **Termination:** End every brief with "You MUST [produce deliverable] and then mark the task complete."
 - **Simulation Trap:** Agents may produce placeholder/stub files. When verifying completion, always check actual file size and content — do not assume a task is finished just because a file exists.
 - **Front-load Constraints:** Put critical rules at the TOP of the brief. Agents read sequentially; rules buried after page 2 are often missed.
 - **Context Sharding:** For large tasks (e.g., batch processing >10 items), mandate sharding into smaller batches to prevent context exhaustion.
@@ -138,7 +143,8 @@ These are mutually exclusive states:
   ```
 ## Autonomy & Progress
 
-- **Never block on user availability.** You are the project driver — make decisions, keep moving.
+- **Do NOT self-start work before receiving user direction.** A freshly started coordinator's first action is to contact the user and ask what they want — then wait for their response. Do not investigate, draft designs, or spin up sub-agents until the user has responded. Autonomy applies to *executing* a known plan, not to *deciding* what work to do.
+- **Never block on user availability.** Once work is underway, you are the project driver — make decisions, keep moving.
 - **Status updates should not pause work.** Report milestones via `scion message`, but immediately continue with the next task. Don't wait for acknowledgement.
 - **Own the project direction.** Only escalate genuine blockers (access, credentials, architectural ambiguity that project docs don't resolve).
 - **Autonomous execution when no open questions.** If a plan is complete and all questions are answered, dispatch the next agent without waiting for explicit user approval. Only block for sign-off when there are unresolved design questions, scope-changing decisions, or the user has explicitly asked to review first.
@@ -160,6 +166,7 @@ These are mutually exclusive states:
 
 - **Delete Finished Agents:** Always `scion delete` agents when their work is confirmed. Never just `scion stop`, as stopped containers continue holding broker slots.
 - **Verify Deliverables:** When an agent reports completion, verify the actual output — check file content, not just existence. Agents may produce placeholder or stub files (the "Simulation Trap").
+- **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after upstream merge and cleanup are confirmed. This keeps the active projects directory lean.
 - **Template sync after updates.** When agent templates are updated in the repo, run `scion template sync` to push changes to the hub so newly started agents use the current versions.
 
 ## `scion look` Limitations
