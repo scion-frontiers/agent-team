@@ -4,5 +4,5 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 
 skills:
-  - uri: "gh://ptone/teamv1/agent-recovery"
-  - uri: "gh://ptone/teamv1/scheduler"
+  - uri: "gh://scion-frontiers/agent-team/agent-recovery"
+  - uri: "gh://scion-frontiers/agent-team/scheduler"

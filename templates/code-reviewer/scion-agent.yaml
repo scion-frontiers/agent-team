@@ -9,4 +9,4 @@ skills:
   - uri: "gh://addyosmani/agent-skills/performance-optimization"
   - uri: "gh://addyosmani/agent-skills/security-and-hardening"
   - uri: "gh://addyosmani/agent-skills/using-agent-skills"
-  - uri: "gh://ptone/teamv1/pr-code-review"
+  - uri: "gh://scion-frontiers/agent-team/pr-code-review"
