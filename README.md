@@ -39,7 +39,6 @@ Each folder under `/templates` defines a distinct agent persona with specialized
 | **`coordinator`** | Project coordinator; manages agent teams, delegates implementation, and drives progress autonomously. | Decomposing requirements, orchestrating workers, status tracking |
 | **`architect`** | System designer; defines software architecture, APIs, data schemas, and implementation blueprints. | Technical design, API specs, component breakdown |
 | **`developer`** | Software engineer; implements features, refactors code, and writes unit/integration tests. | Feature development, code quality, unit testing |
-| **`web-dev`** | Web frontend engineer; specializes in styling, responsive UI/UX, and component-driven web code. | UI layouts, frontend component architecture, responsive styling |
 | **`web-builder`** | Full-stack web application builder; crafts end-to-end interactive apps and user experiences from specs. | Complete web app assembly, integration, deployment readiness |
 | **`qa-tester`** | Quality Assurance specialist; designs test cases, validates user acceptance criteria, and runs manual/E2E tests. | Acceptance testing, functional verification, test reporting |
 | **`test-engineer`** | Test infrastructure specialist; maintains test harnesses, writes integration/E2E suites, and builds CI pipelines. | E2E automation, CI/CD integration, test suite performance |
