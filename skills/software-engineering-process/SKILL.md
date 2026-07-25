@@ -52,9 +52,7 @@ and review; a sub-coordinator owns an entire large issue.
 > **Delegation transfers the authority to create agents. It does not transfer
 > accountability.**
 
-That sentence is what an engineering manager mechanically *is*: the thing that takes
-agent-creation for the implement-and-review subtree off the coordinator's plate. Ownership
-does not transfer. The root owns the outcome all the way through.
+Ownership does not transfer. The root owns the outcome all the way through.
 
 ### Why the tree exists
 
@@ -81,9 +79,6 @@ nobody is subscribed.
 Dispatching agents and reporting that you dispatched them is not completion. Signal
 completion when the work is delivered, not when it is handed out.
 
-*(Status-signal mechanics — `blocked`, `task_completed`, `ask_user` — are already injected
-into every agent. This section is only about what state you are actually in.)*
-
 ---
 
 ## 2. The invariant
@@ -93,9 +88,8 @@ review.**
 
 > **For any item under work, the author and the reviewer are never the same agent.**
 
-Stated as a separation constraint, not a headcount, because a coordinator may supervise
-several items at once and counting agents in the tree gives the wrong answer. The
-coordinator does not count toward it; the constraint is scoped to the item.
+The constraint is scoped to the item, not the tree. A coordinator may supervise several
+items at once and does not count toward it.
 
 **Why it cannot be relaxed:** the reviewer's job is *not letting bad code through*. An
 agent that just argued itself into a design cannot then hold that goal against its own
@@ -111,7 +105,7 @@ Sizing is **depth of the ownership tree** — not stage count, not agent count.
 |---|---|---|
 | Small | coordinator → developer, reviewer | 1 |
 | Chunky | coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 2 |
-| Large | coordinator → sub-coordinator → engineering manager → developers | 3 |
+| Large | coordinator → sub-coordinator<br>sub-coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 3 |
 
 The coordinator is the invariant root and is present at every size. Sizing asks only how
 many layers hang beneath it.
@@ -132,15 +126,15 @@ is what the role description says the role does.
 
 ### Cost of supervision
 
-A coordinator sustains roughly **2–3 issues concurrently**, or tens across a session when
-supervision is light. It scales because it holds very little detail per issue: it
-supervises rather than does.
+A coordinator sustains roughly **2–3 issues concurrently**, and **tens of agents across a
+session**. It scales because it holds very little detail per issue: it supervises rather
+than does.
 
-> Coordinator concurrency is a direct function of how much per-issue context the process
-> forces it to hold.
+> **Do not carry per-issue detail you can re-read.** Design rationale, review findings and
+> implementation state belong in artifacts and scratchpad files. Go read them when you
+> need them.
 
-Anything that makes the coordinator carry design detail or review state per issue reduces
-how many issues it can carry at all. Keep coordinator obligations thin on purpose.
+Holding that state yourself is what takes you from three concurrent issues down to one.
 
 ---
 
@@ -194,9 +188,9 @@ mean "skip it before shipping."
 
 ## 6. Context discipline
 
-Separate agents per phase **are** separate context windows. That is a real benefit of the
-structure, not just division of labour — which is why phases should not be collapsed into
-one agent to save time.
+Separate agents per phase **are** separate context windows. **Do not collapse phases into
+one agent to save time** — what you lose is the context reset, not just the division of
+labour.
 
 - A role boundary is a context reset.
 - A fresh reviewer is a fresh window.
@@ -273,6 +267,3 @@ Before reporting delivery:
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
 | Review methodology and severity | code-reviewer role definition, `pr-code-review` |
-
-Status-signal mechanics (`blocked`, `task_completed`, `ask_user`) are injected into every
-agent automatically and are not restated here.
