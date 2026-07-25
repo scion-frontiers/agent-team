@@ -263,6 +263,10 @@ Before reporting delivery:
       still pending.
 - [ ] No subtree is still live.
 
+**Run this immediately before you report — not as you go.** A box ticked earlier states
+something about a moment that has passed: agents you created have since finished, stalled,
+or spawned others. **Re-check; do not recall.**
+
 ## 11. Related material
 
 | For | See |
