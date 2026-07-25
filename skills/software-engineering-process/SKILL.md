@@ -275,4 +275,4 @@ or spawned others. **Re-check; do not recall.**
 | Model override, agent recovery, stall handling | `scion-agent-manage`, `agent-recovery` |
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
-| Review methodology and severity | code-reviewer role definition, `pr-code-review` |
+| Review methodology and severity | `code-review` |
