@@ -123,9 +123,7 @@ The "Blocks merge" column says only whether a finding stops *this* merge. It say
 about whether the finding can be dropped.
 
 **What happens to a finding after you file it is owned by `software-engineering-process`
-§5.** Read the disposition rule there. It is deliberately not restated here — a restated
-rule alongside a citation looks authoritative and goes stale silently when the source
-changes.
+§5.** Read it there.
 
 Two consequences for how you label:
 
