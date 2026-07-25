@@ -47,12 +47,14 @@ coordinator. The owner:
 5. remains the owner until the work is delivered.
 
 An owner may delegate a **bounded subtree** — an engineering manager owns implementation
-and review; a sub-coordinator owns an entire large issue.
+and review; a sub-coordinator owns an entire large issue. A delegated agent creates,
+supervises, and accepts *inside* its subtree. The parent still accepts that subtree's
+deliverable into the parent work item.
 
 > **Delegation transfers the authority to create agents. It does not transfer
 > accountability.**
 
-Ownership does not transfer. The root owns the outcome all the way through.
+The root owns the outcome all the way through.
 
 ### Supervision follows creation
 
@@ -175,8 +177,16 @@ A reviewer re-reading its own review commonly misses items it raised itself.
 **Cap: 6 rounds**, then escalate. Hitting the cap regularly means something upstream is
 broken.
 
+To escalate, hand the parent owner or human the round history, the unresolved findings,
+what was already tried, and a recommended next action. **Do not open a seventh round
+without a decision.**
+
 **Non-blocking is not optional.** It means "will not block the merge review." It does not
 mean "skip it before shipping."
+
+Every finding ends in **resolved** or **explicitly declined as not required**. Postponing an
+accepted finding needs a human decision and a tracked follow-up — a reason written in the
+review is not a disposition.
 
 ---
 
@@ -249,7 +259,8 @@ Before reporting delivery:
 - [ ] Every agent you created has reported, been accepted, or been explicitly stopped.
 - [ ] Every change was reviewed by an agent that did not write it.
 - [ ] The final review round came back clean — not "clean except".
-- [ ] Non-blocking findings were resolved or consciously deferred with a reason.
+- [ ] Every non-blocking finding was resolved or explicitly declined. Nothing accepted is
+      still pending.
 - [ ] No subtree is still live.
 
 ## 11. Related material
