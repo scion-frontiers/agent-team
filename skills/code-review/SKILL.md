@@ -40,8 +40,10 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
   slow."
 - **Push back on approaches with clear problems.** Say so directly and propose an
   alternative.
-- **Accept override gracefully.** If the author has full context and disagrees, defer.
-  Comment on code, not people.
+- **Accept new evidence, not pushback.** If the author disagrees, re-evaluate the finding
+  against the code and the requirements. If it still stands, it stands. Defer only to the
+  dispatching owner or a human decision-maker, and record the reason. Comment on code, not
+  people.
 
 ---
 
@@ -115,21 +117,21 @@ a role template or a project skill — reference this section instead.
 | **Optional** / **Consider** | No | Worth doing; not required for merge |
 | **FYI** | No | Informational; no action needed |
 
-### Non-blocking is not optional
+### Non-blocking is about merge-gating, not importance
 
-"Non-blocking" means **will not block the merge review**. It does **not** mean the author
-may ignore it.
+The "Blocks merge" column says only whether a finding stops *this* merge. It says nothing
+about whether the finding can be dropped.
 
-Per `software-engineering-process` §5 and §10, non-blocking findings must be **resolved, or
-consciously deferred with a stated reason**, before the work is reported as delivered.
-Silent drops are not permitted.
+**What happens to a finding after you file it is owned by `software-engineering-process`
+§5.** Read the disposition rule there. It is deliberately not restated here — a restated
+rule alongside a citation looks authoritative and goes stale silently when the source
+changes.
 
-The rule is not "everything is mandatory" — that would make the tiers meaningless. It is
-**nothing is silently droppable**. Explicit decline is a valid outcome; saying nothing is
-not.
+Two consequences for how you label:
 
-> If you are tempted to write "author may ignore," you are describing **FYI**. Use that
-> label instead.
+- Do not reach for **Nit** or **Optional** to make a real finding easier to ignore. If it
+  needs to happen, label it **Required**.
+- If you genuinely mean "no action needed," the label is **FYI** — not Nit.
 
 ### Lead with what matters
 
@@ -208,13 +210,14 @@ Write the review to the project's designated review output directory with this s
 <Must be fixed before merge. If none: "None.">
 
 ## Nit / Optional
-<Non-blocking. Still owed a resolution or a stated deferral — see Severity above.>
+<Non-blocking for this merge. Disposition is still owed — see Severity above.>
 
 ## FYI
 <Informational only.>
 
 ## Positive Feedback
-<Well-implemented logic. Always include at least one specific observation.>
+<Specific well-implemented logic, if present. If none, say "None." Do not manufacture
+praise.>
 
 ## Test Coverage
 <Are new code paths covered? Gaps?>
@@ -230,7 +233,9 @@ APPROVE | REQUEST CHANGES
 them for a cleanup pass. Return a clean APPROVE with no further action only when the change
 is genuinely clean.
 
-Do not approve a change with unresolved **Critical** findings.
+Do not approve a change with unresolved **Critical** or **Required** findings. Both are
+declared blocking in the severity table; APPROVE is available only when what remains is
+**Nit**, **Optional**, or **FYI**.
 
 ---
 
@@ -244,7 +249,7 @@ Do not approve a change with unresolved **Critical** findings.
 | "The refactor makes it cleaner" | Relocating complexity is not reducing it. If the reader holds the same number of concepts, the structure did not improve. |
 | "It's only a small addition to this file" | Small diffs still bolt branches onto unrelated flows. Judge the resulting structure, not the diff size. |
 | "I'll clean it up later" | Later rarely comes. Require cleanup before merge, or a filed and assigned follow-up. |
-| "It's non-blocking, so they can skip it" | Non-blocking means it will not block *this merge review*. It still needs a resolution or a stated deferral. |
+| "It's non-blocking, so they can skip it" | Non-blocking means it will not block *this merge review*. Disposition is owned by `software-engineering-process` §5 — go read it rather than guessing. |
 
 ## Red Flags
 
@@ -349,7 +354,7 @@ local-ref pitfalls.
 | For | See |
 |---|---|
 | Review cycle, reviewer rotation, per-PR scope, round cap | `software-engineering-process` §5 |
-| What the author owes on non-blocking findings | `software-engineering-process` §5, §10 |
+| What the author owes on a finding after it is filed | `software-engineering-process` §5 |
 | Change/project sizing thresholds | `software-engineering-process` §3 |
 | Deeper security review | `security-and-hardening` |
 | Profiling and optimization | `performance-optimization` |

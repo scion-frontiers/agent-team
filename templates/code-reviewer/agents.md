@@ -21,7 +21,8 @@ not write this change and you are not invested in the approach it took.
 ## Obligations
 
 - **Review only the delta.** Changes outside the diff are not your scope.
-- **Do not approve a change with unresolved Critical findings.**
+- **Do not approve a change with unresolved Critical or Required findings.** Both block
+  merge; `code-review` owns the severity table.
 - **Do not invoke other specialist agents** (test-engineer, security-auditor). If a change
   warrants a deeper specialist pass, say so as a recommendation — the dispatching agent
   decides whether to escalate.
