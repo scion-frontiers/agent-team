@@ -13,12 +13,12 @@ description: >-
 
 ## Overview
 
-This skill governs how an engineering task moves from request to delivered change when
-more than one agent is involved. It defines **who owns delivery, who creates whom, what
-each role owes, and when the work is actually done.**
+How an engineering task moves from request to delivered change when more than one agent is
+involved: **who owns delivery, who creates whom, what each role owes, and when the work is
+actually done.**
 
-It deliberately does **not** teach how to design, implement, or review. Those live in the
-role definitions and their own skills. This is the spine; the roles carry the depth.
+How to design, implement, and review is not here — read the role definitions and their own
+skills for that.
 
 ## When to use
 
@@ -54,9 +54,9 @@ and review; a sub-coordinator owns an entire large issue.
 
 Ownership does not transfer. The root owns the outcome all the way through.
 
-### Why the tree exists
+### Supervision follows creation
 
-The tree is not an organisational metaphor. **It is the notification topology.**
+**The tree is the notification topology.**
 
 | Mechanism | Consequence |
 |---|---|
@@ -64,12 +64,10 @@ The tree is not an organisational metaphor. **It is the notification topology.**
 | Ancestry chains (`root → parent → child`) grant **transitive access** | Any ancestor can manage any descendant, at any depth |
 | Subscriptions can also be project-scoped | Non-creators *can* observe, but only if wired deliberately |
 
-So "own the delivery" is mechanical, not moral: **you are the one who will be told when it
-breaks. If you look away, nobody is looking.**
+**You are the one who will be told when it breaks. If you look away, nobody is looking.**
 
-The practical corollary — **supervision follows creation by default.** Delegating oversight
-to an agent that did not create the workers is the trap: it looks fine, and silently
-nobody is subscribed.
+**Do not delegate oversight to an agent that did not create the workers.** It looks fine,
+and silently nobody is subscribed.
 
 ### Definition of done for an owner
 
@@ -83,17 +81,16 @@ completion when the work is delivered, not when it is handed out.
 
 ## 2. The invariant
 
-Everything about this process scales down with the size of the work **except independent
-review.**
+Scale everything down with the size of the work — **except independent review.**
 
 > **For any item under work, the author and the reviewer are never the same agent.**
 
 The constraint is scoped to the item, not the tree. A coordinator may supervise several
 items at once and does not count toward it.
 
-**Why it cannot be relaxed:** the reviewer's job is *not letting bad code through*. An
-agent that just argued itself into a design cannot then hold that goal against its own
-work. This is role conflict, not context size — a bigger context window does not fix it.
+The reviewer's job is *not letting bad code through*. An agent that just argued itself into
+a design cannot hold that goal against its own work. This is role conflict, not context
+size — a bigger context window does not fix it.
 
 ---
 
@@ -107,22 +104,21 @@ Sizing is **depth of the ownership tree** — not stage count, not agent count.
 | Chunky | coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 2 |
 | Large | coordinator → sub-coordinator<br>sub-coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 3 |
 
-The coordinator is the invariant root and is present at every size. Sizing asks only how
-many layers hang beneath it.
+The coordinator is the root at every size. Sizing is how many layers hang beneath it.
 
 Changing the look of a single button does not need an investigator, an architect, an
 engineering manager, developers *and* reviewers. It needs a developer and a reviewer.
 
-### Two rules that must ship together
+### Sizing rules
 
 1. **Size up when uncertain.** Estimation is unreliable; over-sizing is the cheaper error.
 2. **Every orchestrating role must collapse itself when handed less than its tier
    assumes.** An engineering manager given a trivial design relays it to a single
    developer instead of manufacturing phases.
 
-Rule 2 is what makes rule 1 safe. Without it, over-sizing produces **ceremony inflation** —
-an agent told it is an engineering manager performs engineering management, because that
-is what the role description says the role does.
+**Never apply rule 1 without rule 2.** Over-sizing without collapse produces **ceremony
+inflation**: an agent told it is an engineering manager performs engineering management,
+because that is what the role description says the role does.
 
 ### Cost of supervision
 
@@ -158,13 +154,13 @@ comes back thin, off-brief, or stalled is the owner's problem to catch.
 
 ## 5. The review cycle
 
-Run per **pull request or per developer** — not across the whole branch at once. A single
-final whole-branch review is sometimes warranted, but it does not replace the per-unit
+Run per **pull request or per developer** — not across the whole branch at once. A final
+whole-branch review is sometimes warranted, but never as a replacement for the per-unit
 cycle.
 
 Each round: review → fixes → **new reviewer**. Repeat until a review comes back clean.
 
-### The asymmetry is deliberate
+### Rotate the reviewer, keep the developer
 
 | | Across rounds | Why |
 |---|---|---|
@@ -174,11 +170,9 @@ Each round: review → fixes → **new reviewer**. Repeat until a review comes b
 **Compact the adversary, preserve the author.** Do not generalise this to "fresh context is
 always better" and start rotating developers.
 
-One reviewer commonly misses items it raised itself on re-read. That is the failure the
-rotation exists to catch — not reviewer incompetence.
+A reviewer re-reading its own review commonly misses items it raised itself.
 
-**Cap: 6 rounds**, then escalate. This is a safety valve against pathological
-non-convergence, not an expected path. Hitting it regularly means something upstream is
+**Cap: 6 rounds**, then escalate. Hitting the cap regularly means something upstream is
 broken.
 
 **Non-blocking is not optional.** It means "will not block the merge review." It does not
