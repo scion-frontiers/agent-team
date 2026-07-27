@@ -104,4 +104,4 @@ What does the screen show?
 
 - **Recreating on first sign of trouble.** Most stuck states are recoverable with "continue". Recreation destroys uncommitted work.
 - **Sending raw input blind.** Always `scion look` first to see the current screen state.
-- **Ignoring shallow clone issues.** If rebase fails with "unrelated histories", the fix is `git fetch --unshallow`, not force-push or branch recreation.
+- **Ignoring shallow clone issues.** A rebase failing with "unrelated histories" is a clone problem wearing a branch problem's clothing — see `scion-agent-manage` → **Triage Table** (`references/troubleshooting.md`), which names both the fix and the wrong turns.
