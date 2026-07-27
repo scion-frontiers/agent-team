@@ -207,21 +207,10 @@ utilisation** as the point where quality starts costing more than the saved hand
 
 ## 7. Briefing
 
-Every agent you create needs a brief. Write the brief to a **shared scratchpad file and
-pass the filepath** — do not inline a long brief into the creation command.
+**Every agent you create needs a brief, and no agent starts work without one.** An agent
+you created that is doing the wrong thing is usually an agent you briefed badly.
 
-A brief states:
-
-| Section | Content |
-|---|---|
-| Task | what to do, in one or two sentences |
-| Context | what has already been decided, and where to read it |
-| Boundaries | what is explicitly out of scope |
-| Deliverable | what artifact is owed, and in what shape |
-| Reporting | who to report to, and when |
-
-For shell-escaping rules when passing prompts, see the `scion-cli-operations` skill —
-do not improvise quoting.
+For brief structure and file-based handoff, see `scion-agent-manage`.
 
 ---
 
@@ -272,7 +261,7 @@ or spawned others. **Re-check; do not recall.**
 | For | See |
 |---|---|
 | Shell escaping when passing prompts | `scion-cli-operations` |
-| Model override, agent recovery, stall handling | `scion-agent-manage`, `agent-recovery` |
+| Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage`, `agent-recovery` |
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
 | Review methodology and severity | `code-review` |
