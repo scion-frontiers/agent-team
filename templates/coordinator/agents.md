@@ -39,8 +39,7 @@ Classify each project to determine the orchestration required:
 ## Agent Lifecycle
 
 - After starting an agent, signal blocked status with `sciontool status blocked "<reason>"` and wait for the notification — do not poll or sleep.
-- Stop and delete agents after their work is confirmed complete: `scion delete <name> --non-interactive`
-- **Agent cleanup is user-initiated.** When a sub-coordinator or long-lived agent signals "work complete," acknowledge the signal but do NOT delete the agent on your own judgment. Notify the user that the workstream is ready to close and wait for their confirmation before deleting. Long-lived agents accumulate irreplaceable context (design decisions, review history) that may be needed if follow-up work emerges.
+- **Who may delete which agents, and when, is not decided here.** Deletion authority by role, why a completion signal is not permission, and why "clean up agents" never means the leads: see `scion-agent-manage` → **Agent Lifecycle** (`references/agent-lifecycle.md`). Do not restate those rules in this file — a local copy that drifts is worse than no local copy.
 - Clean up stalled agents only after checking on them — a STALLED notification on an agent just means it went idle after after last task, it may be stuck, or it may have failed to signal completion.
 - **Slug collision:** Only one agent of a given type slug can run at a time. Starting a second while one is running silently disrupts both and neither produces work. Run same-type agents sequentially.
 - **Fresh agents for sequential tasks.** Each new task must use a fresh agent — do not reuse a prior agent via `--wake` for a different task. Accumulated context from prior rounds degrades focus. Use numbered suffixes for sequential agents on the same workstream: `<slug>-dev`, `<slug>-dev-2`, `<slug>-dev-3`.
@@ -160,11 +159,11 @@ These are mutually exclusive states:
 
 - When a first fix attempt doesn't fully resolve an issue, write a **v2 brief** that includes what the previous agent did and why it wasn't sufficient. This gives the next agent essential context.
 - User feedback during an ongoing fix (like "I'm still seeing X") should be forwarded to the running agent via `scion message` if it's still active.
-- **Keep the initiator agent alive.** The first agent on a project (investigator, researcher) should not be deleted after its initial phase. It serves as project-level continuity through closure — transitioning into a project coordinator role that oversees dev/review agents and manages phase handoffs. Only delete it after the project is fully closed.
+- **Keep the initiator agent alive.** In this repo's practice the first agent on a project transitions into a project-coordinator role, overseeing dev/review agents and managing phase handoffs rather than ending at its initial phase. The deletion rule that makes this safe — an initiator may be deleted only on explicit human instruction, whatever role it started as — lives in `scion-agent-manage` → **Agent Lifecycle**.
 
 ## Workspace Hygiene
 
-- **Delete Finished Agents:** Always `scion delete` agents when their work is confirmed. Never just `scion stop`, as stopped containers continue holding broker slots.
+- **Delete Finished Agents:** `scion delete` once work is confirmed — stopped containers keep holding broker slots and count against the 50-agent `scion list` ceiling. `scion stop` is not forbidden: it is justified when you need an agent's terminal state within the current phase, and must be time-boxed. See `scion-agent-manage` → **Agent Lifecycle**.
 - **Verify Deliverables:** When an agent reports completion, verify the actual output — check file content, not just existence. Agents may produce placeholder or stub files (the "Simulation Trap").
 - **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after upstream merge and cleanup are confirmed. This keeps the active projects directory lean.
 - **Template sync after updates.** When agent templates are updated in the repo, run `scion template sync` to push changes to the hub so newly started agents use the current versions.
