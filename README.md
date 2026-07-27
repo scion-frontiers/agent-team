@@ -18,7 +18,6 @@ agent-team/
 │   └── ...
 └── skills/            # Reusable skill banks (command-line tools, specific action scripts)
     ├── agent-recovery/
-    ├── scheduler/
     └── ...
 ```
 
@@ -26,7 +25,7 @@ agent-team/
    - `scion-agent.yaml`: Configures the agent type, description, model harness, and imported skills.
    - `agents.md`: High-level role instructions and operational protocols for the agent.
    - `system-prompt.md`: Base system prompt establishing behavioral constraints, environment paths, and execution context.
-2. **Skills (`/skills`)**: Independent, reusable capability modules (scripts, tools, and manuals) that can be imported by any agent to perform specialized actions (e.g., `agent-recovery`, `scheduler`).
+2. **Skills (`/skills`)**: Independent, reusable capability modules (scripts, tools, and manuals) that can be imported by any agent to perform specialized actions (e.g., `agent-recovery`).
 
 ---
 
@@ -59,7 +58,6 @@ Shared skills are modular capabilities that can be dynamically linked into any a
 | Skill | Purpose | Key Tools Provided |
 | :--- | :--- | :--- |
 | **`agent-recovery`** | Automatically detects and recovers Scion agents from stuck or transient error states. | Health-check diagnostics, auto-restarts, token refreshes |
-| **`scheduler`** | Schedules future events and cron-style recurring messages/actions across the team. | Cron expression parsing, task queuing, scheduled message triggers |
 | **`code-review`** | Review method for a single change: the five axes, the severity vocabulary, the output format, and how to get a clean PR diff in a container. | Five-axis framework, severity labels, review template, `gh`/`git` diff recipes |
 | **`release-notes-daily`** | Compiles daily digests of work finished, pull requests merged, and open-source activities. | Daily progress synthesis, commit parser, changelog compiler |
 | **`changelog-parallel-backfill`** | Efficiently populates historical project changelogs in parallel across many historical branches. | Parallel execution orchestrator, backfill scripts |
