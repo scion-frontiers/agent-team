@@ -60,7 +60,7 @@ Shared skills are modular capabilities that can be dynamically linked into any a
 | :--- | :--- | :--- |
 | **`agent-recovery`** | Automatically detects and recovers Scion agents from stuck or transient error states. | Health-check diagnostics, auto-restarts, token refreshes |
 | **`scheduler`** | Schedules future events and cron-style recurring messages/actions across the team. | Cron expression parsing, task queuing, scheduled message triggers |
-| **`pr-code-review`** | Connects to GitHub API to pull files, post inline PR comments, and automate review workflows. | GitHub PR integration, automated lints, review comments |
+| **`code-review`** | Review method for a single change: the five axes, the severity vocabulary, the output format, and how to get a clean PR diff in a container. | Five-axis framework, severity labels, review template, `gh`/`git` diff recipes |
 | **`release-notes-daily`** | Compiles daily digests of work finished, pull requests merged, and open-source activities. | Daily progress synthesis, commit parser, changelog compiler |
 | **`changelog-parallel-backfill`** | Efficiently populates historical project changelogs in parallel across many historical branches. | Parallel execution orchestrator, backfill scripts |
 | **`docs-update`** | Evaluates documentation health and automates documentation updates across the repository. | Doc health scanner, markdown links formatter, content sync |
