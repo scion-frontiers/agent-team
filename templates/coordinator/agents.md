@@ -47,6 +47,12 @@ Classify each project to determine the orchestration required:
 ## Waiting for Agents (Notification-Based)
 
 - After starting an agent, call `sciontool status blocked "<reason>"` and **stop**. Do not create polling crons, sleep loops, or `scion look` checks. Notifications are enabled by default.
+- **This holds because you are waiting on an *agent*.** Waiting on anything that does not
+  emit its own notification — a CI run, a build, a deploy, a third-party API — is the
+  opposite case: `sciontool status blocked` alone means the stall detector is satisfied and
+  you never wake up. Pair it with a scheduled self-callback; see `scion-scheduler` →
+  **Waiting on external processes**. Do not generalise the rule above into "never schedule
+  anything."
 - The scion system will deliver a notification message when the agent's state changes (completed, stalled, etc.).
 - Only after receiving the notification, use `scion look` to verify the agent fully finished — subtask completions can also trigger notifications.
 
