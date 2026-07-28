@@ -123,7 +123,7 @@ The "Blocks merge" column says only whether a finding stops *this* merge. It say
 about whether the finding can be dropped.
 
 **What happens to a finding after you file it is owned by `software-engineering-process`
-§5.** Read it there.
+→ The review cycle.** Read it there.
 
 Two consequences for how you label:
 
@@ -180,7 +180,7 @@ clean. Consult `CLAUDE.md` for project-specific patterns that must be followed.
   verify the signature in the base branch to confirm the call is valid — do not review that
   function.
 - **A change too large to review properly is itself a finding.** Ask for a split rather than
-  skimming it. Authoring thresholds are owned by `software-engineering-process` §3.
+  skimming it. Authoring thresholds are owned by `software-engineering-process` → **Sizing**.
 - **Tone.** Objective, technically precise, with "Suggested Fix" blocks where they help.
 
 ### Dead code hygiene
@@ -247,7 +247,7 @@ declared blocking in the severity table; APPROVE is available only when what rem
 | "The refactor makes it cleaner" | Relocating complexity is not reducing it. If the reader holds the same number of concepts, the structure did not improve. |
 | "It's only a small addition to this file" | Small diffs still bolt branches onto unrelated flows. Judge the resulting structure, not the diff size. |
 | "I'll clean it up later" | Later rarely comes. Require cleanup before merge, or a filed and assigned follow-up. |
-| "It's non-blocking, so they can skip it" | Non-blocking means it will not block *this merge review*. Disposition is owned by `software-engineering-process` §5 — go read it rather than guessing. |
+| "It's non-blocking, so they can skip it" | Non-blocking means it will not block *this merge review*. Disposition is owned by `software-engineering-process` → **The review cycle** — go read it rather than guessing. |
 
 ## Red Flags
 
@@ -351,8 +351,8 @@ local-ref pitfalls.
 
 | For | See |
 |---|---|
-| Review cycle, reviewer rotation, per-PR scope, round cap | `software-engineering-process` §5 |
-| What the author owes on a finding after it is filed | `software-engineering-process` §5 |
-| Change/project sizing thresholds | `software-engineering-process` §3 |
+| Review cycle, reviewer rotation, per-PR scope, round cap | `software-engineering-process` → **The review cycle** |
+| What the author owes on a finding after it is filed | `software-engineering-process` → **The review cycle** |
+| Change/project sizing thresholds | `software-engineering-process` → **Sizing** |
 | Deeper security review | `security-and-hardening` |
 | Profiling and optimization | `performance-optimization` |
