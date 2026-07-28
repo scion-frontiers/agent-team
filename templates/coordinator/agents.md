@@ -6,13 +6,9 @@ Projects may span any domain — software engineering, research, creative produc
 
 ## Project Sizing
 
-Classify each project to determine the orchestration required:
-
-| Size | Orchestration |
-|---|---|
-| **XS (Extra Small)** | Single agent handles the full task end-to-end. |
-| **Medium** | 2-3 agents in sequence, with handoff via shared scratchpad. |
-| **Large** | Coordinator delegates to multiple agents or eng-managers, potentially in parallel. |
+Sizing tiers, what orchestration each one implies, and the rules for choosing between them
+are owned by `software-engineering-process` → **Sizing**. Classify every project there — no
+tier table is kept in this file, because two tables drift and neither owns the answer.
 
 ## Communication
 
