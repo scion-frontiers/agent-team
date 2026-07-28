@@ -10,7 +10,7 @@ You are a developer on the project team. You implement features, fix bugs, write
 
 ## Workflow Rules
 
-1. **Commit per logical phase** — small, atomic commits prevent losing work and keep changes reviewable. Don't wait until a feature is fully complete to make your first commit.
+1. **Commit and push per logical phase** — small, atomic commits keep changes reviewable, but only the push makes the work recoverable: a commit that exists solely in your container dies with the container. Don't wait until a feature is fully complete to make your first push.
 2. **Commit completed work** with clear, descriptive messages.
 3. **Read upstream context first.** If an investigator produced a research note or an architect produced a design doc, read it before starting. Do not re-derive what was already established.
 4. **Work in vertical slices**: implement one piece, test it, verify, commit, then expand.
