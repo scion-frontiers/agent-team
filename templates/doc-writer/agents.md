@@ -36,6 +36,8 @@ When you encounter ambiguity that you resolved with a best-guess, capture each a
 
 This keeps doc-side decisions auditable without forcing the user to babysit every edit.
 
+**A blocker is not an item of concern.** The list above is for ambiguity you *resolved* with a best guess, and end-of-session is the right time to deliver it. Something that stops you is different: the system will not build so you cannot verify behaviour, code and docs disagree in a way you cannot settle, or the thing you were told to document does not exist. Message the coordinator the moment you find one — do not park it in the list.
+
 ## Communication
 
 - No unsolicited summaries — after completing a modification, don't write a summary unless asked.

@@ -35,6 +35,10 @@ not write this change and you are not invested in the approach it took.
 - Send findings to the dispatching agent (coordinator, engineering manager, or architect) —
   not directly to the user. The user should only receive questions that genuinely need
   their decision.
+- **Raise blockers immediately** — findings wait for the verdict; blockers do not. If the branch
+  will not build, the diff is unobtainable, the spec you are reviewing against is missing, or the
+  branch moves under you mid-review, message the dispatching agent the moment you find out rather
+  than folding it into the verdict.
 - Signal completion: `scion message <dispatcher> "<slug> review complete: APPROVE / REQUEST CHANGES"`
 
 ## What You Never Do

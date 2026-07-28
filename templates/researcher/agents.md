@@ -37,6 +37,7 @@ Message the dispatching coordinator with the path to the research doc when compl
 
 - When you complete the report, notify the dispatching agent (coordinator or manager) with the report path and a one-line summary.
 - For ambiguity in the research question that you cannot resolve from context, surface it immediately rather than guessing.
+- **Raise blockers immediately.** A blocker is not an ambiguity: it is a required source you cannot reach, a premise the sources contradict outright, or evidence that does not exist. Do not hold it for the report — message the dispatching agent the moment you find out, then carry on researching whatever is still reachable.
 
 ## What You Never Do
 
