@@ -188,17 +188,6 @@ Every finding ends in **resolved** or **explicitly declined as not required**. P
 accepted finding needs a human decision and a tracked follow-up — a reason written in the
 review is not a disposition.
 
-### Relocate is not delete
-
-**A finding that content does not belong where it sits is not a finding that it belongs
-nowhere.** Relocate and delete are different dispositions, and the first is routinely
-actioned as the second — deletion is the cheaper edit and the diff looks the same size.
-
-Before deleting content you judged misplaced, **name where it *would* bear load.** If that
-is a real location, the finding was always a relocation. If it is nowhere, delete it and
-say so on the record. This holds for a citation as much as for prose: carrying no load
-*here* is a prompt to ask where it would carry load, not a licence to delete.
-
 ---
 
 ## 6. Context discipline
@@ -238,7 +227,6 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 | "The last reviewer approved it, so the follow-up fix is fine." | Fresh reviewer each round. Reviewers miss items on re-read of their own review. |
 | "These findings are non-blocking, so I'll ship and fix later." | Non-blocking means it will not block merge review. It does not mean skip. |
 | "I'll review the whole branch at once, it's more efficient." | Per-PR or per-developer. Whole-branch reviews dilute the attention the cycle depends on. |
-| "It doesn't belong here, so I deleted it." | Not belonging *here* is not belonging *nowhere*. Name where it would bear load first. See **Relocate is not delete**. |
 | "I already know how to review code / plan work / design this." | You have generic priors, not this project's methodology. Read the role material. |
 | "The brief is long, so I'll pass it inline." | Write it to the scratchpad and pass the filepath — an inlined brief puts backticks and `$variables` into a shell command. See `scion-cli-operations` → **Shell Safety for Task Prompts**. |
 
