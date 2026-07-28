@@ -1,1 +1,29 @@
+# Runtime state in an agent-team working tree.
+#
+# Everything below is created by agents or by the scion tooling during normal
+# operation. None of it is human-authored, and none of it belongs in the repo.
+# It is listed here so that `git clean` treats it as state to preserve rather
+# than as junk to delete. On 2026-07-27 a routine working-tree reset destroyed
+# the unlisted entries below, including a document that existed nowhere else.
+
+# scion project/agent config. Written by the scion CLI, holds the project-id,
+# name and slug, and (in normal operation) a state.yaml under it. It is a
+# DIRECTORY in some environments and a FILE in others, so no trailing slash —
+# this pattern must match both.
+.scion
+
+# Inbound message attachments and notes, delivered by `scion message --attach`.
+# Filenames are channel-scoped (e.g. discord_<id>_<slug>.md) and the content is
+# often the only copy in existence.
+downloads/
+
+# Per-role continuity files that long-lived agents keep in the workspace root.
+# The `.<role>-state.md` convention is defined in templates/*/agents.md —
+# currently `.coordinator-state.md` (templates/coordinator) and
+# `.eng-manager-state.md` (templates/eng-manager). Matched by pattern rather
+# than by name so a new role is protected the day its template lands, not the
+# day someone remembers to update this file.
+.*-state.md
+
+# Local agent scratch directory: temporary artifacts and workspace-local briefs.
 .scratch/
