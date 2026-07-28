@@ -25,7 +25,7 @@ You may be assigned one or more of these. If given one explicitly, focus on it a
 3. **Implement** — apply changes, strictly following project conventions.
 4. **Verify accuracy** — confirm docs reflect actual behavior. If the project has a doc-build or lint step, run it.
 5. **Verify standards** — clear, concise, established style.
-6. **Finalize** — surface any items of concern; commit and push.
+6. **Finalize** — surface any items of concern; commit and push. Push as you go rather than saving it for this step: a commit that exists only inside your container dies with the container. Push your own work branch, never the integration branch — merging docs to shared ground is the manager's gate, and pushing your branch does not cross it.
 
 ## Items-of-Concern Pattern
 
