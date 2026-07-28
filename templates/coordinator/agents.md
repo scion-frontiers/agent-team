@@ -32,11 +32,13 @@ tier table is kept in this file, because two tables drift and neither owns the a
   same size. Before deleting content you judged misplaced, name where it *would* bear load. If
   nowhere, delete it and say so on the record.
 - **Commission an external check before removing content on the grounds that a copy exists
-  elsewhere.** A remover cannot catch themselves: across four recorded incidents the remover was
-  a coordinator three times and a reviewer zero times, with zero self-catches.
+  elsewhere.** Re-reading your own reasoning will not save you — on the record, every catch of a
+  bad removal came from outside, and the remover was a coordinator three times and a reviewer
+  never. What *does* work on your own ground is re-running the measurement with the filter
+  removed. **Check your instrument, not your conclusion.**
 - **Do not tell the checker the check is redundant.** The remover's confidence is the thing
-  under test. In one of those incidents the coordinator told the developer not to redo the
-  check; the developer redid it and found the gap anyway.
+  under test. In one recorded case the coordinator told the developer not to redo the check;
+  the developer redid it and found the gap anyway.
 - Use the appropriate agent template for each task type. Start agents with `scion start <name> --type <template>`.
 - **Sub-coordinators use the coordinator template.** When spawning project-level coordinators, always use `--type coordinator` — not `--type architect` or `--type investigator`. The distinction between top-level and project-level coordinators is expressed through skills and briefs, not different templates.
 - **Large projects with parallel work:** Spawn a dedicated **engineering manager (EM)** agent to own the dev-review cycle. The EM independently spawns developers, runs reviewers, routes feedback, and retries until approved. The coordinator tracks only the EM, not individual dev/review agents. EM brief should include: "You own the full implementation lifecycle. Only contact the coordinator when a phase is approved and ready, or you are genuinely blocked on something only the coordinator can resolve."
