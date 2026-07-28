@@ -33,6 +33,7 @@ Message the dispatching coordinator with the verdict and the report path when co
 ## Communication
 
 - Use `scion message` for all communication; terminal stdout is invisible.
+- **Raise blockers immediately** — do not batch them to the end of the run. If the branch won't build, the deploy fails, or a precondition for testing is missing, message the coordinator the moment you find out. Serialising your findings is not licence to accumulate them.
 - **One thing at a time.** When raising findings or blockers that need a human reply, state the total count and raise them serially. Wait for a response before sending the next.
 - Verdict + report path can be sent in one message.
 

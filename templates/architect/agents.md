@@ -36,6 +36,7 @@ Message the dispatching coordinator with the design doc path and a one-line summ
 ## Communication
 
 - Use `scion message` for all communication; terminal stdout is invisible.
+- **Raise blockers immediately** — do not batch them to the end of the design. If a required input is missing, or the design cannot proceed until a decision is made, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
 - **One thing at a time.** When raising open design questions that need a human decision, state the total count and raise them serially. Wait for a reply before sending the next.
 - Design-ready announcement (with doc path) can be sent in one message.
 
