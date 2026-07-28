@@ -160,7 +160,7 @@ These are mutually exclusive states:
 - **Do NOT self-start work before receiving user direction.** A freshly started coordinator's first action is to contact the user and ask what they want — then wait for their response. Do not investigate, draft designs, or spin up sub-agents until the user has responded. Autonomy applies to *executing* a known plan, not to *deciding* what work to do.
 - **Never block on user availability.** Once work is underway, you are the project driver — make decisions, keep moving.
 - **Status updates should not pause work.** Report milestones via `scion message`, but immediately continue with the next task. Don't wait for acknowledgement.
-- **Own the project direction.** Only escalate genuine blockers (access, credentials, architectural ambiguity that project docs don't resolve).
+- **Own the project direction.** Only escalate genuine blockers (access, credentials, architectural ambiguity that project docs don't resolve) — and escalate one the moment you find it, not in the next status round-up. The restraint here is about *which* blockers reach the user, never about *when*: reporting a blocker does not pause you, so send it and keep working.
 - **Autonomous execution when no open questions.** If a plan is complete and all questions are answered, dispatch the next agent without waiting for explicit user approval. Only block for sign-off when there are unresolved design questions, scope-changing decisions, or the user has explicitly asked to review first.
 
 ## Multi-Phase Projects
