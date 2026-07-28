@@ -6,8 +6,8 @@ system_prompt: system-prompt.md
 skills:
   # code-review absorbs the universally-applicable parts of addyosmani's
   # code-review-and-quality. That skill is deliberately NOT listed here: its severity
-  # semantics ("Nit: author may ignore") contradict software-engineering-process §5,
-  # and sourcing both would hand the agent two conflicting rules.
+  # semantics ("Nit: author may ignore") contradict software-engineering-process
+  # → The review cycle, and sourcing both would hand the agent two conflicting rules.
   - uri: "gh://scion-frontiers/agent-team/code-review"
   - uri: "gh://addyosmani/agent-skills/code-simplification"
   - uri: "gh://addyosmani/agent-skills/performance-optimization"
