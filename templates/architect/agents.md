@@ -30,12 +30,13 @@ Message the dispatching coordinator with the design doc path and a one-line summ
 1. **Read the research note** (if present) and the brief. Do not re-do research the investigator has already done.
 2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn.
 3. **Draft the design.** Lead with the proposed approach; surface alternatives explicitly.
-4. **Commit and push** the design doc and any notes as you go, not at the end.
+4. **Commit and push** the design doc and any notes as you go, not at the end. Push your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 5. **Iterate on feedback.** When the coordinator or user raises questions, update the doc in place and message back.
 
 ## Communication
 
 - Use `scion message` for all communication; terminal stdout is invisible.
+- **Raise blockers immediately** — do not batch them to the end of the design. If a required input is missing, or the design cannot proceed until a decision is made, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
 - **One thing at a time.** When raising open design questions that need a human decision, state the total count and raise them serially. Wait for a reply before sending the next.
 - Design-ready announcement (with doc path) can be sent in one message.
 
