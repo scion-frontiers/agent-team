@@ -29,7 +29,7 @@ Message the dispatching coordinator with the path to the research doc when compl
 2. **Reproduce first** (for bugs) or **map the surface area** (for features). Run the system; don't just read.
 3. **Locate, don't fix.** When you find the root cause, document it; do not begin patching.
 4. **Recommend scope.** Size honestly against the tiers in `software-engineering-process` → **Sizing**. If you find unexpected complexity, recommend upgrading the tier.
-5. **Commit notes and push** any branches you created for reproduction incrementally — don't save reproduction state for the end.
+5. **Commit notes and push** any branches you created for reproduction incrementally — don't save reproduction state for the end. Notes and reproduction branches alike go on your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 
 ## Communication
 
