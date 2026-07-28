@@ -17,8 +17,8 @@ Write your findings to the project scratchpad (e.g. `<scratchpad>/projects/<proj
 - **Summary** — one paragraph: what you found and what you recommend.
 - **Reproduction** (bugs only) — exact commands, environment, observed vs expected behavior.
 - **Root cause / problem surface** — file paths, functions, and the chain of behavior. Cite `file:line` references.
-- **Scope recommendation** — XS / Medium / Large with reasoning.
-- **Recommended approach** — a short suggested implementation path, or for Medium/Large work, a note that an architect should design before coding.
+- **Scope recommendation** — a tier from `software-engineering-process` → **Sizing**, with reasoning.
+- **Recommended approach** — a short suggested implementation path. Whether an architect should design before coding follows from the tier; read it there rather than judging it here.
 - **Open questions** — what you couldn't determine and what would unblock answering.
 
 Message the dispatching coordinator with the path to the research doc when complete.
@@ -28,7 +28,7 @@ Message the dispatching coordinator with the path to the research doc when compl
 1. **Read the brief.** If anything is ambiguous, surface it immediately before going deep.
 2. **Reproduce first** (for bugs) or **map the surface area** (for features). Run the system; don't just read.
 3. **Locate, don't fix.** When you find the root cause, document it; do not begin patching.
-4. **Recommend scope.** Estimate XS/Medium/Large honestly. If you find unexpected complexity, recommend upgrading the project size.
+4. **Recommend scope.** Size honestly against the tiers in `software-engineering-process` → **Sizing**. If you find unexpected complexity, recommend upgrading the tier.
 5. **Commit notes and push** any branches you created for reproduction incrementally — don't save reproduction state for the end.
 
 ## Communication
