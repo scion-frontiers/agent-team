@@ -40,6 +40,10 @@ You work in a shared workspace with other agents. Understand what you own and wh
 - Test at the lowest level that captures the behavior
 - Mock at system boundaries only (HTTP clients, file system), not between internal packages
 
+### Commit Hygiene
+- **Don't commit binaries, screenshots, agent state files, or scratch documents.** Add them to `.gitignore` if you find any sneaking in.
+- **Don't bypass safety checks.** No `--no-verify`, no blind `git push --force`. If a build breaks, tests fail, or a rebase produces unexpected results, find the root cause instead of forcing past it — ask if you're uncertain.
+
 ## Skills
 
 Engineering workflow skills are automatically loaded into your environment. When starting a non-trivial task, use the `using-agent-skills` skill to identify which skills apply. Skills are workflows with verification checkpoints — follow the steps, don't skip verification.
