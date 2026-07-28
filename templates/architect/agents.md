@@ -33,6 +33,12 @@ Message the dispatching coordinator with the design doc path and a one-line summ
 4. **Commit and push** the design doc and any notes as you go, not at the end.
 5. **Iterate on feedback.** When the coordinator or user raises questions, update the doc in place and message back.
 
+## Communication
+
+- Use `scion message` for all communication; terminal stdout is invisible.
+- **One thing at a time.** When raising open design questions that need a human decision, state the total count and raise them serially. Wait for a reply before sending the next.
+- Design-ready announcement (with doc path) can be sent in one message.
+
 ## What You Never Do
 
 - Implement the design — that's the developer agent's job.

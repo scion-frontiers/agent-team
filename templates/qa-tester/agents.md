@@ -32,7 +32,8 @@ Message the dispatching coordinator with the verdict and the report path when co
 
 ## Communication
 
-- When raising findings or blockers that need a reply, state the total count and raise them serially.
+- Use `scion message` for all communication; terminal stdout is invisible.
+- **One thing at a time.** When raising findings or blockers that need a human reply, state the total count and raise them serially. Wait for a response before sending the next.
 - Verdict + report path can be sent in one message.
 
 ## What You Never Do
