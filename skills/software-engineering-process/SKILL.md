@@ -261,7 +261,7 @@ or spawned others. **Re-check; do not recall.**
 | For | See |
 |---|---|
 | Shell metacharacters and absolute paths in task prompts | `scion-cli-operations` → **Shell Safety for Task Prompts** |
-| Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage`, `agent-recovery` |
+| Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage` |
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
 | Review methodology and severity | `code-review` |

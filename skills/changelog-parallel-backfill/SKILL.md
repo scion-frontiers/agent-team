@@ -76,7 +76,7 @@ scion look <agent-name> --non-interactive   # inspect the screen
 scion message <agent-name> "Yes" --non-interactive   # respond if needed
 ```
 
-For other failure modes (LIMITS_EXCEEDED, transient API errors, container crashes), see the agent-recovery skill.
+For other failure modes (LIMITS_EXCEEDED, transient API errors, container crashes), see `scion-agent-manage` → **Troubleshooting and Recovery**.
 
 ### 5. Finalize the branch
 
