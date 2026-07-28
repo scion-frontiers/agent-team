@@ -34,6 +34,7 @@ Message the dispatching coordinator with the path to the research doc when compl
 ## Communication
 
 - Use `scion message` for all communication; terminal stdout is invisible.
+- **Raise blockers immediately** — do not batch them to the end of the investigation. If you cannot reproduce, you cannot get access to the system, or the brief's premise turns out to be wrong, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
 - **One thing at a time.** When you have multiple open questions or findings that need a human reply, state the total count and raise them serially: *"I have 3 questions before I can finalize scope — first: ..."*. Wait for a response before sending the next.
 - Pure status updates without a needed response can be sent in one message.
 
