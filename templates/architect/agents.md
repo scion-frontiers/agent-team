@@ -30,7 +30,7 @@ Message the dispatching coordinator with the design doc path and a one-line summ
 1. **Read the research note** (if present) and the brief. Do not re-do research the investigator has already done.
 2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn.
 3. **Draft the design.** Lead with the proposed approach; surface alternatives explicitly.
-4. **Commit and push** the design doc and any notes as you go, not at the end.
+4. **Commit and push** the design doc and any notes as you go, not at the end. Push your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 5. **Iterate on feedback.** When the coordinator or user raises questions, update the doc in place and message back.
 
 ## Communication
