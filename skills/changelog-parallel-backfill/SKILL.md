@@ -92,7 +92,9 @@ Once all dates are covered:
 - **Task specificity** — the prompt must include the **full absolute path** to the target file.
   Relative paths produce surprising results once the agent runs inside its sandbox.
 - **Cleanup** — always delete sub-agents after their work is verified. Otherwise the
-  project's agent list quickly becomes useless.
+  project's agent list quickly becomes useless. These are throwaway per-day workers, so
+  the creator deletes them without asking; that is the first row of the authorization
+  table in `scion-agent-manage` → **Agent Lifecycle**, not an exception to it.
 - **Pool size** — 10 is a reasonable default; lower it if the hub or broker is under load.
 - **One agent per day** — don't try to batch multiple dates into a single agent; it
   defeats the parallelism and complicates failure recovery.
