@@ -228,7 +228,7 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 | "These findings are non-blocking, so I'll ship and fix later." | Non-blocking means it will not block merge review. It does not mean skip. |
 | "I'll review the whole branch at once, it's more efficient." | Per-PR or per-developer. Whole-branch reviews dilute the attention the cycle depends on. |
 | "I already know how to review code / plan work / design this." | You have generic priors, not this project's methodology. Read the role material. |
-| "The brief is long, so I'll pass it inline." | Write it to the scratchpad and pass the filepath. |
+| "The brief is long, so I'll pass it inline." | Write it to the scratchpad and pass the filepath — an inlined brief puts backticks and `$variables` into a shell command. See `scion-cli-operations` → **Shell Safety for Task Prompts**. |
 
 ## 9. Red flags
 
@@ -260,7 +260,7 @@ or spawned others. **Re-check; do not recall.**
 
 | For | See |
 |---|---|
-| Shell escaping when passing prompts | `scion-cli-operations` |
+| Shell metacharacters and absolute paths in task prompts | `scion-cli-operations` → **Shell Safety for Task Prompts** |
 | Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage`, `agent-recovery` |
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
