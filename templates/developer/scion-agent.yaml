@@ -4,6 +4,7 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 
 skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"
   - uri: "gh://addyosmani/agent-skills/api-and-interface-design"
   - uri: "gh://addyosmani/agent-skills/ci-cd-and-automation"
   - uri: "gh://addyosmani/agent-skills/code-review-and-quality"

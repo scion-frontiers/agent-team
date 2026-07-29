@@ -2,3 +2,6 @@ schema_version: "1"
 description: "Project coordinator — manages agent teams, delegates all implementation, drives progress autonomously"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+
+skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"

@@ -21,3 +21,6 @@ system_prompt: system-prompt.md
 # and gemini are pretty solid as researchers.
 harness_config: gemini-cli
 model: L
+
+skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"
