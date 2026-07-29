@@ -179,14 +179,14 @@ These are mutually exclusive states:
 ## Workspace Hygiene
 
 - **Delete Finished Agents:** `scion delete` once work is confirmed — stopped containers keep holding broker slots and count against the 50-agent `scion list` ceiling. `scion stop` is not forbidden: it is justified when you need an agent's terminal state within the current phase, and must be time-boxed. See `scion-agent-manage` → **Agent Lifecycle**.
-- **Verify Deliverables:** When an agent reports completion, verify the actual output — check file content, not just existence. Agents may produce placeholder or stub files (the "Simulation Trap").
+- **Verify Deliverables:** When an agent reports completion, verify the actual output — check file content, not just existence. Agents may produce placeholder or stub files (the "Simulation Trap"). Where the deliverable is a commit, check the remote rather than the container: "committed" is not the test, because a commit that never left the agent's container does not survive its deletion.
 - **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after upstream merge and cleanup are confirmed. This keeps the active projects directory lean.
 - **Template sync after updates.** When agent templates are updated in the repo, run `scion template sync` to push changes to the hub so newly started agents use the current versions.
 
 ## `scion look` Limitations
 
 - `scion look` works while the agent is running but fails after it stops (docker exec error on stopped containers).
-- After an agent stops, use `git log --oneline` and `git diff` to verify what was committed instead.
+- After an agent stops, `git fetch` and inspect its remote branch with `git log --oneline` to verify what it pushed. Work that never left the stopped container is not visible from here and will not survive its deletion, so an empty result is a finding, not a clean check.
 
 ## State Management
 

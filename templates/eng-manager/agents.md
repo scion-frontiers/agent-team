@@ -141,7 +141,7 @@ Manage agent lifecycle to preserve audit trails without accumulating clutter:
 
 1. **During a workstream**: keep completed agents in `stopped` state — their terminal logs serve as an audit trail for implementation decisions
 2. **At the end of a milestone**: once work is committed, pushed, and verified, perform a "GC" pass — delete all stopped agents from the session
-3. **Never delete agents with uncommitted work** — verify their output is captured first
+3. **Never delete an agent whose work is not on the remote** — "uncommitted" is the wrong test, and it is the test that loses work: a commit that exists only inside the container dies with the container, and it passes an uncommitted-work check on the way out. Fetch and confirm the agent's branch is on the remote before you delete it. Where the agent owed a file or a report rather than a commit, confirm that artifact exists somewhere the container's deletion cannot reach
 
 ### Handling Blocked Workers
 

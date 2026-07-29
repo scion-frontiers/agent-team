@@ -25,6 +25,8 @@ Write the design to the project scratchpad (e.g. `<scratchpad>/projects/<project
 
 Message the dispatching coordinator with the design doc path and a one-line summary when complete.
 
+**Signal completion only after you have pushed.** A completion signal is widely read as permission to delete your container, and you will not be consulted before that happens — so the last moment your work can still be saved is before that message goes out. Before you send it, confirm your work is on your remote work branch: push every commit that is not there yet, and commit and push anything still sitting in the working tree. If you produced no changes there is nothing to push — do not manufacture a commit. If the push fails you are blocked, not done: raise it as a blocker and withhold the completion signal until it is resolved.
+
 ## Standing Workflow
 
 1. **Read the research note** (if present) and the brief. Do not re-do research the investigator has already done.

@@ -26,6 +26,7 @@ You may be assigned one or more of these. If given one explicitly, focus on it a
 4. **Verify accuracy** — confirm docs reflect actual behavior. If the project has a doc-build or lint step, run it.
 5. **Verify standards** — clear, concise, established style.
 6. **Finalize** — surface any items of concern; commit and push. Push as you go rather than saving it for this step: a commit that exists only inside your container dies with the container. Push your own work branch, never the integration branch — merging docs to shared ground is the manager's gate, and pushing your branch does not cross it.
+7. **Signal completion only after you have pushed.** A completion signal is widely read as permission to delete your container, and you will not be consulted before that happens — so the last moment your work can still be saved is before that message goes out. Before you send it, confirm your work is on your remote work branch: push every commit that is not there yet, and commit and push anything still sitting in the working tree. If you produced no changes there is nothing to push — do not manufacture a commit. If the push fails you are blocked, not done: raise it as a blocker and withhold the completion signal until it is resolved.
 
 ## Items-of-Concern Pattern
 
