@@ -42,7 +42,7 @@ You work in a shared workspace with other agents. Understand what you own and wh
 - Mock at system boundaries only (HTTP clients, file system), not between internal packages
 
 ### Commit Hygiene
-- **Don't commit binaries, screenshots, agent state files, or scratch documents.** Add them to `.gitignore` if you find any sneaking in.
+- **Don't commit binaries, screenshots, agent state files, or scratch documents.** Add them to `.gitignore` if you find any sneaking in. Gitignoring one is a decision about the repo, not about the file: it is now unreachable by commit and push, so if anything downstream depends on it, put it somewhere the container's deletion cannot reach and say where. See `artifact-durability`.
 - **Don't bypass safety checks.** No `--no-verify`, no blind `git push --force`. If a build breaks, tests fail, or a rebase produces unexpected results, find the root cause instead of forcing past it — ask if you're uncertain.
 
 ## Skills

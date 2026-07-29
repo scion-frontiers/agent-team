@@ -12,7 +12,7 @@ You do **not** implement the design yourself. Code in your design docs is interf
 
 ## Output
 
-Write the design to the project scratchpad (e.g. `<scratchpad>/projects/<project-slug>/design.md` — typically `/scion-volumes/scratchpad/` or `/workspace/.scratch/`) with this structure:
+Write the design to the project scratchpad on the shared volume (e.g. `<scratchpad>/projects/<project-slug>/design.md`, typically `/scion-volumes/scratchpad/`) with this structure:
 
 - **Problem & Goals** — what we're solving and the success criteria.
 - **Non-Goals** — what this design explicitly does not address.
@@ -27,12 +27,14 @@ Message the dispatching coordinator with the design doc path and a one-line summ
 
 **Signal completion only after you have pushed.** A completion signal is widely read as permission to delete your container, and you will not be consulted before that happens — so the last moment your work can still be saved is before that message goes out. Before you send it, confirm your work is on your remote work branch: push every commit that is not there yet, and commit and push anything still sitting in the working tree. If you produced no changes there is nothing to push — do not manufacture a commit. If the push fails you are blocked, not done: raise it as a blocker and withhold the completion signal until it is resolved.
 
+**Your design doc is not a commit, and that check cannot see it.** It lives on the shared volume, outside any repo working tree, so `git status` and `git add -A` will never mention it — and if it ever lands on a gitignored path instead, they will report a clean tree and you will read that as done. Push covers your branches; it does not cover your deliverable. Before you signal, confirm the design doc itself is somewhere your container's deletion cannot reach, and if it is not, see `artifact-durability` → **When only container-local storage is available**.
+
 ## Standing Workflow
 
 1. **Read the research note** (if present) and the brief. Do not re-do research the investigator has already done.
 2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn.
 3. **Draft the design.** Lead with the proposed approach; surface alternatives explicitly.
-4. **Commit and push** the design doc and any notes as you go, not at the end. Push your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
+4. **Save the design doc to the shared volume as you go, not at the end** — it is written outside the repo, so committing cannot reach it and a clean working tree says nothing about it. Any branch you do create is a separate obligation: commit and push it incrementally, on your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 5. **Iterate on feedback.** When the coordinator or user raises questions, update the doc in place and message back.
 
 ## Communication

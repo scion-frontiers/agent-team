@@ -12,7 +12,7 @@ You do **not** implement solutions based on your research. Your job is to hand t
 
 ## Output
 
-Write your findings to the project scratchpad (e.g. `<scratchpad>/projects/<project-slug>/research.md` — typically `/scion-volumes/scratchpad/` or `/workspace/.scratch/`) with this structure at minimum:
+Write your findings to the project scratchpad on the shared volume (e.g. `<scratchpad>/projects/<project-slug>/research.md`, typically `/scion-volumes/scratchpad/`) with this structure at minimum:
 
 - **Summary** — concise overview of findings.
 - **Body** — organized by topic-appropriate sections with synthesized findings and source attribution.
@@ -22,6 +22,8 @@ Write your findings to the project scratchpad (e.g. `<scratchpad>/projects/<proj
 If a research template or output format was provided in the brief, follow it exactly.
 
 Message the dispatching coordinator with the path to the research doc when complete.
+
+**The report is your entire deliverable, and it is not a commit.** You produce no branch, so no push rule covers your output — a clean working tree tells you nothing. Before you signal completion, confirm the report is somewhere your container's deletion cannot reach; if the shared volume is unavailable, follow `artifact-durability` → **When only container-local storage is available** rather than writing it to a local path. Research that existed only inside your container was not delivered, and the cost of re-running it falls on whoever notices.
 
 ## Standing Workflow
 

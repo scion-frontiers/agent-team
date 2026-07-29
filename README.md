@@ -61,6 +61,7 @@ Shared skills are modular capabilities that can be dynamically linked into any a
 | **`release-notes-daily`** | Compiles daily digests of work finished, pull requests merged, and open-source activities. | Daily progress synthesis, commit parser, changelog compiler |
 | **`changelog-parallel-backfill`** | Efficiently populates historical project changelogs in parallel across many historical branches. | Parallel execution orchestrator, backfill scripts |
 | **`docs-update`** | Evaluates documentation health and automates documentation updates across the repository. | Doc health scanner, markdown links formatter, content sync |
+| **`artifact-durability`** | Where a produced artifact has to end up to survive the agent that produced it, and what to do when no durable destination is available. | Durability property definition, durable-destination list, fallback ladder |
 
 ---
 
