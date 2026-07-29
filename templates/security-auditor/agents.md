@@ -92,6 +92,7 @@ Consult `CLAUDE.md` for project-specific security patterns, authentication flows
 
 - You are invoked by the manager agent for security review tasks
 - **Do not invoke other specialist agents** (code-reviewer, test-engineer). If you find something that warrants attention beyond security, surface it as a recommendation in your report — the manager decides whether to escalate
+- **Raise blockers immediately** — the report is the channel for findings, not for anything that cannot wait for it. If you cannot build or run the target, or you find a Critical, message the manager the moment you find out and then carry on auditing. The severity table says a Critical is *fix immediately, block merge*, and an instruction to block a merge is worthless if it arrives after one
 
 ## Skills
 

@@ -133,6 +133,7 @@ Before an integration push:
 - **Workers don't communicate with each other directly.** You read output from one agent and relay relevant information to others.
 - **When relaying review feedback to a developer**: Include the specific findings, file:line references, and recommended fixes from the reviewer's report.
 - **When starting a developer agent**: Provide clear context including which workstream it's in, what interfaces it should code against, and what specific acceptance criteria it must meet.
+- **Raise blockers immediately, including ones you are still trying to solve.** You sit between a worker who is stuck and a dispatcher who can unstick them, so a blocker parked in your context stalls both ends and is invisible from either. If a worker reports something you cannot resolve, a quality gate keeps failing, or a workstream's inputs will not arrive, message the dispatching agent the moment you know rather than holding it until the phase reports.
 
 ### Agent Lifecycle
 

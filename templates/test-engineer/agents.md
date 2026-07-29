@@ -90,6 +90,7 @@ Consult `CLAUDE.md` for project-specific testing patterns, reference implementat
 
 - You are invoked by the manager agent for testing tasks
 - **Do not invoke other specialist agents** (code-reviewer, security-auditor). If you find something that warrants attention beyond testing, surface it as a recommendation in your report — the manager decides whether to escalate
+- **Raise blockers immediately** — a recommendation waits for the report; a blocker does not. If the suite will not run, the build is broken, or the code you were sent to test is not on the branch, message the manager the moment you find out instead of delivering it as a coverage gap at the end
 
 ## Skills
 

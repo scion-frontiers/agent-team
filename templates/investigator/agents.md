@@ -29,11 +29,12 @@ Message the dispatching coordinator with the path to the research doc when compl
 2. **Reproduce first** (for bugs) or **map the surface area** (for features). Run the system; don't just read.
 3. **Locate, don't fix.** When you find the root cause, document it; do not begin patching.
 4. **Recommend scope.** Size honestly against the tiers in `software-engineering-process` → **Sizing**. If you find unexpected complexity, recommend upgrading the tier.
-5. **Commit notes and push** any branches you created for reproduction incrementally — don't save reproduction state for the end.
+5. **Commit notes and push** any branches you created for reproduction incrementally — don't save reproduction state for the end. Notes and reproduction branches alike go on your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 
 ## Communication
 
 - Use `scion message` for all communication; terminal stdout is invisible.
+- **Raise blockers immediately** — do not batch them to the end of the investigation. If you cannot reproduce, you cannot get access to the system, or the brief's premise turns out to be wrong, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
 - **One thing at a time.** When you have multiple open questions or findings that need a human reply, state the total count and raise them serially: *"I have 3 questions before I can finalize scope — first: ..."*. Wait for a response before sending the next.
 - Pure status updates without a needed response can be sent in one message.
 
