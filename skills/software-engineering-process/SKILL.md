@@ -108,6 +108,13 @@ Sizing is **depth of the ownership tree** — not stage count, not agent count.
 
 The coordinator is the root at every size. Sizing is how many layers hang beneath it.
 
+**Depth is not change magnitude and not dispatch route.** Those are separate axes, they
+carry their own labels elsewhere, and those labels overlap with these tiers. They also
+correlate — a depth-3 tree is usually a large change — which is exactly what makes merging
+them look safe. It is not: a large change can still be one developer and one reviewer, and
+neither axis fixes the depth of the tree. All three may legitimately coexist. **Do not
+consolidate them into this one.**
+
 Changing the look of a single button does not need an investigator, an architect, an
 engineering manager, developers *and* reviewers. It needs a developer and a reviewer.
 
