@@ -213,7 +213,7 @@ A reviewer re-reading its own review commonly misses items it raised itself.
 **Cap: 6 rounds**, then escalate. Hitting the cap regularly means something upstream is
 broken.
 
-To escalate, hand the parent issue owner or human the round history, the unresolved findings,
+To escalate, hand your supervisor the round history, the unresolved findings,
 what was already tried, and a recommended next action. **Do not open a seventh round
 without a decision.**
 
