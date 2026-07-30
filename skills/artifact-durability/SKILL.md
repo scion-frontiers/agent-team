@@ -94,6 +94,18 @@ Two hazards; that entry closes one and deepens the other.
 Protecting something against the hazard you just met makes it *feel* protected, and that
 feeling is what stops the search for the second hazard.
 
+## Signal completion only after you have pushed
+
+A completion signal is widely read as permission to delete your container, and you will not be consulted before that happens — so the last moment your work can still be saved is before that message goes out. Before you send it, confirm your work is on your remote work branch: push every commit that is not there yet, and commit and push anything still sitting in the working tree. If you produced no changes there is nothing to push — do not manufacture a commit. If the push fails you are blocked, not done: raise it as a blocker and withhold the completion signal until it is resolved.
+
+Push your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
+
+## When your deliverable is not a commit
+
+Some roles produce deliverables that live outside any repo working tree — design docs, research notes, QA reports, state files. These go to a shared volume, not to a branch, so `git status` and `git add -A` will never mention them. If such a deliverable ever lands on a gitignored path instead, those commands will report a clean tree and you will read that as done.
+
+Push covers your branches; it does not cover a file-based deliverable. Before you signal completion, confirm the deliverable itself is somewhere your container's deletion cannot reach. If the shared volume is unavailable, see **When only container-local storage is available** above.
+
 ## Related
 
 - Durability-push versus integration-push, and who may merge to shared ground:

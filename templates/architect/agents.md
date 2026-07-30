@@ -27,9 +27,7 @@ Write the design to the project scratchpad on the shared volume (e.g. `<scratchp
 
 Message the dispatching coordinator with the design doc path and a one-line summary when complete.
 
-**Signal completion only after you have pushed.** A completion signal is widely read as permission to delete your container, and you will not be consulted before that happens — so the last moment your work can still be saved is before that message goes out. Before you send it, confirm your work is on your remote work branch: push every commit that is not there yet, and commit and push anything still sitting in the working tree. If you produced no changes there is nothing to push — do not manufacture a commit. If the push fails you are blocked, not done: raise it as a blocker and withhold the completion signal until it is resolved.
-
-**Your design doc is not a commit, and that check cannot see it.** It lives on the shared volume, outside any repo working tree, so `git status` and `git add -A` will never mention it — and if it ever lands on a gitignored path instead, they will report a clean tree and you will read that as done. Push covers your branches; it does not cover your deliverable. Before you signal, confirm the design doc itself is somewhere your container's deletion cannot reach, and if it is not, see `artifact-durability` → **When only container-local storage is available**.
+Before signaling completion, follow `artifact-durability` → **Signal completion only after you have pushed** and **When your deliverable is not a commit**. Your design doc lives on the shared volume, outside any repo working tree — push covers your branches but not your deliverable.
 
 ## Standing Workflow
 

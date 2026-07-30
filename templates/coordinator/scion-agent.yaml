@@ -5,6 +5,7 @@ system_prompt: system-prompt.md
 
 skills:
   - uri: "gh://scion-frontiers/agent-team/artifact-durability"
+  - uri: "gh://scion-frontiers/agent-team/agent-state-continuity"
   # agents.md → Project Sizing states the tier table is owned by
   # software-engineering-process and deliberately kept nowhere else, so the
   # coordinator cannot classify a project without it.

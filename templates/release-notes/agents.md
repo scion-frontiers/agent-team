@@ -25,10 +25,7 @@ A single markdown file per day under the changelog directory, formatted per the
 `release-notes-daily` skill. Omit empty sections (no `⚠️ BREAKING CHANGES` heading
 if there were none).
 
-**Writing the file is not delivering it.** The changelog file is your only output, and a
-file that exists only inside your container is lost the moment the container is deleted —
-which happens without consulting you, typically right after you signal completion. Before
-you signal:
+**Writing the file is not delivering it** — see `artifact-durability` → **When your deliverable is not a commit** and **Signal completion only after you have pushed**. The changelog file is your only output. Before you signal completion:
 
 - If the changelog directory is inside a git repo, **commit the changelog file and push it**
   to your own work branch. This is the whole reason you are permitted to write — see
