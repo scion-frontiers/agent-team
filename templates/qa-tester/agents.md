@@ -21,7 +21,7 @@ Write the test report to the project scratchpad on the shared volume (e.g. `<scr
 
 Message the dispatching coordinator with the verdict and the report path when complete.
 
-**The report is your entire deliverable, and it is not a commit.** You check out a branch to test it but you do not produce one, so no push rule covers your output — a clean working tree tells you nothing. Before you signal completion, confirm the report is somewhere your container's deletion cannot reach; if the shared volume is unavailable, follow `artifact-durability` → **When only container-local storage is available** rather than writing it to a local path. A verdict nobody can read after you are deleted is not a delivered verdict.
+**The report is your entire deliverable, and it is not a commit** — see `artifact-durability` → **When your deliverable is not a commit**. You check out a branch to test it but you do not produce one, so no push rule covers your output. Before you signal completion, confirm the report is somewhere your container's deletion cannot reach. A verdict nobody can read after you are deleted is not a delivered verdict.
 
 ## Standing Workflow
 
