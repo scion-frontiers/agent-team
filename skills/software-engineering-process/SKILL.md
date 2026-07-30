@@ -296,7 +296,7 @@ or spawned others. **Re-check; do not recall.**
 
 | For | See |
 |---|---|
-| EM brief template for Chunky/Large issues | `references/em-brief-template.md` in this skill |
+| EM brief template for issues with a dedicated issue owner | `references/em-brief-template.md` in this skill |
 | Shell metacharacters and absolute paths in task prompts | `scion-cli-operations` → **Shell Safety for Task Prompts** |
 | Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage` |
 | How to do architecture, design-artifact shape | architect role definition |
