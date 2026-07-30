@@ -16,3 +16,6 @@ schema_version: "1"
 description: "Architect — produces design documents for Medium and Large projects before implementation begins"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
+
+skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"

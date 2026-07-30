@@ -76,11 +76,12 @@ After starting an agent and before calling `sciontool status blocked`, do a quic
 
 ## Agent Briefs & the Scratchpad
 
-Every project needs a **scratchpad** — a shared, non-version-controlled area for briefs, design docs, research notes, and inter-agent artifacts. Common locations:
-- `/scion-volumes/scratchpad/` — the shared scratchpad volume when available (accessible by all agents)
-- `/workspace/.scratch/` — a local gitignored fallback when no shared volume exists
+Every project needs a **scratchpad** — an area for briefs, design docs, research notes, and inter-agent artifacts that is reachable by every agent on the project and survives any one of them being deleted.
 
-Use whichever is available in your environment. The key property is that the scratchpad is shared across agents and not committed to version control.
+- `/scion-volumes/scratchpad/` — the shared scratchpad volume. This is the scratchpad. It is mounted from outside the containers, so it is readable by all agents and unaffected by their deletion.
+- `/workspace/.scratch/` — a container-local gitignored directory. It is **not** a scratchpad. It is invisible to every other agent, and it dies with the container that wrote it, exactly like an unpushed commit.
+
+The properties that matter are **shared** and **durable**, in that order, and only the first location has either. When an environment has no shared volume, an agent's deliverable does not go to `.scratch/` — see `artifact-durability` → **When only container-local storage is available** for the ladder your workers must follow, and name the fallback you expect in their brief rather than leaving them to choose a path.
 
 - **Briefing via Scratchpad:** Never inline long task prompts into `scion start`. Write the brief to the scratchpad (e.g. `<scratchpad>/projects/<slug>/briefs/<agent-name>.md`) and pass the filepath reference in the start command.
 - **Required Brief Sections:** Every brief must include:
@@ -190,7 +191,7 @@ These are mutually exclusive states:
 
 ## State Management
 
-Keep a scratch state file at `.coordinator-state.md` in the workspace root to maintain continuity across sessions:
+Keep a scratch state file at `.coordinator-state.md` in the workspace root as your working copy of project state:
 
 ```
 # Coordinator State
@@ -213,6 +214,10 @@ Keep a scratch state file at `.coordinator-state.md` in the workspace root to ma
 
 Read this file at the start of every session. Update it at significant milestones and before signaling completion.
 
+**This file cannot carry continuity on its own.** It is matched by `.gitignore`, which is deliberate and must stay — it is what stops `git clean` deleting it, after a working-tree reset on 2026-07-27 destroyed unlisted content. But being gitignored means it is never committed and never pushed, so it does not survive the container, and "continuity across sessions" is precisely the case where the container is gone. The entry closes the `git clean` hazard and deepens the deletion one.
+
+So mirror it. Whenever you update this file, also write the same state to the project scratchpad on the shared volume (`<scratchpad>/projects/<slug>/state.md`), which outlives you and is where your successor should look first. Treat the workspace-root copy as the fast local cache and the shared-volume copy as the record. If no shared volume exists, follow `artifact-durability` → **When only container-local storage is available** — do not un-ignore this file to solve it.
+
 ## Rules
 
 1. **Never do the work directly** — delegate all implementation to worker agents.
@@ -222,7 +227,7 @@ Read this file at the start of every session. Update it at significant milestone
 5. **Brief via shared scratchpad** — avoid long inline prompts and local `.scratch/` files for agents.
 6. **Include required sections** in every brief (Key Locations, Communication, Deliverables, Termination).
 7. **Front-load constraints** — critical rules at the top of every brief.
-8. **Keep `.coordinator-state.md` current** — your future self depends on it.
+8. **Keep `.coordinator-state.md` current, and mirror it to the shared volume** — your future self depends on it, and the local copy does not survive you.
 9. **Delete finished agents** immediately to free broker slots.
 10. **Scope tasks tightly** — one logical work item per agent.
 11. **Report, don't offer** — present status and findings, then stop. Do not append "Want me to...?" or similar.

@@ -19,4 +19,5 @@ system_prompt: system-prompt.md
 env:
   PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: /usr/bin/chromium
 skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"
   - uri: "gh://microsoft/playwright-cli/playwright-cli"

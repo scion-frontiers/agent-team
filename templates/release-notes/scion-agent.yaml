@@ -4,4 +4,5 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 
 skills:
+  - uri: "gh://scion-frontiers/agent-team/artifact-durability"
   - uri: "gh://scion-frontiers/agent-team/release-notes-daily"

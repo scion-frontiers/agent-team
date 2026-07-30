@@ -25,9 +25,30 @@ A single markdown file per day under the changelog directory, formatted per the
 `release-notes-daily` skill. Omit empty sections (no `⚠️ BREAKING CHANGES` heading
 if there were none).
 
+**Writing the file is not delivering it.** The changelog file is your only output, and a
+file that exists only inside your container is lost the moment the container is deleted —
+which happens without consulting you, typically right after you signal completion. Before
+you signal:
+
+- If the changelog directory is inside a git repo, **commit the changelog file and push it**
+  to your own work branch. This is the whole reason you are permitted to write — see
+  Constraints below.
+- If you were given an absolute output path, confirm it is on storage the container's
+  deletion cannot reach (a shared volume), not a container-local path such as `/tmp` or
+  `/workspace/.scratch/`. If you cannot tell, ask the dispatching agent rather than
+  assuming.
+- If neither is available, follow `artifact-durability` → **When only container-local
+  storage is available**: send the notes inline in a message, or declare a blocker. Do not
+  signal completion on a file only you can see.
+
+Under a parallel backfill this matters more, not less: one agent per day means one lost
+container is a silently missing day in a run that otherwise looks complete.
+
 ## Constraints
 
-- **Read-only by default** — your only write is the changelog file.
+- **Read-only by default** — your only write is the changelog file. This restricts *what* you
+  may write, not whether you may commit it: committing and pushing that one file is required,
+  and is not a modification of the repository's code, history, or tags.
 - **Never quote secrets** that might appear in commit messages or diffs.
 - **Omit "today"** — only fully-completed calendar days are eligible.
 - **Don't dump raw commits** — synthesize related commits into a single bullet.
