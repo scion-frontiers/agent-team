@@ -1,8 +1,7 @@
 # Engineering Manager (EM) Brief Template
 
-Use this template when briefing an EM agent for Chunky or Large issues with parallel
-implementation. The dedicated issue owner fills in the placeholders and hands this to the
-EM as its brief.
+Use this template when briefing an EM agent for multi-phase implementation. The dedicated
+issue owner fills in the placeholders and hands this to the EM as its brief.
 
 ---
 

@@ -51,13 +51,14 @@ task. Read your brief and your own role material instead.
 An issue is owned in one of two ways, depending on size:
 
 - **Small issues (depth 1):** the coordinator is the issue owner directly — it creates a
-  developer and reviewer and remains the issue owner itself. This corresponds to the
+  developer and reviewer(s) and remains the issue owner itself. This corresponds to the
   Small tier in the Sizing table (§3).
 - **Chunky and Large issues (depth 3):** the coordinator creates a **dedicated issue
-  owner** whose job is to own that issue through delivery. The dedicated issue owner
-  creates the roles the issue needs — investigator, architect, and engineering manager —
-  and supervises them. This corresponds to the Chunky and Large tiers in the Sizing
-  table (§3).
+  owner** — an agent using the coordinator template, briefed as a delegated
+  sub-coordinator responsible for owning the SEP for that issue. The dedicated issue
+  owner creates the roles the issue needs — investigator, architect, and engineering
+  manager — and supervises them. This corresponds to the Chunky and Large tiers in the
+  Sizing table (§3).
 
 In both cases, everything that follows about the issue owner applies equally: the
 responsibilities are the same regardless of whether the coordinator fills the role itself
@@ -131,7 +132,7 @@ Sizing is **depth of the ownership tree** — not stage count, not agent count.
 
 The coordinator is the root at every size. Sizing is how many layers hang beneath it.
 
-> **Note:** Chunky and Large are now structurally identical in tree shape and depth.
+> **Note:** Chunky and Large are structurally identical in tree shape and depth.
 > Both place a dedicated issue owner between the coordinator and the working roles.
 > The distinction between Chunky and Large is **scope and complexity of the issue**,
 > not tree structure — both warrant a dedicated issue owner, but a Large issue
