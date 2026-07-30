@@ -12,9 +12,10 @@ description: >-
 # GCS Artifact Publishing — Scion
 
 A practical reference for publishing reviewable artifacts to the shared bucket and handing a
-human a link. Commands below use `BUCKET_NAME` and `PROJECT_ID`; substitute the bucket and
-project your environment publishes to. In the Scion hub environment the defaults are bucket
-`ddt-scion-hub-exchange` in project `deploy-demo-test`.
+human a link. Commands below use the bare-uppercase placeholders `BUCKET_NAME`, `PROJECT_ID`,
+`PREFIX`, `OBJECT_PATH` and `PROJECT_FOLDER`; substitute your own values before running anything.
+In the Scion hub environment the defaults are bucket `ddt-scion-hub-exchange` in project
+`deploy-demo-test`.
 
 ## When to use
 
@@ -39,7 +40,7 @@ gsutil ls gs://BUCKET_NAME/
 ## 1. Serving model (read this first)
 
 - The artifact bucket must be **public-read** via bucket IAM (`allUsers` has `roles/storage.objectViewer`).
-  Objects are served at `https://storage.googleapis.com/<bucket>/<path>` — **no per-object ACL
+  Objects are served at `https://storage.googleapis.com/BUCKET_NAME/OBJECT_PATH` — **no per-object ACL
   needed**. Confirm with:
   ```bash
   gcloud storage buckets get-iam-policy gs://BUCKET_NAME --format=json | grep -A2 allUsers
@@ -56,32 +57,80 @@ gsutil ls gs://BUCKET_NAME/
 
 ## 2. Uploading
 
-```bash
-# HTML page -> becomes https://storage.googleapis.com/BUCKET_NAME/<prefix>/index.html
-gsutil -h "Cache-Control:no-cache, max-age=0" \
-  cp mypage.html gs://BUCKET_NAME/<prefix>/index.html
+**Always pass both `-h "Content-Type:…"` and `-h "Cache-Control:…"` explicitly, on every upload,
+including HTML.** Both header values contain spaces and commas, so each `-h` argument must stay
+quoted exactly as shown.
 
-# Source data alongside it (set Content-Type for non-HTML so browsers render/serve correctly)
-gsutil -h "Cache-Control:no-cache, max-age=0" -h "Content-Type:text/yaml" \
-  cp data.yaml gs://BUCKET_NAME/<prefix>/data.yaml
+```bash
+# HTML page -> becomes https://storage.googleapis.com/BUCKET_NAME/PREFIX/index.html
+gsutil -h "Content-Type:text/html" \
+       -h "Cache-Control:no-cache, no-store, must-revalidate" \
+       cp mypage.html gs://BUCKET_NAME/PREFIX/index.html
+
+# Source data alongside it
+gsutil -h "Content-Type:text/yaml" \
+       -h "Cache-Control:no-cache, no-store, must-revalidate" \
+       cp data.yaml gs://BUCKET_NAME/PREFIX/data.yaml
 ```
 
 Notes:
-- **`Cache-Control:no-cache`** is important — without it, re-uploads (re-renders) may not show up
-  for the reviewer due to CDN/browser caching.
-- `gsutil` infers `Content-Type` from the extension for common types (`.html` → `text/html`).
-  Set it explicitly for `.yaml`/`.md`/etc. if you want a specific type.
-- Naming the entry page `index.html` gives a clean link (`…/<prefix>/index.html`).
+- **Set `Content-Type` yourself. Do not rely on it being inferred.** When the type is not set,
+  the object can be served as `application/octet-stream`, and a browser then **downloads the
+  file instead of rendering it** — the page appears broken to the reviewer while the upload
+  itself reported success. This is the most common way a published artifact fails. Common
+  values: `text/html`, `text/css`, `application/javascript`, `text/yaml`, `image/png`,
+  `image/svg+xml`.
+- **`Cache-Control:no-cache, no-store, must-revalidate`** is important — without it, re-uploads
+  (re-renders) may not show up for the reviewer due to CDN/browser caching. This is the case
+  every time a human is iterating on an artifact you keep republishing to the same URL.
+- Naming the entry page `index.html` gives a clean link (`…/PREFIX/index.html`).
 
 ---
 
 ## 3. Verify it's live and public
 
+**Verify against the build you just uploaded, not against the URL.** A `200`, a `text/html`, or
+a grep for a string the page has always contained will all pass **before** your upload as
+happily as after it — they confirm that *something* is being served, which was already true.
+
+> **A verification that would have passed before the upload is not a verification.**
+
+So give each build a marker that could not have been there a minute ago, and check for **that**:
+
 ```bash
-gsutil stat gs://BUCKET_NAME/<prefix>/index.html | grep -iE "Content-Type|Cache"
-curl -s -o /dev/null -w "%{http_code} %{content_type}\n" \
-  "https://storage.googleapis.com/BUCKET_NAME/<prefix>/index.html"   # expect: 200 text/html
+BUILD_ID="build-$(date -u +%Y%m%dT%H%M%SZ)"
+
+# 1. Stamp the marker into the artifact BEFORE uploading — from your renderer, or appended:
+printf '<!-- %s -->\n' "$BUILD_ID" >> page.html
+
+# 2. Upload
+gsutil -h "Content-Type:text/html" \
+       -h "Cache-Control:no-cache, no-store, must-revalidate" \
+       cp page.html gs://BUCKET_NAME/PREFIX/index.html
+
+# 3. Fetch what is actually being served and look for THIS build's marker
+body=$(curl -fsS "https://storage.googleapis.com/BUCKET_NAME/PREFIX/index.html"); fetch_rc=$?
+printf '%s' "$body" | grep -q "$BUILD_ID"; marker_rc=$?
+echo "fetch_rc=$fetch_rc marker_rc=$marker_rc"   # both 0 -> this build is the one being served
 ```
+
+`fetch_rc` and `marker_rc` answer two different questions and both matter: the first is whether
+the object is reachable and public at all, the second is whether the bytes coming back are the
+ones you just wrote. **Capture each separately** — in a pipeline, `$?` is only the last command's
+status.
+
+Headers are worth checking too, but check them as a **separate** claim; they are metadata and say
+nothing about which build is live:
+
+```bash
+gsutil stat gs://BUCKET_NAME/PREFIX/index.html | grep -iE "Content-Type|Cache"
+curl -sSI "https://storage.googleapis.com/BUCKET_NAME/PREFIX/index.html" \
+  | grep -iE "^(content-type|cache-control):"
+```
+
+If you have no way to stamp a marker, the fallback is to grep for a string **generated by this
+run's content** — a new row, a new figure, a timestamp the renderer wrote. Never a title, a
+heading, or a nav label; those survive every rebuild and make the check decorative.
 
 Then share the URL with the human (on their channel — see `scion-messaging`).
 
@@ -126,18 +175,32 @@ structural string checks in Python.
 ## 5. End-to-end example
 
 ```bash
-cd <project-folder>
-python3 render.py data.yaml page.html          # your renderer
-gsutil -h "Cache-Control:no-cache, max-age=0" cp page.html gs://BUCKET_NAME/<prefix>/index.html
-gsutil -h "Cache-Control:no-cache, max-age=0" -h "Content-Type:text/yaml" cp data.yaml gs://BUCKET_NAME/<prefix>/data.yaml
-curl -s -o /dev/null -w "%{http_code}\n" "https://storage.googleapis.com/BUCKET_NAME/<prefix>/index.html"
-# -> share https://storage.googleapis.com/BUCKET_NAME/<prefix>/index.html
+cd PROJECT_FOLDER
+BUILD_ID="build-$(date -u +%Y%m%dT%H%M%SZ)"
+
+python3 render.py data.yaml page.html                 # your renderer
+printf '<!-- %s -->\n' "$BUILD_ID" >> page.html       # marker for the verification below
+
+gsutil -h "Content-Type:text/html" \
+       -h "Cache-Control:no-cache, no-store, must-revalidate" \
+       cp page.html gs://BUCKET_NAME/PREFIX/index.html
+gsutil -h "Content-Type:text/yaml" \
+       -h "Cache-Control:no-cache, no-store, must-revalidate" \
+       cp data.yaml gs://BUCKET_NAME/PREFIX/data.yaml
+
+body=$(curl -fsS "https://storage.googleapis.com/BUCKET_NAME/PREFIX/index.html"); fetch_rc=$?
+printf '%s' "$body" | grep -q "$BUILD_ID"; marker_rc=$?
+echo "fetch_rc=$fetch_rc marker_rc=$marker_rc"        # both 0 before you share the link
+# -> share https://storage.googleapis.com/BUCKET_NAME/PREFIX/index.html
 ```
 
 ## Gotchas recap
 
 - Public bucket — no secrets, ever.
 - Use a per-effort prefix; check existing prefixes first.
-- `Cache-Control:no-cache` so re-renders are visible.
-- Set `Content-Type` for non-HTML files.
+- `Cache-Control:no-cache, no-store, must-revalidate` so re-renders are visible.
+- Set `Content-Type` explicitly on **every** upload, HTML included — unset means
+  `application/octet-stream`, which downloads instead of rendering.
+- Verify by grepping the live page for a marker unique to **this** build. A check that would have
+  passed before the upload is not a check.
 - Self-contained HTML (no CDN); robust YAML loading via ruamel fallback.
