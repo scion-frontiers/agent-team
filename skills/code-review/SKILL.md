@@ -173,6 +173,24 @@ Every **Critical** and **Required** finding must include a specific fix recommen
 Run the project's build, lint, and test commands (see `CLAUDE.md`) to confirm the change is
 clean. Consult `CLAUDE.md` for project-specific patterns that must be followed.
 
+**When that gate cannot be run, disclose it — do not skip it silently.** You will often be
+reviewing in a fresh container against a sparse or partial checkout: dependencies not
+installed, the toolchain absent, or only part of the tree fetched. That is a fact about your
+environment, not a finding about the change, and **it is not grounds to withhold a verdict**.
+Work down this ladder and stop at the first rung that runs:
+
+- The full build, lint and test commands. This is still the default whenever it is available.
+- The narrowest real gate you can reach — one package's tests, lint or format check on the
+  changed files only, a type-check, a compile of the touched package.
+- A syntax or parse pass over each changed file, or executing a single changed file directly
+  where the language allows it.
+- Reading the diff against the surrounding code: confirm signatures and call sites the new
+  code depends on, per **Verify dependencies but don't review them** below.
+
+Then **say in the verdict which gates you ran and which you could not, and why** — see
+**Output Format**. An unrun check must be visible to the reader of the review, not inferable
+only from its absence.
+
 ### Scope discipline
 
 - **Ignore technical debt outside the diff.**
@@ -225,6 +243,7 @@ praise.>
 
 ## Final Verdict
 APPROVE | REQUEST CHANGES
+<Gates run, and any gate you could not run here, with the reason.>
 ```
 
 **Separate verdict from recommendations.** If you approve with recommendations, forward
