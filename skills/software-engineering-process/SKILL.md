@@ -50,14 +50,14 @@ task. Read your brief and your own role material instead.
 
 An issue is owned in one of two ways, depending on size:
 
-- **Small and Chunky issues (depth 1–2):** the coordinator is the issue owner directly.
-  It creates the roles the issue needs — a developer and reviewer at Small, or an
-  investigator, architect, and engineering manager at Chunky — but remains the issue
-  owner itself. These correspond to the Small and Chunky tiers in the Sizing table (§3).
-- **Large issues (depth 3):** the coordinator creates a **dedicated issue owner** — a
-  sub-coordinator whose job is to own that issue through delivery. This corresponds to
-  the Large tier in the Sizing table (§3), where the tree is deep enough to warrant a
-  separate agent holding the ownership role.
+- **Small issues (depth 1):** the coordinator is the issue owner directly — it creates a
+  developer and reviewer and remains the issue owner itself. This corresponds to the
+  Small tier in the Sizing table (§3).
+- **Chunky and Large issues (depth 3):** the coordinator creates a **dedicated issue
+  owner** whose job is to own that issue through delivery. The dedicated issue owner
+  creates the roles the issue needs — investigator, architect, and engineering manager —
+  and supervises them. This corresponds to the Chunky and Large tiers in the Sizing
+  table (§3).
 
 In both cases, everything that follows about the issue owner applies equally: the
 responsibilities are the same regardless of whether the coordinator fills the role itself
@@ -120,10 +120,16 @@ Sizing is **depth of the ownership tree** — not stage count, not agent count.
 | Tier | Tree | Depth |
 |---|---|---|
 | Small | coordinator → developer, reviewer | 1 |
-| Chunky | coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 2 |
-| Large | coordinator → sub-coordinator<br>sub-coordinator → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 3 |
+| Chunky | coordinator → dedicated issue owner<br>dedicated issue owner → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 3 |
+| Large | coordinator → dedicated issue owner<br>dedicated issue owner → investigator, architect, engineering manager<br>engineering manager → developers, reviewers | 3 |
 
 The coordinator is the root at every size. Sizing is how many layers hang beneath it.
+
+> **Note:** Chunky and Large are now structurally identical in tree shape and depth.
+> Both place a dedicated issue owner between the coordinator and the working roles.
+> The distinction between Chunky and Large is **scope and complexity of the issue**,
+> not tree structure — both warrant a dedicated issue owner, but a Large issue
+> typically involves more phases, more agents, or longer timelines than a Chunky one.
 
 **Depth is not change magnitude and not dispatch route.** Those are separate axes, they
 carry their own labels elsewhere, and those labels overlap with these tiers. They also
