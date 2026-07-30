@@ -35,8 +35,8 @@ task. Read your brief and your own role material instead.
 
 ## Downstream consumers
 
-`scion-repo-contrib` consumes this skill and pins it to a single commit — `64ddc80`, recorded in
-that repository's `scion-process` skill — rather than following this file forward. **Changes to
+`scion-repo-contrib` consumes this skill and pins it to a single reviewed commit, recorded in
+that repository's `scion-process` skill, rather than following this file forward. **Changes to
 the text of this skill should be notified to that repository's maintainers**; the commit SHA and
 a one-line summary of what changed is enough. That repository moves its pin deliberately, after
 re-reading its own deferrals against the new text: **this is not an automatic-update
