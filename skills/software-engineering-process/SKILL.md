@@ -33,6 +33,15 @@ Use when you are **responsible for delivering work you will not do yourself**:
 **Do not use** as a developer, reviewer, architect, or investigator executing an assigned
 task. Read your brief and your own role material instead.
 
+## Downstream consumers
+
+`scion-repo-contrib` consumes this skill and pins it to a single commit — `64ddc80`, recorded in
+that repository's `scion-process` skill — rather than following this file forward. **Changes to
+the text of this skill should be notified to that repository's maintainers**; the commit SHA and
+a one-line summary of what changed is enough. That repository moves its pin deliberately, after
+re-reading its own deferrals against the new text: **this is not an automatic-update
+relationship.** The **Sizing** section is the part it depends on most.
+
 ---
 
 ## 1. Ownership
