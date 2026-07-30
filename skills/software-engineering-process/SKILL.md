@@ -103,6 +103,34 @@ it looks wired but is silently disconnected.
 Dispatching agents and reporting that you dispatched them is not completion. Signal
 completion when the work is delivered, not when it is handed out.
 
+### Teardown follows the same tree, in reverse
+
+Completion propagates **down** the ownership chain; deletion happens **bottom-up**,
+each level confirming its subtree is torn down before the level above deletes it:
+
+1. Coordinator learns the issue is complete; notifies the issue owner.
+2. Issue owner notifies the EM.
+3. EM deletes its developers and reviewers.
+4. EM confirms its subtree is torn down.
+5. Issue owner deletes the EM.
+6. Issue owner confirms to the coordinator.
+7. Coordinator deletes the issue owner — see **Authorization** below.
+
+**Authorization.** Who may delete which agents is governed by `scion-agent-manage` →
+**Agent Lifecycle**; those rules are not restated here. The general rule lists
+"engineering manager" among roles requiring explicit human instruction for deletion,
+but that category contemplates a free-standing lead, not a supervised node in a deeper
+tree. In this hierarchy the EM is a **bounded, single-issue orchestrator** — clear
+start (receives an agreed design), clear end (implementation delivered), created and
+supervised by the issue owner. The general rule's first category (deleted by creator
+once output is accepted) applies; steps 3–5 are that first category through two
+nesting layers. A **dedicated issue owner** is itself a coordinator-level agent: the
+lead category applies, and step 7 requires **explicit human instruction**.
+
+**When the coordinator is the issue owner** (Small tier), no dedicated issue owner
+exists. The cascade begins at step 2 and there is nothing to delete at the
+issue-owner layer.
+
 ---
 
 ## 2. The invariant
