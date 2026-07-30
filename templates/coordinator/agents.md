@@ -147,7 +147,7 @@ These are mutually exclusive states:
 | Agent stuck in `created` phase (lastSeen zero) | Wait a few minutes, then delete and recreate |
 | Interactive prompt blocking agent | Send `scion message <agent> --raw "ENTER"` or `--raw "0"` to dismiss |
 
-Token refresh is a self-access endpoint the agent calls on itself and authenticates with a token it still holds, so nothing an external party sends can mint one — which is why the 401 row above promises no refresh. Measured in upstream `GoogleCloudPlatform/scion` at `68b8a3b1`, the commit this fork's `scion` binary reports: `pkg/hub/handlers_agents_core.go:1955`, gates at `:1959`, `:1966` and `:1973`, sole non-test caller at `:1993`, and `pkg/hub/agenttoken.go:175`. Unchanged at the later `ae4b60e1`. Recheck upstream before relying on it — a push-based refresh path would make that row false again.
+Token refresh is a self-access endpoint the agent calls on itself and authenticates with a token it still holds, so nothing an external party sends can mint one — which is why the 401 row above promises no refresh. Measured in upstream `GoogleCloudPlatform/scion` at `68b8a3b1`, the commit this fork's `scion` binary reports: `pkg/hub/handlers_agents_core.go:1955`, gates at `:1959`, `:1966` and `:1973`, sole non-test caller at `:1993`, and `pkg/hub/agenttoken.go:175`. The behaviour is unchanged at the later `ae4b60e1`, where those `handlers_agents_core.go` lines sit nine lower and `agenttoken.go` is identical. Recheck upstream before relying on it — a push-based refresh path would make that row false again.
 
 ## Agent Context Management
 
