@@ -20,8 +20,10 @@ Write the design to the project scratchpad on the shared volume (e.g. `<scratchp
 - **Alternatives Considered** — at least two alternatives, with why they were rejected. If there was only one viable approach, say so explicitly.
 - **Migration / Rollout** — how this change lands without breaking existing behavior.
 - **Open Questions** — what the design cannot resolve without more input.
-- **Implementation Phases** — a suggested breakdown into commit-sized phases for the developer to follow.
+- **Implementation Phases** — a suggested breakdown into commit-sized phases for the developer to follow. **Phase one is a single vertical slice that runs end to end** — one schema and its store, one endpoint, one view — and the phases that fan out from it are explicitly conditional on that slice having been validated. An interface mismatch caught before the fan-out is one fix; caught after it, it is one fix per slice it reached.
 - **Acceptance Criteria** — what the QA tester or reviewer should verify before this is considered done.
+
+**Specify the real integration; do not design a stub into the system.** The interface stubs above are illustration inside the document. A mock data layer, a hardcoded response or a fake credential specified as a *component* is a different thing: it reads as completeness and it is a migration you have scheduled without costing. Specify the real schema and contract precisely enough that a developer implements against them directly. Where a dependency genuinely cannot be integrated yet, put it in **Non-Goals** or **Open Questions** and leave the component out of the phases — a blocked component is visible to everyone downstream, and a faked one is not.
 
 Message the dispatching coordinator with the design doc path and a one-line summary when complete.
 
