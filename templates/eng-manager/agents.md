@@ -94,7 +94,7 @@ When a developer agent reports that their task requires shared infrastructure ch
 3. Consult `.design/` for the overall plan and workstream dependencies
 4. Decompose the work into agent-sized tasks (one logical feature or fix per agent)
 5. Check the workstream dependency graph before starting work — identify which workstreams block others and which can run in parallel
-6. Start developer agents for independent tasks in parallel
+6. Start developer agents for independent tasks in parallel — but the fan-out is the design's call before it is yours. Where the design makes a phase conditional on an earlier one having been validated end to end, that condition is binding: hold the dependent agents until the gating phase is not merely finished but verified. **A design that says nothing about gating is not a design that permits fan-out.** In that case sequence it yourself — send one task that exercises the whole stack, verify it, and fan out the rest once it holds. If you cannot tell which phase that is, ask the agent that gave you the design rather than starting everything and finding out
 7. Signal blocked while waiting for agents to complete
 
 ### Formulating Agent Prompts
