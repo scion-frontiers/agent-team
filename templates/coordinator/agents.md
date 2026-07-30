@@ -118,7 +118,7 @@ Do NOT use `--harness-config` for model overrides — that expects a named harne
 - **Proactively check agent status** if no notification arrives within a reasonable time (~5-10 minutes for simple tasks, ~30 minutes for complex ones).
 - Agents can crash silently — the notification system depends on the agent completing normally. If a container crashes, no COMPLETED notification is sent.
 - After any agent finishes or crashes, send a brief status update to the user.
-- **Periodic active sweeps:** During active work sessions, sweep all running agents every 15-30 minutes. For each agent: `scion look <agent>` — is it progressing or spinning? If spinning/confused: nudge with "continue" or context clear. If token error: send a message to trigger refresh. Key indicator of a stuck agent: same task state across two consecutive sweeps with no new tool calls or messages.
+- **Periodic active sweeps:** During active work sessions, sweep all running agents every 15-30 minutes. For each agent: `scion look <agent>` — is it progressing or spinning? If spinning/confused: nudge with "continue" or context clear. If token error: see **Recovery Triage** — a message may unstick the agent, but it does not refresh its token. Key indicator of a stuck agent: same task state across two consecutive sweeps with no new tool calls or messages.
 
 ## Recovering Stuck Agents
 
@@ -142,10 +142,12 @@ These are mutually exclusive states:
 | Transient API error in agent.log | `scion message <agent> "continue"` |
 | `LIMITS_EXCEEDED` state | `scion message <agent> "continue"` |
 | Container crash (exit 255, `Exited`) | Recreate the agent |
-| Hub auth 401 error | Send any message to trigger token refresh |
+| Hub auth 401 error | Send any message — it can unstick a wedged agent, but it does not refresh the token. If 401s persist the agent cannot self-recover: stop, delete, recreate |
 | Context at 100% | Send raw `/clear` sequence (see below) |
 | Agent stuck in `created` phase (lastSeen zero) | Wait a few minutes, then delete and recreate |
 | Interactive prompt blocking agent | Send `scion message <agent> --raw "ENTER"` or `--raw "0"` to dismiss |
+
+Token refresh is a self-access endpoint the agent calls on itself and authenticates with a token it still holds, so nothing an external party sends can mint one — which is why the 401 row above promises no refresh. Measured in upstream `GoogleCloudPlatform/scion` at `68b8a3b1`, the commit this fork's `scion` binary reports: `pkg/hub/handlers_agents_core.go:1955`, gates at `:1959`, `:1966` and `:1973`, sole non-test caller at `:1993`, and `pkg/hub/agenttoken.go:175`. The behaviour is unchanged at the later `ae4b60e1`, where those `handlers_agents_core.go` lines sit nine lower and `agenttoken.go` is identical. Recheck upstream before relying on it — a push-based refresh path would make that row false again.
 
 ## Agent Context Management
 
@@ -220,9 +222,9 @@ Use this structure:
 
 Read this file at the start of every session. Update it at significant milestones and before signaling completion.
 
-**This file cannot carry continuity on its own.** It is matched by `.gitignore`, which is deliberate and must stay — it is what stops `git clean` deleting it, after a working-tree reset on 2026-07-27 destroyed unlisted content. But being gitignored means it is never committed and never pushed, so it does not survive the container, and "continuity across sessions" is precisely the case where the container is gone. The entry closes the `git clean` hazard and deepens the deletion one.
+**This file cannot carry continuity on its own.** Whether `.gitignore` matches it is a property of the workspace rather than of this template — the `git check-ignore` above is what tells you. Where it is matched, that is deliberate and must stay: the entry is what stops `git clean` deleting the file, after a working-tree reset on 2026-07-27 destroyed unlisted content. It also means the file is never committed and never pushed, so the entry closes the `git clean` hazard and deepens the deletion one. Where it is not matched, `git clean` is live against it and getting it ignored is the fix. Under either answer the file does not survive the container, and "continuity across sessions" is precisely the case where the container is gone.
 
-So mirror it. Whenever you update this file, also write the same state to the project scratchpad on the shared volume (`<scratchpad>/projects/<slug>/state.md`), which outlives you and is where your successor should look first. Treat the workspace-root copy as the fast local cache and the shared-volume copy as the record. If no shared volume exists, follow `artifact-durability` → **When only container-local storage is available** — do not un-ignore this file to solve it.
+So mirror it. Whenever you update this file, also write the same state to the project scratchpad on the shared volume (`<scratchpad>/projects/<slug>/<agent-name>-state.md`), which outlives you and is where your successor should look first. **Your agent name belongs in that path too, not only in the local one.** One fixed path per project slug on a shared mount is the same collision one layer out: two coordinators on one project write the same file, last writer wins, no error and no edit event, and read-before-write does not help because by then the corruption looks like the reader's own file. There is no `.gitignore` on the scratchpad volume to fall back on, so the name is the only defence. Treat the workspace-root copy as the fast local cache and the shared-volume copy as the record. If no shared volume exists, follow `artifact-durability` → **When only container-local storage is available** — do not un-ignore this file to solve it.
 
 ## Rules
 
