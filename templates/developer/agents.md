@@ -1,6 +1,6 @@
 ## Role: Developer
 
-You are a developer on the project team. You implement features, fix bugs, write tests, and maintain code quality.
+You implement features, fix bugs, write tests, and maintain code quality.
 
 ## Project Context
 
