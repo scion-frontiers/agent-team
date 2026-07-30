@@ -13,7 +13,7 @@ description: >-
 
 ## Overview
 
-How an engineering task moves from request to delivered change when more than one agent is
+How an engineering issue moves from request to delivered change when more than one agent is
 involved: **who owns delivery, who creates whom, what each role owes, and when the work is
 actually done.**
 
@@ -22,7 +22,7 @@ skills for that.
 
 ## When to use
 
-Use when you are **responsible for delivering work you will not do yourself**:
+Use when you are **responsible for delivering an issue you will not implement yourself**:
 
 - classifying an incoming issue and deciding how much process it warrants
 - deciding which roles to instantiate, and creating those agents
@@ -37,19 +37,34 @@ task. Read your brief and your own role material instead.
 
 ## 1. Ownership
 
-**Exactly one agent owns delivery of a work item at any moment.** By default that is the
-coordinator. The owner:
+**Exactly one agent owns delivery of an issue at any moment.** That agent is the
+**issue owner**. By default the issue owner is the coordinator. The issue owner:
 
 1. creates the agents it needs,
 2. briefs them,
 3. monitors them,
 4. accepts or rejects what comes back,
-5. remains the owner until the work is delivered.
+5. remains the issue owner until the issue is delivered.
 
-An owner may delegate a **bounded subtree** — an engineering manager owns implementation
-and review; a sub-coordinator owns an entire large issue. A delegated agent creates,
-supervises, and accepts *inside* its subtree. The parent still accepts that subtree's
-deliverable into the parent work item.
+### How an issue gets its owner
+
+An issue is owned in one of two ways, depending on size:
+
+- **Small issues (depth 1):** the coordinator is the issue owner directly — no additional
+  agent is created. This covers the low end of the Small tier in the Sizing table (§3).
+- **Larger issues (depth 2–3):** the coordinator creates a **dedicated issue owner** — a
+  sub-coordinator whose job is to own that issue through delivery. This corresponds to the
+  Chunky and Large tiers in the Sizing table (§3), where the tree is deep enough to
+  warrant a separate agent holding the ownership role.
+
+In both cases, everything that follows about the issue owner applies equally: the
+responsibilities are the same regardless of whether the coordinator fills the role itself
+or delegates it to a dedicated agent.
+
+An issue owner may delegate a **bounded subtree** — an engineering manager owns
+implementation and review; a dedicated issue owner owns an entire large issue. A delegated
+agent creates, supervises, and accepts *inside* its subtree. The parent issue owner still
+accepts that subtree's deliverable into the parent issue.
 
 > **Delegation transfers the authority to create agents. It does not transfer
 > accountability.**
@@ -71,9 +86,9 @@ The root owns the outcome all the way through.
 **Do not delegate oversight to an agent that did not create the workers.** It looks fine,
 and silently nobody is subscribed.
 
-### Definition of done for an owner
+### Definition of done for an issue owner
 
-> **Your task is not complete while your subtree is live. Delivery is the deliverable, not
+> **Your work is not complete while your subtree is live. Delivery is the deliverable, not
 > dispatch.**
 
 Dispatching agents and reporting that you dispatched them is not completion. Signal
@@ -85,10 +100,10 @@ completion when the work is delivered, not when it is handed out.
 
 Scale everything down with the size of the work — **except independent review.**
 
-> **For any item under work, the author and the reviewer are never the same agent.**
+> **For any issue under work, the author and the reviewer are never the same agent.**
 
-The constraint is scoped to the item, not the tree. A coordinator may supervise several
-items at once and does not count toward it.
+The constraint is scoped to the issue, not the tree. A coordinator may supervise several
+issues at once and does not count toward it.
 
 The reviewer's job is *not letting bad code through*. An agent that just argued itself into
 a design cannot hold that goal against its own work. This is role conflict, not context
@@ -156,8 +171,8 @@ only the roles the size calls for.
 | Developer | a brief and a phase | a change, ready for review |
 | Reviewer | a change | a verdict, held to *do not let bad code through* |
 
-The owner monitors each of these and accepts or rejects the artifact. An artifact that
-comes back thin, off-brief, or stalled is the owner's problem to catch.
+The issue owner monitors each of these and accepts or rejects the artifact. An artifact
+that comes back thin, off-brief, or stalled is the issue owner's problem to catch.
 
 ---
 
@@ -184,7 +199,7 @@ A reviewer re-reading its own review commonly misses items it raised itself.
 **Cap: 6 rounds**, then escalate. Hitting the cap regularly means something upstream is
 broken.
 
-To escalate, hand the parent owner or human the round history, the unresolved findings,
+To escalate, hand the parent issue owner or human the round history, the unresolved findings,
 what was already tried, and a recommended next action. **Do not open a seventh round
 without a decision.**
 
@@ -267,6 +282,7 @@ or spawned others. **Re-check; do not recall.**
 
 | For | See |
 |---|---|
+| EM brief template for Chunky/Large issues | `references/em-brief-template.md` in this skill |
 | Shell metacharacters and absolute paths in task prompts | `scion-cli-operations` → **Shell Safety for Task Prompts** |
 | Briefing structure, model override, agent recovery, stall handling | `scion-agent-manage` |
 | How to do architecture, design-artifact shape | architect role definition |
