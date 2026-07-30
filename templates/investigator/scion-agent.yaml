@@ -19,3 +19,7 @@ system_prompt: system-prompt.md
 
 skills:
   - uri: "gh://scion-frontiers/agent-team/artifact-durability"
+  # agents.md requires a scope tier from software-engineering-process → Sizing
+  # as a named deliverable, so the investigator cannot produce its output
+  # without it.
+  - uri: "gh://scion-frontiers/agent-team/software-engineering-process"

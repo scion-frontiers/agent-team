@@ -9,6 +9,11 @@ skills:
   # semantics ("Nit: author may ignore") contradict software-engineering-process
   # → The review cycle, and sourcing both would hand the agent two conflicting rules.
   - uri: "gh://scion-frontiers/agent-team/code-review"
+  # code-review delegates severity disposition, the review cycle and sizing
+  # thresholds to software-engineering-process — "go read it rather than
+  # guessing" — and the exclusion reasoned about in the comment above is
+  # decided by that same skill. Both need it present.
+  - uri: "gh://scion-frontiers/agent-team/software-engineering-process"
   - uri: "gh://addyosmani/agent-skills/code-simplification"
   - uri: "gh://addyosmani/agent-skills/performance-optimization"
   - uri: "gh://addyosmani/agent-skills/security-and-hardening"
