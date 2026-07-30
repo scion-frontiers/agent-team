@@ -63,15 +63,19 @@ In both cases, everything that follows about the issue owner applies equally: th
 responsibilities are the same regardless of whether the coordinator fills the role itself
 or delegates it to a dedicated agent.
 
-An issue owner may delegate a **bounded subtree** — an engineering manager owns
-implementation and review; a dedicated issue owner owns an entire large issue. A delegated
-agent creates, supervises, and accepts *inside* its subtree. The parent issue owner still
-accepts that subtree's deliverable into the parent issue.
+**Only the top-level coordinator delegates issue ownership.** The issue-owner hierarchy
+is exactly two layers deep: coordinator, and optionally a dedicated issue owner beneath
+it. A dedicated issue owner does not further delegate issue ownership.
+
+Within an issue, the issue owner may delegate **implementation subtrees** — for example,
+an engineering manager owns implementation and review for a set of developers. A
+delegated agent creates, supervises, and accepts *inside* its subtree, but the issue
+owner still accepts that subtree's deliverable.
 
 > **Delegation transfers the authority to create agents. It does not transfer
 > accountability.**
 
-The root owns the outcome all the way through.
+The coordinator owns the outcome all the way through.
 
 ### Supervision follows creation
 
