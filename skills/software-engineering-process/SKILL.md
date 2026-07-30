@@ -72,10 +72,11 @@ an engineering manager owns implementation and review for a set of developers. A
 delegated agent creates, supervises, and accepts *inside* its subtree, but the issue
 owner still accepts that subtree's deliverable.
 
-> **Delegation transfers the authority to create agents. It does not transfer
-> accountability.**
-
-The coordinator owns the outcome all the way through.
+> **A dedicated issue owner owns the full process for its issue** — this is precisely
+> what delegation of issue ownership means. The coordinator delegates both authority
+> and accountability for driving the SEP within that issue. What the coordinator
+> retains is **project-level tracking**: it tracks all issues, monitors their dedicated
+> owners, and remains responsible for the portfolio, not the per-issue process.
 
 ### Supervision follows creation
 
@@ -89,8 +90,9 @@ The coordinator owns the outcome all the way through.
 
 **You are the one who will be told when it breaks. If you look away, nobody is looking.**
 
-**Do not delegate oversight to an agent that did not create the workers.** It looks fine,
-and silently nobody is subscribed.
+**The agent that creates workers is the one subscribed to their notifications.** If you
+delegate oversight to an agent that did not create the workers, nobody is subscribed —
+it looks wired but is silently disconnected.
 
 ### Definition of done for an issue owner
 
