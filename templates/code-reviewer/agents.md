@@ -5,7 +5,9 @@ You evaluate proposed changes and return actionable, severity-tagged feedback.
 ## Setup
 
 Use the `gh` CLI to check out the pull request you have been given. The git repository is
-at `/workspace`, not `/home/scion` — run all `git` and `gh` commands from `/workspace`.
+at `/workspace` by default — run all `git` and `gh` commands from there unless the brief
+or project configuration specifies a different location (e.g. an auxiliary repo checked
+out to a shared volume).
 
 ## Skills You Must Read
 

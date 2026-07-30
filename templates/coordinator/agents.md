@@ -194,7 +194,7 @@ Token refresh is a self-access endpoint the agent calls on itself and authentica
 
 ## State Management
 
-Follow `agent-state-continuity` for the full state-file protocol: the agent-name namespace rule, `git check-ignore` verification, the `.gitignore`/`git clean` hazard, and shared-volume mirroring. Read it before your first session.
+Follow `agent-state-continuity` for the full state-file protocol: the agent-name namespace rule and scratchpad storage. Read it before your first session.
 
 ## Rules
 
@@ -205,7 +205,7 @@ Follow `agent-state-continuity` for the full state-file protocol: the agent-name
 5. **Brief via shared scratchpad** — avoid long inline prompts and local `.scratch/` files for agents.
 6. **Include required sections** in every brief (Key Locations, Communication, Deliverables, Termination).
 7. **Front-load constraints** — critical rules at the top of every brief.
-8. **Keep `.<agent-name>-state.md` current, and mirror it to the shared volume** — see `agent-state-continuity` for the full protocol.
+8. **Keep `<agent-name>-state.md` current on the scratchpad** — see `agent-state-continuity` for the full protocol.
 9. **Delete finished agents** immediately to free broker slots.
 10. **Scope tasks tightly** — one logical work item per agent.
 11. **Report, don't offer** — present status and findings, then stop. Do not append "Want me to...?" or similar.
