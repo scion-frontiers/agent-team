@@ -55,6 +55,8 @@ Each folder under `/templates` defines a distinct agent persona with specialized
 
 Shared skills are modular capabilities that can be dynamically linked into any agent's toolbox.
 
+**`skills/` is a public registry, not an internal detail of the templates in this repository.** Every directory under `skills/` is addressable by URI from any template — one of ours, or one maintained by someone else entirely.
+
 | Skill | Purpose | Key Tools Provided |
 | :--- | :--- | :--- |
 | **`code-review`** | Review method for a single change: the five axes, the severity vocabulary, the output format, and how to get a clean PR diff in a container. | Five-axis framework, severity labels, review template, `gh`/`git` diff recipes |
@@ -62,6 +64,27 @@ Shared skills are modular capabilities that can be dynamically linked into any a
 | **`changelog-parallel-backfill`** | Efficiently populates historical project changelogs in parallel across many historical branches. | Parallel execution orchestrator, backfill scripts |
 | **`docs-update`** | Evaluates documentation health and automates documentation updates across the repository. | Doc health scanner, markdown links formatter, content sync |
 | **`artifact-durability`** | Where a produced artifact has to end up to survive the agent that produced it, and what to do when no durable destination is available. | Durability property definition, durable-destination list, fallback ladder |
+| **`software-engineering-process`** | How multi-agent engineering work is owned, sized, delegated, and verified from request to delivery. | Ownership tree, sizing tiers, the review cycle, briefing rules |
+| **`gcs-artifact-publishing`** | Publishes human-reviewable artifacts to the shared GCS artifact bucket and returns a public link. | Bucket/auth setup, `gsutil` upload recipes, public-access verification, HTML renderers |
+
+The table lists every directory under `skills/`.
+
+### Referencing a skill by URI
+
+A template imports a skill by listing its URI under `skills:` in that template's `scion-agent.yaml`. The last path segment is the bundle's **directory name**, and it omits the `skills/` prefix:
+
+```yaml
+skills:
+  - uri: "gh://scion-frontiers/agent-team/code-review"
+```
+
+That is the live declaration in `templates/code-reviewer/scion-agent.yaml`, and it resolves to `skills/code-review/` in this repository. The same form works from a template maintained anywhere — a consuming template does not have to live here.
+
+### A bundle nothing here references is not an unused bundle
+
+Some bundles above are referenced by no template in this repository. **That is an expected state, not a defect.** Because the registry is addressable from outside, a bundle none of our own templates import may still be imported by templates maintained elsewhere.
+
+So, for anyone doing a tidy-up: **do not read "not referenced by any template in this repo" as evidence that a bundle is unused, unmaintained, or safe to delete or rename.** The references that keep a bundle alive are not visible from inside this repository, and this repository deliberately does not track who consumes it.
 
 ---
 
