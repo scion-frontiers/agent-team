@@ -192,7 +192,12 @@ These are mutually exclusive states:
 
 ## State Management
 
-Keep a scratch state file at `.coordinator-state.md` in the workspace root as your working copy of project state:
+Keep a scratch state file at `.<agent-name>-state.md` in the workspace root as your working copy of project state — substitute your own agent name, so an agent named `acme-web-coord` keeps `.acme-web-coord-state.md`. Two properties of that filename are load-bearing:
+
+- **It must end in `-state.md`.** The workspace `.gitignore` protects these files with the pattern `.*-state.md`, which tests for a leading dot and for the filename ending in `-state.md`, and nothing else. A name that does not end that way — `.coordinator-state-<agent>.md`, `.state-<agent>.md` — is not matched and silently loses its `git clean` protection.
+- **The namespace is your agent name, not your role.** One fixed name per role is one name for every instance of that role, so the second coordinator to share a workspace overwrites the first one's file — no error, no conflict.
+
+Use this structure:
 
 ```
 # Coordinator State
@@ -228,7 +233,7 @@ So mirror it. Whenever you update this file, also write the same state to the pr
 5. **Brief via shared scratchpad** — avoid long inline prompts and local `.scratch/` files for agents.
 6. **Include required sections** in every brief (Key Locations, Communication, Deliverables, Termination).
 7. **Front-load constraints** — critical rules at the top of every brief.
-8. **Keep `.coordinator-state.md` current, and mirror it to the shared volume** — your future self depends on it, and the local copy does not survive you.
+8. **Keep `.<agent-name>-state.md` current, and mirror it to the shared volume** — your future self depends on it, and the local copy does not survive you. Your agent name, not your role, and the `-state.md` ending is what `.gitignore` matches.
 9. **Delete finished agents** immediately to free broker slots.
 10. **Scope tasks tightly** — one logical work item per agent.
 11. **Report, don't offer** — present status and findings, then stop. Do not append "Want me to...?" or similar.
