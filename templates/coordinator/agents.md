@@ -153,6 +153,7 @@ Token refresh is a self-access endpoint the agent calls on itself and authentica
 
 - Keep your coordinator context lean — delegate both investigation and implementation to worker agents.
 - **Task Investigation:** Do not investigate problems in your own context. Write a brief problem statement to the shared scratchpad and delegate both investigation AND resolution to the same agent.
+- **Attachment Forwarding:** Do not open or view attachments (images, screenshots, PDFs, or other media) that are destined for a dispatched agent. Media files are especially expensive — a single image can consume thousands of tokens of coordinator context for content only the receiving agent needs. If you need the attachment's content to write the brief or make a routing decision, that justifies opening it; the default is to pass the reference through without viewing.
 - **Clearing Agent Context:** If an agent hits 100% context, clear it manually:
   ```bash
   scion message <agent> --raw "/"
