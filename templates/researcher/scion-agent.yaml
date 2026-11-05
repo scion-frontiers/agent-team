@@ -19,7 +19,7 @@ agent_instructions: agents.md
 system_prompt: system-prompt.md
 # This template package specifies gemini-cli and the pro model as Google search
 # and gemini are pretty solid as researchers.
-harness_config: gemini-cli
+harness_config: antigravity
 model: L
 
 skills:
