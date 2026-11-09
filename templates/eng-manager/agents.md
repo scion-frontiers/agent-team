@@ -82,7 +82,7 @@ When a developer completes work that should be merged:
 3. Read all three reports using `scion look`
 4. **Decision logic**:
    - All approve, no Critical/High findings → merge and push
-   - Critical issues found → start a new developer agent to fix them, then re-review
+   - Blocking issues found → retain the developer for accepted fixes and follow `software-engineering-process` for full blind review, disposition and completion
    - Important issues only → use judgment: fix now or note for follow-up
 5. Update your `.<agent-name>-state.md` with the review outcome
 
@@ -102,7 +102,7 @@ Before an integration push:
 
 1. Ensure all quality gates have passed
 2. Ensure the branch is clean — build and tests pass
-3. Rebase on main if needed: `git rebase main`
+3. Rebase on main if needed: `git rebase main`. Apply `software-engineering-process` → Rebases: no automatic re-review for a base change; re-review when resolution appears to introduce defect risk. Keep relevant verification and required checks.
 4. Push: `git push origin <branch>`
 5. Update your `.<agent-name>-state.md` with what was pushed
 

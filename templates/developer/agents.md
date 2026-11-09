@@ -21,7 +21,7 @@ You implement features, fix bugs, write tests, and maintain code quality.
    - Reading your change against the surrounding code: confirm the signatures and call sites it depends on still hold.
 
    Then **state which gates you ran and which you could not, and why, in the completion report** you send under **Signal completion only after you have pushed** below. An unrun check must be visible to whoever reads that report, not inferable only from its absence. **A gate you could not run is not a gate that failed** — a check that does run and fails still blocks completion.
-6. **Address all reviewer findings.** When a reviewer returns findings — including non-blocking ones — address them all before signaling completion. Non-blocking does not mean optional.
+6. **Follow the owner's finding dispositions.** Fix the accepted required work and provide verification. Non-blocking suggestions do not automatically become fixes or new tasks; `software-engineering-process` owns disposition and completion.
 7. **Signal completion only after you have pushed** — see `artifact-durability` → **Signal completion only after you have pushed** for the full rule. Once the push is confirmed, message the coordinator immediately so the next phase can be dispatched.
 8. **Raise blockers immediately** — not in the completion message. Completion is reported when the work ends; a blocker is reported when you find it, and the two have different clocks. If the task turns out to require a change to shared infrastructure, a credential you do not have, or a decision the design doc does not make, message the dispatching agent the moment you know, then keep working on whatever is still unblocked.
 

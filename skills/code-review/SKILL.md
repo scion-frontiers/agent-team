@@ -12,8 +12,10 @@ description: >-
 ## Reviewer Mindset
 
 You are a Senior Staff Software Engineer and Security Researcher performing a rigorous
-review of a single change. **Review only the delta.** Do not comment on technical debt,
-style issues, or architectural flaws in lines that were not modified.
+review of the full proposed change against its base, including on later blind passes.
+Inspect surrounding code and dependencies enough to evaluate effects. Distinguish
+introduced or newly exposed failures from unrelated pre-existing debt; the latter
+is not a demand to expand this change.
 
 You exist because you hold a **different goal** from the author: not letting bad code
 through. An agent that just argued itself into a design cannot then adversarially attack
@@ -106,30 +108,42 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
 
 ## Severity
 
-**This skill is the sole owner of the severity vocabulary.** Do not restate these labels in
-a role template or a project skill — reference this section instead.
+This skill owns the generic finding labels. Project security policy owns security
+risk grades and the threshold for a security hold; do not conflate the two.
 
 | Label | Blocks merge? | Use for |
 |---|---|---|
-| **Critical** | Yes | Security vulnerability, data loss, broken functionality |
-| **Required** | Yes | Must be fixed before merge — missing test, wrong abstraction, bad error handling |
-| **Nit** | No | Formatting, naming, style preference |
-| **Optional** / **Consider** | No | Worth doing; not required for merge |
-| **FYI** | No | Informational; no action needed |
+| **Critical** | Yes | Evidenced severe functional failure or data loss; security only where project hold policy permits |
+| **Required** | Yes | A material correctness, compatibility, operability or maintainability defect, or a concrete unmet acceptance requirement; explain the failure and impact |
+| **Nit** | No | Minor naming, formatting or style suggestion |
+| **Optional** / **Consider** | No | Useful improvement not needed for acceptance |
+| **FYI** | No | Information; no action requested |
 
-### Non-blocking is about merge-gating, not importance
+A preferred abstraction or an absent test is not automatically Required. State
+what can fail and what existing verification misses. Do not promote optional work
+because it was found late or because the author declined it. Do not soften a
+material defect merely to finish the review.
 
-The "Blocks merge" column says only whether a finding stops *this* merge. It says nothing
-about whether the finding can be dropped.
+For security findings, report the project's risk grade separately. When the project
+allows holds only for High/Critical, lower grades cannot block through a generic
+label, incomplete verdict or withheld signoff. Other human approval requirements
+remain unchanged.
 
-**What happens to a finding after you file it is owned by `software-engineering-process`
-→ The review cycle.** Read it there.
+Disposition belongs to `software-engineering-process` → The review cycle. A
+non-blocking suggestion may be declined without a cleanup task. A clean review
+is a valid outcome; do not manufacture findings.
 
-Two consequences for how you label:
+Rebase-triggered review follows `software-engineering-process` → Rebases. A new
+base/head alone is not a reason to request another pass. When resolution appears
+to introduce defect risk and a pass is needed, keep the full blind scope.
 
-- Do not reach for **Nit** or **Optional** to make a real finding easier to ignore. If it
-  needs to happen, label it **Required**.
-- If you genuinely mean "no action needed," the label is **FYI** — not Nit.
+### Independent assessment and history
+
+In blind review, form and record your assessment before seeing past findings or
+verdicts. The owner then reconciles duplicates and settled dispositions. Once
+history is available, do not repeat a resolved finding or reopen a disposition
+without new evidence. Fix verification may use prior findings; it is a separate
+activity, not a substitute for the full blind assessment.
 
 ### Lead with what matters
 
@@ -226,7 +240,7 @@ Write the review to the project's designated review output directory with this s
 <Must be fixed before merge. If none: "None.">
 
 ## Nit / Optional
-<Non-blocking for this merge. Disposition is still owed — see Severity above.>
+<Non-blocking recommendations; the owner records disposition without requiring a fix.>
 
 ## FYI
 <Informational only.>
@@ -243,12 +257,12 @@ praise.>
 
 ## Final Verdict
 APPROVE | REQUEST CHANGES
+<Reviewed base/head; full blind assessment or fix verification.>
 <Gates run, and any gate you could not run here, with the reason.>
 ```
 
-**Separate verdict from recommendations.** If you approve with recommendations, forward
-them for a cleanup pass. Return a clean APPROVE with no further action only when the change
-is genuinely clean.
+**Separate verdict from recommendations.** APPROVE may include non-blocking findings.
+Do not require a cleanup pass or withhold signoff because those recommendations remain.
 
 Do not approve a change with unresolved **Critical** or **Required** findings. Both are
 declared blocking in the severity table; APPROVE is available only when what remains is
@@ -265,7 +279,7 @@ declared blocking in the severity table; APPROVE is available only when what rem
 | "The tests pass, so it's good" | Tests do not catch architecture problems, security issues, or readability. |
 | "The refactor makes it cleaner" | Relocating complexity is not reducing it. If the reader holds the same number of concepts, the structure did not improve. |
 | "It's only a small addition to this file" | Small diffs still bolt branches onto unrelated flows. Judge the resulting structure, not the diff size. |
-| "I'll clean it up later" | Later rarely comes. Require cleanup before merge, or a filed and assigned follow-up. |
+| "I'll clean it up later" | Give the owner evidence to choose a finite disposition; optional polish can be declined without a task. |
 | "It's non-blocking, so they can skip it" | Non-blocking means it will not block *this merge review*. Disposition is owned by `software-engineering-process` → **The review cycle** — go read it rather than guessing. |
 
 ## Red Flags

@@ -35,7 +35,11 @@ Before signaling completion, follow `artifact-durability` → **Signal completio
 2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn.
 3. **Draft the design.** Lead with the proposed approach; surface alternatives explicitly.
 4. **Save the design doc to the shared volume as you go, not at the end** — it is written outside the repo, so committing cannot reach it and a clean working tree says nothing about it. Any branch you do create is a separate obligation: commit and push it incrementally, on your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
-5. **Iterate on feedback.** When the coordinator or user raises questions, update the doc in place and message back.
+5. **Iterate through direct design discussion.** When the user or coordinator raises
+   questions, update the doc in place and message back. Do not run developer/reviewer
+   cycles on architecture planning or add a mandatory architecture reviewer/signoff.
+   `software-engineering-process` §2 owns this distinction; independent code review
+   applies to the later implementation.
 
 ## Communication
 

@@ -44,7 +44,12 @@ tier table is kept in this file, because two tables drift and neither owns the a
 - **Sub-coordinators use the coordinator template.** When spawning project-level coordinators, always use `--type coordinator` — not `--type architect` or `--type investigator`. The distinction between top-level and project-level coordinators is expressed through skills and briefs, not different templates.
 - **Large projects with parallel work:** Spawn a dedicated **engineering manager (EM)** agent to own the dev-review cycle. The EM independently spawns developers, runs reviewers, routes feedback, and retries until approved. The coordinator tracks only the EM, not individual dev/review agents. EM brief should include: "You own the full implementation lifecycle. Only contact the coordinator when a phase is approved and ready, or you are genuinely blocked on something only the coordinator can resolve."
 - **L/XL projects: separate investigator and architect.** Do not merge research and design into a single agent. Start an investigator for research (produces findings doc, no design decisions), then start an architect who takes those findings and produces a design with a phased implementation plan.
-- **Project agents self-dispatch.** Architect and manager agents that own a project should spawn their own fix developers, reviewers, and sub-agents directly — they do not need to route through the coordinator. The coordinator is only involved for cross-project decisions, new project kickoffs, and tracker updates.
+- **Implementation managers self-dispatch within their assigned scope.** They own
+  developer/reviewer work under `software-engineering-process`. An architect's
+  planning assignment is design and direct human feedback, not a developer/reviewer
+  subtree. Do not dispatch architecture review loops or mandatory design signoffs;
+  the process skill §2 owns that boundary. Implementation begins through the existing
+  issue owner when authorized.
 
 ## Agent Lifecycle
 
@@ -172,7 +177,7 @@ Token refresh is a self-access endpoint the agent calls on itself and authentica
 - **Each phase is a separate dispatch.** When a design doc has multiple phases, create a tracking item per phase. The coordinator is responsible for dispatching each phase in sequence (or in parallel when the design permits).
 - **Independent phases can be parallelized.** When the design notes phases are independent, dispatch them to separate agents simultaneously.
 - **A project is not complete when one phase ships.** It is complete when all acceptance criteria from the design doc are verified. Check AC coverage before marking a project done.
-- **All reviewer findings must be addressed before shipping.** When a reviewer returns findings — including non-blocking ones — forward them all to the developer. Non-blocking means "won't block merge review," not "skip before shipping." Only proceed when the reviewer signs off with no outstanding items.
+- **For implementation, apply the review-cycle completion condition in `software-engineering-process`, including its rebase rule.** Reconcile the blind assessment with history and give each finding a finite disposition. Route accepted fixes to the developer; do not turn every non-blocking suggestion into a task or require a perfectly clean review.
 
 ## Iterative Work
 
@@ -209,6 +214,6 @@ Follow `agent-state-continuity` for the full state-file protocol: the agent-name
 9. **Delete finished agents** immediately to free broker slots.
 10. **Scope tasks tightly** — one logical work item per agent.
 11. **Report, don't offer** — present status and findings, then stop. Do not append "Want me to...?" or similar.
-12. **All findings addressed before shipping** — non-blocking reviewer findings are not optional.
+12. **Implementation review completion follows `software-engineering-process`** — unresolved blockers hold; non-blocking findings receive finite dispositions. Architecture planning follows human discussion, without reviewer loops.
 13. **Track every phase** — multi-phase projects need per-phase dispatch, not a single handoff.
 14. **Prefix agent names with project slug** — for traceability and cleanup.

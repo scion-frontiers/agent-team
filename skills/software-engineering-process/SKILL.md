@@ -107,16 +107,17 @@ completion when the work is delivered, not when it is handed out.
 
 ## 2. The invariant
 
-Scale everything down with the size of the work — **except independent review.**
+Scale implementation process with the work while preserving independent code review.
 
-> **For any issue under work, the author and the reviewer are never the same agent.**
+> **For implementation changes requiring code review, the author and reviewer are
+> different agents.** The constraint is scoped to the issue, not the tree.
 
-The constraint is scoped to the issue, not the tree. A coordinator may supervise several
-issues at once and does not count toward it.
-
-The reviewer's job is *not letting bad code through*. An agent that just argued itself into
-a design cannot hold that goal against its own work. This is role conflict, not context
-size — a bigger context window does not fix it.
+Architecture planning follows direct human design discussion and feedback. Do not
+apply the developer/reviewer cycle to a design artifact, appoint a mandatory
+architecture reviewer, or require successive reviewer signoffs before the human
+can discuss or accept the design. The architect revises the design in response to
+that discussion; the issue owner checks scope and delivery without adding a review
+round. This does not remove independent review of the later implementation.
 
 ---
 
@@ -193,39 +194,88 @@ that comes back thin, off-brief, or stalled is the issue owner's problem to catc
 
 ## 5. The review cycle
 
-Run per **pull request or per developer** — not across the whole branch at once. A final
-whole-branch review is sometimes warranted, but never as a replacement for the per-unit
-cycle.
+This cycle applies to implementation, not architecture planning (§2).
+Run per pull request or per developer. Review the entire proposed change against
+its base and intended behavior; inspect surrounding code needed to assess effects.
+A whole-branch review may supplement, not replace, that scope.
 
-Each round: review → fixes → **new reviewer**. Repeat until a review comes back clean.
+### Independent assessment and fix verification
 
-### Rotate the reviewer, keep the developer
+Start with a full blind independent review. Give the reviewer the base/head,
+requirements, relevant project guidance and actual verification evidence. Do not
+supply previous findings, verdicts, author rebuttals or the owner's disposition
+history before the reviewer records its assessment. Blind does not mean deprived
+of requirements or code context. If prior review content is unavoidably visible,
+disclose that limit rather than claiming a blind pass.
 
-| | Across rounds | Why |
-|---|---|---|
-| Reviewer | **replaced** | Sheds context. Avoids anchoring on its own prior review; attention decays across long reviews |
-| Developer | **retained** | Keeps context. Holds the thread of what was tried and why |
+After the assessment is recorded, the owner reconciles findings with history.
+A targeted independent check of a previous fix may use that history; label it
+fix verification, not a full blind review. Keep the developer across rounds.
+Use a fresh reviewer for each full blind pass; a reviewer who already knows the
+findings may verify fixes but cannot claim a blind pass on that change.
 
-**Compact the adversary, preserve the author.** Do not generalise this to "fresh context is
-always better" and start rotating developers.
+### Disposition and convergence
 
-A reviewer re-reading its own review commonly misses items it raised itself.
+The owner decides each finding once in the existing review record, with a short
+reason: fix now, decline as not required, or defer outside this delivery. A fixed
+item links its verification. A real deferred defect gets an existing backlog
+reference and owner; optional polish may be declined without creating a task.
+Group repeated instances of the same cause. Reopen a disposition only for new
+evidence or an explicit human instruction. No separate form is required.
 
-**Cap: 6 rounds**, then escalate. Hitting the cap regularly means something upstream is
-broken.
+Critical/Required findings under `code-review` remain actionable at every pass;
+their classification must name a material failure or an unmet requirement.
+Disputed blocking classification is resolved on evidence by the owner or escalated
+to the existing decision-maker; it is not silently downgraded. Deferring an accepted
+blocking defect needs the existing human exception authority. Security holds obey
+the project's explicit security threshold; do not bypass it by relabelling a
+below-threshold security finding as Required or withholding signoff.
 
-To escalate, hand your supervisor the round history, the unresolved findings,
-what was already tried, and a recommended next action. **Do not open a seventh round
-without a decision.**
+New lower-priority findings from a later blind pass default to decline as not
+required for this delivery, or defer if there is a useful separate defect to track.
+They do not automatically generate fixes, more reviewers, or a new approval gate.
+On the first pass too, non-blocking recommendations do not have to be implemented.
+Human instructions and explicit acceptance requirements still govern.
 
-**Non-blocking is not optional.** It means "will not block the merge review." It does not
-mean "skip it before shipping."
+After a material fix, run a fresh full blind review of the resulting complete
+change. Also independently verify the original failure is fixed; that check may
+occur after the blind assessment is recorded. A lower-priority fix that the owner
+chooses to include receives proportionate independent verification of the edit
+and its effects. It does not alone require another full pass. If the edit changes
+a contract, behavior or risk materially, treat it as a material change and obtain
+a full blind pass, subject to the rebase rule below. A human may request a full
+pass at any point.
 
-Every finding ends in **resolved** or **explicitly declined as not required**. Postponing an
-accepted finding needs a human decision and a tracked follow-up — a reason written in the
-review is not a disposition.
+### Rebases
 
----
+Rebasing onto main, changed commit IDs or a changed base do not by themselves
+require another review. Re-review when conflict or semantic resolution appears
+to introduce defect risk; a conflict-free rebase can also expose a risky semantic
+interaction. Use the existing owner's engineering judgment during the work, not
+a separate reviewer, checklist, approval or permission to decide this question.
+When risk warrants re-review, obtain a fresh full blind assessment of the complete
+resulting change, then reconcile history. Do not turn it into fix-only review.
+Run relevant verification and required project checks when earlier evidence no
+longer applies. Record the resulting revision and verification limits in the
+existing handoff. Review, verification and human merge authority remain distinct.
+
+### Completion
+
+The review cycle ends when a full independent assessment covers the proposed
+change, subsequent edits have the verification/review required above, no accepted
+blocking finding remains unresolved, all other findings have a finite disposition,
+and required checks and human approvals are satisfied. APPROVE may carry declined
+or deferred non-blocking findings. Zero comments and perfectly clean successive
+passes are not completion requirements. Record the reviewed head and any later
+verified edits or rebase. Apply the rebase rule above: a new head/base alone does
+not invalidate review; risky resolution does require re-review.
+
+Do not start a new round just because non-blocking findings remain. If the same
+material defect survives a fix attempt, or the owner cannot resolve a material
+classification dispute, stop automatic dispatch and escalate with the evidence,
+what was tried and a recommended next action. A decision to continue must name
+the changed approach. This replaces a fixed round count; no round count authorizes
+shipping an unresolved blocker or skipping an independent assessment.
 
 ## 6. Context discipline
 
@@ -257,12 +307,12 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 |---|---|
 | "I'm the engineering manager, so I should break this into phases." | A trivial design goes straight to one developer. Orchestration you did not need is waste you introduced. |
 | "I'm the architect, so I owe a design document." | Handed a one-line fix, you owe a sentence and a decision. |
-| "This change is small enough that I can review my own work." | You cannot hold both "make this work" and "do not let this through." |
+| "This implementation is small enough that I can review my own work." | Independent code review still applies; architecture discussion follows §2. |
 | "I handed it off, so it's their problem now." | You delegated the work, not the delivery. |
 | "My task was to dispatch the developers, and I dispatched them." | Delivery is the deliverable, not dispatch. You are not done while your subtree is live. |
 | "I spawned the agents, so I'm done until they report." | An agent that never reports is exactly the case you exist to catch. Silence is not progress. |
-| "The last reviewer approved it, so the follow-up fix is fine." | Fresh reviewer each round. Reviewers miss items on re-read of their own review. |
-| "These findings are non-blocking, so I'll ship and fix later." | Non-blocking means it will not block merge review. It does not mean skip. |
+| "The last reviewer approved it, so the follow-up fix is fine." | Later edits need proportionate verification; material changes need a full blind pass, with the §5 rebase exception. |
+| "These findings are non-blocking, so I can ignore them." | Record a finite disposition; optional polish need not become a task or another round. |
 | "I'll review the whole branch at once, it's more efficient." | Per-PR or per-developer. Whole-branch reviews dilute the attention the cycle depends on. |
 | "I already know how to review code / plan work / design this." | You have generic priors, not this project's methodology. Read the role material. |
 | "The brief is long, so I'll pass it inline." | Write it to the scratchpad and pass the filepath — an inlined brief puts backticks and `$variables` into a shell command. See `scion-cli-operations` → **Shell Safety for Task Prompts**. |
@@ -271,8 +321,8 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 
 - You created an agent and have not heard from it, and have not gone to check.
 - You are about to report completion while an agent you created is still running.
-- The same agent wrote and reviewed a change.
-- A reviewer is reviewing its own previous review's fixes.
+- The same agent authored and code-reviewed an implementation change.
+- Fix verification is presented as a full blind review.
 - An architect is re-running investigation that was already delivered to it.
 - You are relaying messages between two agents that could talk directly.
 - Your tier says "engineering manager" and the design is three lines long.
@@ -283,10 +333,10 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 Before reporting delivery:
 
 - [ ] Every agent you created has reported, been accepted, or been explicitly stopped.
-- [ ] Every change was reviewed by an agent that did not write it.
-- [ ] The final review round came back clean — not "clean except".
-- [ ] Every non-blocking finding was resolved or explicitly declined. Nothing accepted is
-      still pending.
+- [ ] Implementation changes received independent code review; architecture planning followed §2 without a reviewer loop.
+- [ ] For implementation, the review-cycle completion condition in §5 holds, including its rebase rule.
+- [ ] Required verification and human approvals are satisfied; remaining gaps and
+      non-blocking dispositions are visible.
 - [ ] No subtree is still live.
 
 **Run this immediately before you report — not as you go.** A box ticked earlier states
