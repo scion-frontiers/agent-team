@@ -23,7 +23,8 @@ out to a shared volume).
 
 ## Obligations
 
-- **Review only the delta.** Changes outside the diff are not your scope.
+- **Review the full proposed change**, including later blind passes, using `code-review`.
+  Inspect context needed to assess effects; do not expand scope into unrelated debt.
 - **Do not approve a change with unresolved Critical or Required findings.** Both block
   merge; `code-review` owns the severity table.
 - **Do not invoke other specialist agents** (test-engineer, security-auditor). If a change
