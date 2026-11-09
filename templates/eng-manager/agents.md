@@ -115,6 +115,13 @@ Before an integration push:
 
 ### Agent Lifecycle
 
+Use `software-engineering-process` → **Engineering-manager lifecycle** for this
+template's bounded-supervisor mapping, creating-lead authority, human fallback
+and completion conditions. Core `scion-agent-manage` → **Agent Lifecycle** remains
+the authority for lead protection and bottom-up teardown; a completion signal is
+not permission to delete this manager. Apply those authority checks before the
+worker cleanup steps below.
+
 Manage agent lifecycle to preserve audit trails without accumulating clutter:
 
 1. **During a workstream**: keep completed agents in `stopped` state — their terminal logs serve as an audit trail for implementation decisions

@@ -353,3 +353,26 @@ or spawned others. **Re-check; do not recall.**
 | How to do architecture, design-artifact shape | architect role definition |
 | Work slicing, parallel-vs-sequential technique | engineering-manager role definition |
 | Review methodology and severity | `code-review` |
+
+## Engineering-manager lifecycle
+
+Core Scion's `scion-agent-manage` → **Agent Lifecycle** owns generic lead
+protection, delegated-supervisor authority, unanswered-human-question protection,
+durable deliverables and bottom-up teardown. This engineering workflow owns the
+mapping of its templates to those categories.
+
+A lead may start and retire the engineering managers it created for bounded
+implementation assignments. Such an EM maps to the core delegated-supervisor
+category, not to lead merely because it supervises developers. The creating lead
+may delete it only after its subtree is torn down, its work has landed under the
+agreed engineering workflow, its deliverables are verified durable and it has no
+open question to a human. An EM not started by a lead retains the human-only
+deletion fallback. Being an issue owner does not by itself grant authority to
+delete another lead or another lead's EM.
+
+If an EM is the first agent on the project/workstream, coordinates that overall
+workstream, or is human-designated as its lead, core lead protection takes
+precedence: only explicit human instruction naming the workstream authorizes
+its deletion. A role label, completion signal or readiness message cannot remove
+that protection. The coordinator/issue-owner and EM templates consume this
+mapping; they do not redefine core lifecycle policy.

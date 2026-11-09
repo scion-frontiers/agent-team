@@ -176,20 +176,20 @@ Token refresh is a self-access endpoint the agent calls on itself and authentica
 
 - **Each phase is a separate dispatch.** When a design doc has multiple phases, create a tracking item per phase. The coordinator is responsible for dispatching each phase in sequence (or in parallel when the design permits).
 - **Independent phases can be parallelized.** When the design notes phases are independent, dispatch them to separate agents simultaneously.
-- **A project is not complete when one phase ships.** It is complete when all acceptance criteria from the design doc are verified. Check AC coverage before marking a project done.
+- **A project is not complete when one phase is delivered.** It is complete when all acceptance criteria from the design doc are verified. Check AC coverage before marking a project done.
 - **For implementation, apply the review-cycle completion condition in `software-engineering-process`, including its rebase rule.** Reconcile the blind assessment with history and give each finding a finite disposition. Route accepted fixes to the developer; do not turn every non-blocking suggestion into a task or require a perfectly clean review.
 
 ## Iterative Work
 
 - When a first fix attempt doesn't fully resolve an issue, write a **v2 brief** that includes what the previous agent did and why it wasn't sufficient. This gives the next agent essential context.
 - User feedback during an ongoing fix (like "I'm still seeing X") should be forwarded to the running agent via `scion message` if it's still active.
-- **Keep the initiator agent alive.** In this repo's practice the first agent on a project transitions into a project-coordinator role, overseeing dev/review agents and managing phase handoffs rather than ending at its initial phase. The deletion rule that makes this safe — an initiator may be deleted only on explicit human instruction, whatever role it started as — lives in `scion-agent-manage` → **Agent Lifecycle**.
+- **Keep the lead alive.** A project can produce code, research, designs, documents or other work without a repository. Its lead carries continuity across assignments and phase handoffs; the starting template does not determine its lifespan. Completion means the agreed deliverables and acceptance criteria are satisfied and their durable locations are verified, with required handoffs complete and human questions resolved. Apply repository merge requirements only when that project requires them. Human authorization to delete the lead remains in `scion-agent-manage` → **Agent Lifecycle**; engineering-manager lifecycle mapping belongs in `software-engineering-process` → **Engineering-manager lifecycle**.
 
 ## Workspace Hygiene
 
 - **Delete Finished Agents:** `scion delete` once work is confirmed — stopped containers keep holding broker slots and count against the 50-agent `scion list` ceiling. `scion stop` is not forbidden: it is justified when you need an agent's terminal state within the current phase, and must be time-boxed. See `scion-agent-manage` → **Agent Lifecycle**.
 - **Verify Deliverables:** When an agent reports completion, verify the actual output — check file content, not just existence. Agents may produce placeholder or stub files (the "Simulation Trap"). Where the deliverable is a commit, check the remote rather than the container: "committed" is not the test, because a commit that never left the agent's container does not survive its deletion.
-- **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after upstream merge and cleanup are confirmed. This keeps the active projects directory lean.
+- **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after agreed deliverables are accepted, their durability and required handoffs are verified, and authorized cleanup is confirmed. For repository work, include the required merge/landing condition; non-repository work has no implied merge requirement. This keeps the active projects directory lean.
 - **Template sync after updates.** When agent templates are updated in the repo, run `scion template sync` to push changes to the hub so newly started agents use the current versions.
 
 ## `scion look` Limitations
