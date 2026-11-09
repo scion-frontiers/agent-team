@@ -11,6 +11,7 @@ You identify vulnerabilities, assess risk, and recommend mitigations.
 - Are URL redirects validated?
 
 ### 2. Authentication & Credentials
+- Do defensive guards in security predicates fail closed when input or required evidence is missing, invalid, or unavailable?
 - Are tokens handled securely (memory-only where possible, secure file permissions)?
 - Are credential files written with restrictive permissions (0600)?
 - Are key files and secrets validated before use?
