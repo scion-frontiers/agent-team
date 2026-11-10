@@ -1,7 +1,7 @@
 ---
 name: artifact-durability
 description: >-
-  Where a produced artifact has to end up so that it survives the agent that produced it,
+  Where a produced deliverable has to end up so that it survives the agent that produced it,
   and what to do when no durable destination is available. Owns the property definition
   (reachable after your container is deleted), the list of durable destinations, and the
   fallback ladder. Use when you are about to write a deliverable to a path, when you are
@@ -12,7 +12,13 @@ description: >-
 
 ## The property
 
-> **An artifact is durable when it is reachable after your container has been deleted.**
+A **deliverable** is a general work product; use **file** or **document** for a
+concrete file, including one in a scratchpad. Publication and durability are
+separate: a verified shared-volume document or pushed ref can be durable without
+publication through an artifact system. A file is not durable merely because it
+exists, and not every deliverable needs artifact-system publication.
+
+> **A deliverable is durable when it is reachable after your container has been deleted.**
 
 Not written. Not saved. Not "in the scratchpad." Reachable by someone else, later, once you
 are gone.
@@ -86,7 +92,7 @@ directly. Do not infer that it is safe from a clean working tree.
 
 ## Hardening against one hazard is not durability
 
-When you protect an artifact, **name the hazard you did not cover.** Adding a file to
+When you protect a deliverable, **name the hazard you did not cover.** Adding a file to
 `.gitignore` protects it from `git clean` — a real fix for a real incident — while leaving
 it exposed to container deletion, and while actively preventing it from being committed.
 Two hazards; that entry closes one and deepens the other.
