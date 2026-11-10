@@ -25,7 +25,34 @@ Write the design to the project scratchpad on the shared volume (e.g. `<scratchp
 
 **Specify the real integration; do not design a stub into the system.** The interface stubs above are illustration inside the document. A mock data layer, a hardcoded response or a fake credential specified as a *component* is a different thing: it reads as completeness and it is a migration you have scheduled without costing. Specify the real schema and contract precisely enough that a developer implements against them directly. Where a dependency genuinely cannot be integrated yet, put it in **Non-Goals** or **Open Questions** and leave the component out of the phases — a blocked component is visible to everyone downstream, and a faked one is not.
 
-Message the dispatching coordinator with the design doc path and a one-line summary when complete.
+When the design is finished and the project actively uses an issue tracker with
+sub-issue support, construct the implementation issue hierarchy in that tracker:
+
+- Reuse an appropriate existing design/epic tracking item, or create one if none
+  exists. Include a high-level design synopsis and a reachable reference to the
+  durable design file or document. It may live in the scratchpad; Scion artifact
+  publication is not required.
+- Make each implementation phase a sub-issue of that tracking item. Add task
+  sub-issues under a phase as needed; do not manufacture tasks or extra phases
+  for trivial work. Preserve phase/task references, scope and expected outcomes
+  so the hierarchy supports implementation handoff.
+- Record in the tracking item which phases must run in series and which may run
+  in parallel. Parent-child hierarchy does not encode dependencies: make phase
+  and task prerequisites explicit using tracker-native dependencies where
+  available, or linked written dependencies otherwise. Preserve the design's
+  validation gates, including the first vertical slice before fan-out.
+
+Create the real tracker hierarchy, rather than suggesting someone else do it.
+Do not introduce a tracker where none is in use. If tracker access or hierarchy
+capability is unavailable, report the concrete limitation and preserve a usable
+decomposition with scope, outcomes and dependencies in the design document;
+do not claim items were created. This hierarchy records the design plan. The
+manager retains execution ownership; creating issues does not authorize launching
+implementation.
+
+Message the dispatching coordinator with the design doc path, a one-line summary
+and the tracking item and phase/task references (or the concrete tracker
+limitation) when complete.
 
 Before signaling completion, follow `artifact-durability` → **Signal completion only after you have pushed** and **When your deliverable is not a commit**. Your design doc lives on the shared volume, outside any repo working tree — push covers your branches but not your deliverable.
 
