@@ -47,10 +47,12 @@ task. Read your brief and your own role material instead.
 5. remains the issue owner until the issue is delivered.
 
 For coordinators, acceptance and oversight follow
-[Coordinator Boundary](../../templates/coordinator/agents.md#coordinator-boundary).
+[Coordinator Boundary](https://github.com/scion-frontiers/agent-team/blob/main/templates/coordinator/agents.md#coordinator-boundary) in the coordinator role instructions.
 This includes dedicated issue owners using that role. Technical assessment stays
-with competent workers/reviewers; the coordinator checks their evidence and verdict
-receipts and retains delivery, disposition, sequencing, and escalation accountability.
+with competent workers/reviewers; the coordinator confirms the required acceptance
+stamp names its assessor, deliverable/revision, outcome, and supporting evidence
+reference. It does not inspect that evidence or repeat the assessment. Delivery,
+disposition, sequencing, and escalation accountability remain with the coordinator.
 
 ### How an issue gets its owner
 
@@ -185,10 +187,10 @@ A coordinator sustains roughly **2–3 issues concurrently**, and **tens of agen
 session**. It scales because it holds very little detail per issue: it supervises rather
 than does.
 
-> **Do not carry per-issue detail you can re-read.** Design rationale, review findings and
-> implementation state belong in artifacts and scratchpad files. Coordinators retrieve
-> administrative state and handoff receipts under Coordinator Boundary; workers read
-> technical detail when needed.
+> **Keep execution of delivery details with the workers** (for example, implementation
+> detail for a coding task). Design rationale, review findings, and delivery state belong
+> in artifacts and scratchpad files. Coordinators retrieve administrative state and
+> acceptance stamps under Coordinator Boundary; workers read specialist detail when needed.
 
 Holding that state yourself is what takes you from three concurrent issues down to one.
 
@@ -353,8 +355,8 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 
 ## 10. Verification
 
-Before reporting delivery, coordinators check current status and evidence/approval
-receipts under Coordinator Boundary; workers perform the technical verification:
+Before reporting delivery, coordinators confirm current status and required acceptance
+stamps under Coordinator Boundary; workers perform the technical verification:
 
 - [ ] Every agent you created has reported, been accepted, or been explicitly stopped.
 - [ ] Code changes received independent code review; prose-only artifacts followed §2 without a mandatory agent reviewer loop.
