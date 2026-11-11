@@ -46,6 +46,12 @@ task. Read your brief and your own role material instead.
 4. accepts or rejects what comes back,
 5. remains the issue owner until the issue is delivered.
 
+For coordinators, acceptance and oversight follow
+[Coordinator Boundary](../../templates/coordinator/agents.md#coordinator-boundary).
+This includes dedicated issue owners using that role. Technical assessment stays
+with competent workers/reviewers; the coordinator checks their evidence and verdict
+receipts and retains delivery, disposition, sequencing, and escalation accountability.
+
 ### How an issue gets its owner
 
 An issue is owned in one of two ways, depending on size:
@@ -180,8 +186,9 @@ session**. It scales because it holds very little detail per issue: it supervise
 than does.
 
 > **Do not carry per-issue detail you can re-read.** Design rationale, review findings and
-> implementation state belong in artifacts and scratchpad files. Go read them when you
-> need them.
+> implementation state belong in artifacts and scratchpad files. Coordinators retrieve
+> administrative state and handoff receipts under Coordinator Boundary; workers read
+> technical detail when needed.
 
 Holding that state yourself is what takes you from three concurrent issues down to one.
 
@@ -209,8 +216,8 @@ that comes back thin, off-brief, or stalled is the issue owner's problem to catc
 
 This cycle applies to code changes. Prose-only artifacts, including architecture
 planning, follow §2 without this cycle or its fresh-reviewer and round machinery.
-Run per pull request or per developer. Review the entire proposed change against
-its base and intended behavior; inspect surrounding code needed to assess effects.
+Run per pull request or per developer. The reviewer reviews the entire proposed change
+against its base and intended behavior and inspects surrounding code needed to assess effects.
 A whole-branch review may supplement, not replace, that scope.
 
 ### Independent assessment and fix verification
@@ -265,8 +272,9 @@ pass at any point.
 Rebasing onto main, changed commit IDs or a changed base do not by themselves
 require another review. Re-review when conflict or semantic resolution appears
 to introduce defect risk; a conflict-free rebase can also expose a risky semantic
-interaction. Use the existing owner's engineering judgment during the work, not
-a separate reviewer, checklist, approval or permission to decide this question.
+interaction. Use the existing owner's engineering judgment during the work; a coordinator owner
+obtains that technical risk assessment from the responsible worker. This does not
+require a separate reviewer, checklist, approval or permission to decide this question.
 When risk warrants re-review, obtain a fresh full blind assessment of the complete
 resulting change, then reconcile history. Do not turn it into fix-only review.
 Run relevant verification and required project checks when earlier evidence no
@@ -345,7 +353,8 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 
 ## 10. Verification
 
-Before reporting delivery:
+Before reporting delivery, coordinators check current status and evidence/approval
+receipts under Coordinator Boundary; workers perform the technical verification:
 
 - [ ] Every agent you created has reported, been accepted, or been explicitly stopped.
 - [ ] Code changes received independent code review; prose-only artifacts followed §2 without a mandatory agent reviewer loop.
