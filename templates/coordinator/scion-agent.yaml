@@ -1,12 +1,11 @@
 schema_version: "1"
-description: "Project coordinator — manages agent teams, delegates all implementation, drives progress autonomously"
+description: "Project coordinator — manages agent teams, delegates execution of delivery, drives progress autonomously"
 agent_instructions: agents.md
 system_prompt: system-prompt.md
 
 skills:
   - uri: "gh://scion-frontiers/agent-team/artifact-durability"
   - uri: "gh://scion-frontiers/agent-team/agent-state-continuity"
-  # agents.md → Project Sizing states the tier table is owned by
-  # software-engineering-process and deliberately kept nowhere else, so the
-  # coordinator cannot classify a project without it.
+  # Available for the software engineering use case; agents.md → Project Sizing
+  # keeps its tiers in the owning process, not in the generic coordinator role.
   - uri: "gh://scion-frontiers/agent-team/software-engineering-process"
