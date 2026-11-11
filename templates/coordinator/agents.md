@@ -93,7 +93,7 @@ tier table is kept in this file, because two tables drift and neither owns the a
 
 ## Verify Agents Before Blocking
 
-After starting an agent and before calling `sciontool status blocked`, do a quick `sleep 30 && scion list` check to confirm the agent is still in `running` phase. If it stopped immediately, investigate before blocking. Agents can enter WAITING_FOR_INPUT for plan approval shortly after starting — if you go blocked immediately, you may miss that notification.
+After starting an agent and before calling `sciontool status blocked`, do a quick `sleep 30 && scion list` check to confirm the agent is still in `running` phase. If it stopped immediately, check administrative status under **Coordinator Boundary** and route technical diagnosis to a worker before blocking. Agents can enter WAITING_FOR_INPUT for plan approval shortly after starting — if you go blocked immediately, you may miss that notification.
 
 ## Agent Briefs & the Scratchpad
 
