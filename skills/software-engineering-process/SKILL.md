@@ -2,11 +2,11 @@
 name: software-engineering-process
 description: >-
   How multi-agent engineering work is owned, sized, delegated, and verified from request
-  to delivery. Covers the ownership tree, the independent-review invariant, sizing by
-  delegation depth, the review cycle, and briefing. Use when you are responsible for
+  to delivery. Covers the ownership tree, the independent code-review invariant, sizing by
+  delegation depth, the code-review cycle, and briefing. Use when you are responsible for
   delivering an issue you will not implement yourself — classifying incoming work,
   deciding which roles to instantiate, creating and supervising agents, or governing a
-  review cycle.
+  code-review cycle.
 ---
 
 # Software Engineering Process
@@ -27,7 +27,7 @@ Use when you are **responsible for delivering an issue you will not implement yo
 - classifying an incoming issue and deciding how much process it warrants
 - deciding which roles to instantiate, and creating those agents
 - supervising agents you created and deciding whether to accept their output
-- governing a review cycle
+- governing a code-review cycle
 - deciding whether you are finished
 
 **Do not use** as a developer, reviewer, architect, or investigator executing an assigned
@@ -50,7 +50,7 @@ task. Read your brief and your own role material instead.
 
 An issue is owned in one of two ways, depending on size:
 
-- **Small issues (depth 1):** the coordinator is the issue owner directly — it creates a
+- **Small code issues (depth 1):** the coordinator is the issue owner directly — it creates a
   developer and reviewer(s) and remains the issue owner itself. This corresponds to the
   Small tier in the Sizing table (§3).
 - **Chunky and Large issues (depth 3):** the coordinator creates a **dedicated issue
@@ -108,22 +108,35 @@ completion when the work is delivered, not when it is handed out.
 ## 2. The invariant
 
 Scale implementation process with the work while preserving independent code review.
+The review invariant and cycle apply to code changes, not prose-only artifacts.
 
-> **For implementation changes requiring code review, the author and reviewer are
+> **For code changes requiring code review, the author and reviewer are
 > different agents.** The constraint is scoped to the issue, not the tree.
+
+Prose-only design documents, skills, instruction templates and documentation generally
+go to the user for review and approval. They do not require the agent code-review
+cycle, fresh reviewers or successive review rounds. A user may explicitly request
+a review when useful. Author validation is not independent review.
+
+Classify the actual change, not its file extension: executable examples, scripts and
+behavior-changing code still require code review. In a mixed change, review the code
+with its relevant prose context; accompanying prose does not create another mandatory
+review chain.
 
 Architecture planning follows direct human design discussion and feedback. Do not
 apply the developer/reviewer cycle to a design artifact, appoint a mandatory
 architecture reviewer, or require successive reviewer signoffs before the human
 can discuss or accept the design. The architect revises the design in response to
 that discussion; the issue owner checks scope and delivery without adding a review
-round. This does not remove independent review of the later implementation.
+round. This does not remove independent review of the later code changes.
 
 ---
 
 ## 3. Sizing
 
 Sizing is **depth of the ownership tree** — not stage count, not agent count.
+The implementation trees below include code reviewers; prose-only work follows §2
+without creating reviewer roles to fit a tier.
 
 | Tier | Tree | Depth |
 |---|---|---|
@@ -194,7 +207,8 @@ that comes back thin, off-brief, or stalled is the issue owner's problem to catc
 
 ## 5. The review cycle
 
-This cycle applies to implementation, not architecture planning (§2).
+This cycle applies to code changes. Prose-only artifacts, including architecture
+planning, follow §2 without this cycle or its fresh-reviewer and round machinery.
 Run per pull request or per developer. Review the entire proposed change against
 its base and intended behavior; inspect surrounding code needed to assess effects.
 A whole-branch review may supplement, not replace, that scope.
@@ -279,9 +293,10 @@ shipping an unresolved blocker or skipping an independent assessment.
 
 ## 6. Context discipline
 
-Separate agents per phase **are** separate context windows. **Do not collapse phases into
-one agent to save time** — what you lose is the context reset, not just the division of
-labour.
+For code implementation, separate agents per phase **are** separate context windows.
+**Do not collapse phases into one agent to save time** — what you lose is the context
+reset, not just the division of labour. This does not add phases or reviewers to
+prose-only work (§2).
 
 - A role boundary is a context reset.
 - A fresh reviewer is a fresh window.
@@ -307,7 +322,7 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 |---|---|
 | "I'm the engineering manager, so I should break this into phases." | A trivial design goes straight to one developer. Orchestration you did not need is waste you introduced. |
 | "I'm the architect, so I owe a design document." | Handed a one-line fix, you owe a sentence and a decision. |
-| "This implementation is small enough that I can review my own work." | Independent code review still applies; architecture discussion follows §2. |
+| "This code change is small enough that I can review my own work." | Independent code review still applies; prose-only artifacts follow §2. |
 | "I handed it off, so it's their problem now." | You delegated the work, not the delivery. |
 | "My task was to dispatch the developers, and I dispatched them." | Delivery is the deliverable, not dispatch. You are not done while your subtree is live. |
 | "I spawned the agents, so I'm done until they report." | An agent that never reports is exactly the case you exist to catch. Silence is not progress. |
@@ -321,7 +336,7 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 
 - You created an agent and have not heard from it, and have not gone to check.
 - You are about to report completion while an agent you created is still running.
-- The same agent authored and code-reviewed an implementation change.
+- The same agent authored and code-reviewed a code change.
 - Fix verification is presented as a full blind review.
 - An architect is re-running investigation that was already delivered to it.
 - You are relaying messages between two agents that could talk directly.
@@ -333,8 +348,8 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 Before reporting delivery:
 
 - [ ] Every agent you created has reported, been accepted, or been explicitly stopped.
-- [ ] Implementation changes received independent code review; architecture planning followed §2 without a reviewer loop.
-- [ ] For implementation, the review-cycle completion condition in §5 holds, including its rebase rule.
+- [ ] Code changes received independent code review; prose-only artifacts followed §2 without a mandatory agent reviewer loop.
+- [ ] For code changes, the review-cycle completion condition in §5 holds, including its rebase rule.
 - [ ] Required verification and human approvals are satisfied; remaining gaps and
       non-blocking dispositions are visible.
 - [ ] No subtree is still live.
