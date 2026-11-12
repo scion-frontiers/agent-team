@@ -64,6 +64,7 @@ Shared skills are modular capabilities that can be dynamically linked into any a
 | **`changelog-parallel-backfill`** | Efficiently populates historical project changelogs in parallel across many historical branches. | Parallel execution orchestrator, backfill scripts |
 | **`docs-update`** | Evaluates documentation health and automates documentation updates across the repository. | Doc health scanner, markdown links formatter, content sync |
 | **`artifact-durability`** | Where a produced artifact has to end up to survive the agent that produced it, and what to do when no durable destination is available. | Durability property definition, durable-destination list, fallback ladder |
+| **`backlog-stewardship`** | Assigned backlog intake, evidence-based bug assessment and shared implementation bundles. | Per-issue acceptance/closure traceability, write recovery and standing-duty boundaries |
 | **`software-engineering-process`** | How multi-agent engineering work is owned, sized, delegated, and verified from request to delivery. | Ownership tree, sizing tiers, the review cycle, briefing rules |
 | **`gcs-artifact-publishing`** | Publishes human-reviewable artifacts to the shared GCS artifact bucket and returns a public link. | Bucket/auth setup, `gsutil` upload recipes, public-access verification, HTML renderers |
 
