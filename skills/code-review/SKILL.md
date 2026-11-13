@@ -119,6 +119,9 @@ risk grades and the threshold for a security hold; do not conflate the two.
 | **Optional** / **Consider** | No | Useful improvement not needed for acceptance |
 | **FYI** | No | Information; no action requested |
 
+Report findings with these labels. If a brief asks for a different label set, map each
+finding to this table and state whether it blocks merge; the owner acts on that column.
+
 A preferred abstraction or an absent test is not automatically Required. State
 what can fail and what existing verification misses. Do not promote optional work
 because it was found late or because the author declined it. Do not soften a
@@ -176,9 +179,16 @@ Every **Critical** and **Required** finding must include a specific fix recommen
 ## Review Process
 
 1. **Understand the intent.** What is the change trying to accomplish? Read the spec, brief,
-   or issue before the code.
+   or issue before the code. Where a brief restates its sources (requirements, mock copy or
+   scene names, field lists, test names), check the restatement against the source it cites.
+   The source wins; report a mismatch rather than reviewing against the paraphrase.
 2. **Review the tests first.** They reveal intent and coverage. Do they test behavior rather
-   than implementation? Are edge cases covered? Would they catch a regression?
+   than implementation? Are edge cases covered? Would they catch a regression? Where it is
+   cheap, answer that last question with evidence: revert the fix or mutate the guarded line
+   locally, run the targeted tests, then restore. A test that still passes does not cover the
+   behavior. Check that assertions observe the behavior itself, not a proxy for it: an
+   attribute the runtime never exposes, a fixture checked against itself, or synthetic input
+   standing in for a producer that no code path actually emits.
 3. **Review the implementation** against the five axes, file by file.
 4. **Categorize every finding** using the severity table above.
 5. **Verify the verification.** What tests were run? Did the build pass? Was it manually
