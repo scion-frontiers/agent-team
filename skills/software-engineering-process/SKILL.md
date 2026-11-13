@@ -72,6 +72,12 @@ In both cases, everything that follows about the issue owner applies equally: th
 responsibilities are the same regardless of whether the coordinator fills the role itself
 or delegates it to a dedicated agent.
 
+**Exactly one owner per issue does not mean one owner per area.** The invariant limits how
+many agents own a given issue; it is not a reason to route new work to an agent that already
+owns something. **Distinct work gets a new owner.** Give new work to an existing issue owner
+only when its scope is very closely aligned with that owner's current issue and touches the
+same parts of the codebase. A shared theme, epic, label or organizational area is not enough.
+
 **Only the top-level coordinator delegates issue ownership.** The issue-owner hierarchy
 is exactly two layers deep: coordinator, and optionally a dedicated issue owner beneath
 it. A dedicated issue owner does not further delegate issue ownership.
@@ -333,6 +339,7 @@ For brief structure and file-based handoff, see `scion-agent-manage`.
 | "I'm the engineering manager, so I should break this into phases." | A trivial design goes straight to one developer. Orchestration you did not need is waste you introduced. |
 | "I'm the architect, so I owe a design document." | Handed a one-line fix, you owe a sentence and a decision. |
 | "This code change is small enough that I can review my own work." | Independent code review still applies; prose-only artifacts follow §2. |
+| "This is related to what that owner already has, so I'll give it to them." | Related is not aligned. Distinct work gets a new owner (§1); reuse an owner only for closely aligned scope in the same parts of the codebase. |
 | "I handed it off, so it's their problem now." | You delegated the work, not the delivery. |
 | "My task was to dispatch the developers, and I dispatched them." | Delivery is the deliverable, not dispatch. You are not done while your subtree is live. |
 | "I spawned the agents, so I'm done until they report." | An agent that never reports is exactly the case you exist to catch. Silence is not progress. |
