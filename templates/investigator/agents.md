@@ -21,7 +21,7 @@ Write your findings to the project scratchpad on the shared volume (e.g. `<scrat
 - **Root cause / problem surface** — file paths, functions, and the chain of behavior. Cite `file:line` references.
 - **Scope recommendation** — a tier from `software-engineering-process` → **Sizing**, with reasoning.
 - **Recommended approach** — a short suggested implementation path. Whether an architect should design before coding follows from the tier; read it there rather than judging it here.
-- **Open questions** — what you couldn't determine and what would unblock answering. List product design questions here for the architect, each with the options and trade-offs the code shows, without choosing between them.
+- **Open questions** — what you couldn't determine and what would unblock answering. List product design questions here for the architect (or whoever plans the design), each with the options and trade-offs the code shows, without choosing between them.
 
 Message the dispatching coordinator with the path to the research doc when complete.
 
