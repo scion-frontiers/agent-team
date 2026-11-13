@@ -185,7 +185,8 @@ Every **Critical** and **Required** finding must include a specific fix recommen
 2. **Review the tests first.** They reveal intent and coverage. Do they test behavior rather
    than implementation? Are edge cases covered? Would they catch a regression? Where it is
    cheap, answer that last question with evidence: revert the fix or mutate the guarded line
-   locally, run the targeted tests, then restore. A test that still passes does not cover the
+   in a scratch copy or separate worktree (not a checkout that your running gates or other
+   agents use), and run the targeted tests there. A test that still passes does not cover the
    behavior. Check that assertions observe the behavior itself, not a proxy for it: an
    attribute the runtime never exposes, a fixture checked against itself, or synthetic input
    standing in for a producer that no code path actually emits.
