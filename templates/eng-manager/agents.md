@@ -81,9 +81,9 @@ When a developer completes work that should be merged:
 2. Signal blocked while waiting for the reviewers to complete
 3. Read their reports
 4. **Decision logic**:
-   - No blocking findings (`code-review` Critical or Required, or a security hold the project's policy allows) → merge and push
+   - No blocking findings → merge and push. Blocking means `code-review` Critical or Required, or a security finding at or above the project's hold threshold (absent one, the `security-auditor` Critical or High its table marks block or fix before merge)
    - Blocking issues found → retain the developer for accepted fixes and follow `software-engineering-process` for full blind review, disposition and completion
-   - Non-blocking findings only → record a disposition for each under `software-engineering-process`: fix now or decline
+   - Non-blocking findings only → record a disposition for each under `software-engineering-process` → **Disposition and convergence**
 5. Update your `.<agent-name>-state.md` with the review outcome
 
 ### Merging and Pushing
