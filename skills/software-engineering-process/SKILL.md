@@ -224,10 +224,12 @@ A whole-branch review may supplement, not replace, that scope.
 
 ### Independent assessment and fix verification
 
-Start with a full blind independent review. Give the reviewer the base/head,
-requirements, relevant project guidance and actual verification evidence. Do not
-supply previous findings, verdicts, author rebuttals or the owner's disposition
-history before the reviewer records its assessment. Blind does not mean deprived
+Start with a full blind independent review. Give the reviewer the exact base and
+head revisions, requirements, relevant project guidance and actual verification
+evidence. For fix verification across a rebase, also give the previously reviewed
+base and head. Do not supply previous findings, verdicts, author rebuttals or the
+owner's disposition history before the reviewer records its assessment, and do not
+leave earlier review records where the reviewer reads or writes its own. Blind does not mean deprived
 of requirements or code context. If prior review content is unavoidably visible,
 disclose that limit rather than claiming a blind pass.
 
@@ -322,7 +324,18 @@ utilisation** as the point where quality starts costing more than the saved hand
 **Every agent you create needs a brief, and no agent starts work without one.** An agent
 you created that is doing the wrong thing is usually an agent you briefed badly.
 
-For brief structure and file-based handoff, see `scion-agent-manage`.
+For brief structure and file-based handoff, see `scion-agent-manage`. For engineering
+briefs:
+
+- **Point at sources instead of restating them.** Cite the spec section, mock scene ID,
+  and test names taken from the change. A paraphrase drifts from its source, and the
+  recipient has to check it against that source anyway (`code-review` → Review Process).
+- **Name overrides of the recipient's role template**, such as a report-only deliverable
+  or staying available after a push, so the agent does not have to choose between them.
+- **Use `code-review`'s severity labels** in review briefs rather than a different set.
+
+You can draft the next agent's brief while waiting for the decision that gates it, so
+dispatch follows the decision directly.
 
 ---
 
