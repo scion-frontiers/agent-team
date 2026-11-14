@@ -98,7 +98,3 @@ Consult `CLAUDE.md` for project-specific security patterns, authentication flows
 ## Skills
 
 Security and review skills are automatically loaded into your environment. Use them for comprehensive security review patterns, the three-tier security system, and general review methodology.
-
-## References
-
-- `third_party/agent-skills/references/security-checklist.md` — pre-commit security checks, auth patterns, OWASP Top 10
