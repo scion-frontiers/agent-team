@@ -74,7 +74,7 @@ here, and software engineering roles are not a default for other domains.
 - After starting an agent, signal blocked status with `sciontool status blocked "<reason>"` and wait for the notification — do not poll or sleep.
 - **Who may delete which agents, and when, is not decided here.** Deletion authority by role, why a completion signal is not permission, and why "clean up agents" never means the leads: see `scion-agent-manage` → **Agent Lifecycle** (`references/agent-lifecycle.md`). Do not restate those rules in this file — a local copy that drifts is worse than no local copy.
 - Clean up stalled agents only after checking on them — a STALLED notification on an agent just means it went idle after after last task, it may be stuck, or it may have failed to signal completion.
-- **Slug collision:** Only one agent of a given type slug can run at a time. Starting a second while one is running silently disrupts both and neither produces work. Run same-type agents sequentially.
+- **Unique agent names:** Each active agent needs a unique name, while multiple agents may use the same template concurrently. Give concurrent same-role agents distinct task-scoped names (for example `<slug>-p1-dev`, `<slug>-p2-dev`).
 - **Fresh agents for sequential tasks.** Each new task must use a fresh agent — do not reuse a prior agent via `--wake` for a different task. Accumulated context from prior rounds degrades focus. Use numbered suffixes for sequential agents on the same workstream: `<slug>-dev`, `<slug>-dev-2`, `<slug>-dev-3`.
 
 ## Waiting for Agents (Notification-Based)
@@ -96,7 +96,7 @@ here, and software engineering roles are not a default for other domains.
 
 ## Verify Agents Before Blocking
 
-After starting an agent and before calling `sciontool status blocked`, do a quick `sleep 30 && scion list` check to confirm the agent is still in `running` phase. If it stopped immediately, check administrative status under **Coordinator Boundary** and route specialist diagnosis to a worker before blocking. Agents can enter WAITING_FOR_INPUT for plan approval shortly after starting — if you go blocked immediately, you may miss that notification.
+After starting an agent and before calling `sciontool status blocked`, check `scion list` or `scion look <name>` to confirm the agent reached `running` phase (`scion-agent-manage` → **Waiting for the agent to start**) — do not run a shell `sleep`. If it stopped immediately, check administrative status under **Coordinator Boundary** and route specialist diagnosis to a worker before blocking. Agents can also enter `WAITING_FOR_INPUT` shortly after starting; if you need a delayed recheck before relying on notifications, schedule a one-shot self-callback with `scion schedule create` (`scion-scheduler`) and then call `sciontool status blocked`.
 
 ## Agent Briefs & the Scratchpad
 
@@ -166,23 +166,22 @@ These are mutually exclusive states:
 | `LIMITS_EXCEEDED` state | `scion message <agent> "continue"` |
 | Container crash (exit 255, `Exited`) | Recreate the agent |
 | Hub auth 401 error | Send any message — it can unstick a wedged agent, but it does not refresh the token. If 401s persist the agent cannot self-recover: stop, delete, recreate |
-| Context at 100% | Send raw `/clear` sequence (see below) |
+| Context at 100% | Send `/clear` keystrokes via `scion keys` (see below) |
 | Agent stuck in `created` phase (lastSeen zero) | Wait a few minutes, then delete and recreate |
-| Interactive prompt blocking agent | Send `scion message <agent> --raw "ENTER"` or `--raw "0"` to dismiss |
+| Interactive prompt blocking agent | Inspect with `scion look <agent>`, then dismiss with `scion keys <agent> "Enter"` or `"0"` |
 
-For detailed recovery guidance, see `scion-agent-manage` →
-**Troubleshooting agents** (`references/troubleshooting.md`). The 401 row does not
+For detailed recovery guidance, see `scion-agent-manage` (`references/troubleshooting.md`). The 401 row does not
 promise token refresh; route any specialist diagnosis under **Coordinator Boundary**.
 
 ## Agent Context Management
 
 - Keep your coordinator context lean — delegate investigation and execution of delivery to worker agents.
 - **Task Investigation:** Do not investigate problems in your own context. Write a brief problem statement to the shared scratchpad and delegate investigation and resolution to the appropriate worker under the applicable process.
-- **Clearing Agent Context:** If an agent hits 100% context, clear it manually:
+- **Clearing Agent Context:** If an agent hits 100% context, inspect screen state with `scion look <agent>` and clear it one input per call (`scion keys` has no sequence syntax):
   ```bash
-  scion message <agent> --raw "/"
-  scion message <agent> --raw "clear"
-  scion message <agent> --raw "ENTER"
+  scion keys <agent> "/"
+  scion keys <agent> "clear"
+  scion keys <agent> "Enter"
   ```
 ## Autonomy & Progress
 
