@@ -77,7 +77,7 @@ When starting any agent, your prompt must include:
 
 When a developer completes work that should be merged:
 
-1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` and `security-auditor` in parallel on the same change when its risk warrants them (for example a security-sensitive surface, or coverage claims the tests must back) or your brief asks for them.
+1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` in parallel when coverage claims need backing or your brief asks for it. Specialist security review is the issue owner's call before submission (`software-engineering-process` → **Specialist security review**); do not add one unless your brief asks.
 2. Signal blocked while waiting for the reviewers to complete
 3. Read their reports
 4. **Decision logic**:

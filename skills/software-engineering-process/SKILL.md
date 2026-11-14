@@ -220,6 +220,34 @@ only the roles the size calls for.
 The issue owner monitors each of these and accepts or rejects the artifact. An artifact
 that comes back thin, off-brief, or stalled is the issue owner's problem to catch.
 
+### Specialist security review
+
+A security specialist examines a change's attack surface in depth. It runs
+outside the code-review cycle (§5): it adds no rounds to it, does not replace the
+code reviewer's security axis (`code-review`), and does not guarantee that the
+change is secure.
+
+**When.** The issue owner decides whether a pull request needs one, using these
+criteria:
+- it adds or widens an entry point reachable without authentication;
+- it changes authentication, authorization, or how credentials or secrets are
+  stored, issued or checked;
+- it executes, evaluates or templates code, expressions or prompts supplied by
+  users, agents or third parties.
+
+If it is uncertain whether a criterion applies, the owner asks the human, who decides.
+
+**Once, just before submission.** When the §5 cycle is complete, the owner runs
+one specialist pass on the reviewed head before submitting the pull request.
+There is no design-stage security review and no repeat pass.
+
+**Rework is gated on risk.** The owner assesses each finding's risk in the
+deployed context and escalates uncertain cases to the human. Only a finding at or
+above the project's security hold threshold may hold submission or require a fix,
+and the fix is the smallest change that removes that risk. A fix is a later edit
+under §5. Every other finding gets an ordinary disposition, by default declined or
+deferred, and does not reopen the design or the scope.
+
 ---
 
 ## 5. The review cycle
@@ -340,6 +368,10 @@ briefs:
   and the recipient has to check it against that source anyway (`code-review` → Review
   Process).
 - **Use `code-review`'s severity labels** in code-review briefs rather than a different set.
+- **Mark where each review requirement comes from.** When a brief adds a reviewer or
+  gate, say whether this process requires it, a human asked for it, or it is
+  a suggestion from a plan, and cite the source. Do not restate a plan's staffing
+  suggestion as a delivery requirement.
 
 You can draft the next agent's brief while waiting for the decision that gates it, so
 dispatch follows the decision directly.
