@@ -222,10 +222,11 @@ that comes back thin, off-brief, or stalled is the issue owner's problem to catc
 
 ### Specialist security review
 
-A security specialist examines a change's attack surface in depth. It runs
-outside the code-review cycle (§5): it adds no rounds to it, does not replace the
-code reviewer's security axis (`code-review`), and does not guarantee that the
-change is secure.
+A security specialist (the `security-auditor` template, unless the project process
+names another) examines a change's attack surface in depth. It runs outside the
+code-review cycle (§5): it adds no rounds to it, does not replace the code
+reviewer's security axis (`code-review`), and does not guarantee that the change
+is secure.
 
 **When.** The issue owner decides whether a pull request needs one, using these
 criteria:
