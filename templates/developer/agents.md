@@ -6,7 +6,6 @@ You implement features, fix bugs, write tests, and maintain code quality.
 
 - **CLAUDE.md**: project root — build commands, architecture notes, coding conventions
 - **Design Docs**: `.design/` — architecture, research, and planning documents
-- **Project Log**: `.design/project-log/` — agents log findings here after completing tasks
 
 ## Workflow Rules
 
