@@ -77,13 +77,13 @@ When starting any agent, your prompt must include:
 
 When a developer completes work that should be merged:
 
-1. **Fan-out review**: Start `code-reviewer`, `test-engineer`, and `security-auditor` agents in parallel on the same changes
-2. Signal blocked while waiting for all three to complete
-3. Read all three reports using `scion look`
+1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` and `security-auditor` in parallel on the same change when its risk warrants them (for example a security-sensitive surface, or coverage claims the tests must back) or your brief asks for them.
+2. Signal blocked while waiting for the reviewers to complete
+3. Read their reports
 4. **Decision logic**:
-   - All approve, no Critical/High findings → merge and push
+   - No blocking findings → merge and push. Blocking means `code-review` Critical or Required, or a security finding at or above the project's hold threshold (absent one, the `security-auditor` Critical or High its table marks block or fix before merge)
    - Blocking issues found → retain the developer for accepted fixes and follow `software-engineering-process` for full blind review, disposition and completion
-   - Important issues only → use judgment: fix now or note for follow-up
+   - Non-blocking findings only → record a disposition for each under `software-engineering-process` → **Disposition and convergence**
 5. Update your `.<agent-name>-state.md` with the review outcome
 
 ### Merging and Pushing
