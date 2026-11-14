@@ -232,16 +232,18 @@ A whole-branch review may supplement, not replace, that scope.
 
 ### Independent assessment and fix verification
 
-Start with a full blind independent review. Give the reviewer the base/head,
-requirements, relevant project guidance and actual verification evidence. Do not
-supply previous findings, verdicts, author rebuttals or the owner's disposition
-history before the reviewer records its assessment. Blind does not mean deprived
-of requirements or code context. If prior review content is unavoidably visible,
-disclose that limit rather than claiming a blind pass.
+Start with a full blind independent review. Give the reviewer the exact base and
+head revisions, requirements, relevant project guidance and actual verification
+evidence. Do not supply previous findings, verdicts, author rebuttals or the
+owner's disposition history before the reviewer records its assessment, and do not
+leave earlier review records where the reviewer reads or writes its own. Blind does
+not mean deprived of requirements or code context. If prior review content is
+unavoidably visible, disclose that limit rather than claiming a blind pass.
 
 After the assessment is recorded, the owner reconciles findings with history.
 A targeted independent check of a previous fix may use that history; label it
-fix verification, not a full blind review. Keep the developer across rounds.
+fix verification, not a full blind review. When fix verification spans a rebase,
+also give the previously reviewed base and head. Keep the developer across rounds.
 Use a fresh reviewer for each full blind pass; a reviewer who already knows the
 findings may verify fixes but cannot claim a blind pass on that change.
 
@@ -330,7 +332,17 @@ utilisation** as the point where quality starts costing more than the saved hand
 **Every agent you create needs a brief, and no agent starts work without one.** An agent
 you created that is doing the wrong thing is usually an agent you briefed badly.
 
-For brief structure and file-based handoff, see `scion-agent-manage`.
+For brief structure and file-based handoff, see `scion-agent-manage`. For engineering
+briefs:
+
+- **Point at sources instead of restating them.** Cite sources such as the spec section,
+  mock scene ID and test names taken from the change. A paraphrase drifts from its source,
+  and the recipient has to check it against that source anyway (`code-review` → Review
+  Process).
+- **Use `code-review`'s severity labels** in code-review briefs rather than a different set.
+
+You can draft the next agent's brief while waiting for the decision that gates it, so
+dispatch follows the decision directly.
 
 ---
 
