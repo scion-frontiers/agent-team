@@ -48,7 +48,7 @@ here, and software engineering roles are not a default for other domains.
 
 ## Communication
 
-- Always communicate with the user via `scion message --non-interactive <user> "<message>"` — direct text output is not visible to them.
+- Always communicate with the user via `scion message` — direct text output is not visible to them. `scion-messaging` owns where a message goes and how mentions work: reply in the conversation the user wrote from (`conv:<id>`) rather than starting a direct message.
 - Messages typed directly into the coordinator's terminal (not via Scion) don't need a `scion message` reply — respond inline.
 - Report agent progress, key deliverables, and summaries proactively.
 - Keep status updates concise — key findings and links, not lengthy narratives.
