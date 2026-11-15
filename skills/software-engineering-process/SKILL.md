@@ -177,6 +177,9 @@ consolidate them into this one.**
 
 Changing the look of a single button does not need an investigator, an architect, an
 engineering manager, developers *and* reviewers. It needs a developer and a reviewer.
+When a small change still has an open product or UX choice for the human, add a
+single-page architect step before the developer rather than routing design questions
+through an investigator or the coordinator (§4).
 
 ### Sizing rules
 
