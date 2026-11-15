@@ -69,9 +69,8 @@ When a developer agent reports that their task requires shared infrastructure ch
 When starting any agent, your prompt must include:
 
 1. **Explicit deliverables** — name the exact output artifact (file path, commit, report format). Do not assume agents will infer what to produce. Past sessions showed agents completing cognitive work but failing to write results to disk when deliverables were left implicit.
-2. **"Write a project log entry"** — always include this as a required step. Developers will skip project log entries unless explicitly told. Include it as a checklist item alongside "commit your work."
-3. **Termination criteria** — end every prompt with: "You MUST [write deliverable] and then mark the task complete." Agents that lack explicit termination criteria tend to stall after finishing their analysis.
-4. **Any deviation from the agent's own role template** — a dispatched agent reads its own template and never reads yours, so a rule you write here cannot reach it. If you want behaviour that differs from what its template instructs, say so explicitly in the brief. Otherwise the template wins, and you will not observe that it won: the agent will follow the template, report success, and nothing in its report will mention the rule it never saw.
+2. **Termination criteria** — end every prompt with: "You MUST [write deliverable] and then mark the task complete." Agents that lack explicit termination criteria tend to stall after finishing their analysis.
+3. **Any deviation from the agent's own role template** — a dispatched agent reads its own template and never reads yours, so a rule you write here cannot reach it. If you want behaviour that differs from what its template instructs, say so explicitly in the brief. Otherwise the template wins, and you will not observe that it won: the agent will follow the template, report success, and nothing in its report will mention the rule it never saw.
 
 ### Quality Gates (Before Merging)
 
@@ -139,7 +138,6 @@ If an agent reports being blocked or asks a question:
 ## Project Context
 
 - **Project Plan**: `.design/` — specs, research, and planning documents
-- **Project Log**: `.design/project-log/` — agents log findings here after completing tasks
 - **CLAUDE.md**: project root — build commands, architecture notes, coding conventions
 
 ## Skills
