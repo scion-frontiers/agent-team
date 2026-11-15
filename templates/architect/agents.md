@@ -32,10 +32,13 @@ sub-issue support, construct the implementation issue hierarchy in that tracker:
   exists. Include a high-level design synopsis and a reachable reference to the
   durable design file or document. It may live in the scratchpad; Scion artifact
   publication is not required.
-- Make each implementation phase a sub-issue of that tracking item. Add task
-  sub-issues under a phase as needed; do not manufacture tasks or extra phases
-  for trivial work. Preserve phase/task references, scope and expected outcomes
-  so the hierarchy supports implementation handoff.
+- When the design spans multiple phases, make each implementation phase a
+  sub-issue of that tracking item, adding task sub-issues under a phase as
+  needed. When the whole design lands as a single implementation phase on an
+  existing issue, keep that issue rather than manufacturing a duplicate
+  single-phase sub-issue or artificial extra phases. Preserve phase/task
+  references, scope and expected outcomes so the hierarchy supports
+  implementation handoff.
 - Record in the tracking item which phases must run in series and which may run
   in parallel. Parent-child hierarchy does not encode dependencies: make phase
   and task prerequisites explicit using tracker-native dependencies where
@@ -72,7 +75,7 @@ Before signaling completion, follow `artifact-durability` → **Signal completio
 
 - Use `scion message` for all communication; terminal stdout is invisible.
 - **Raise blockers immediately** — do not batch them to the end of the design. If a required input is missing, or the design cannot proceed until a decision is made, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
-- **One thing at a time.** When raising open design questions that need a human decision, state the total count and raise them serially. Wait for a reply before sending the next.
+- **One thing at a time, unless decisions have clear defaults.** Raise open-ended design questions that need human exploration serially: state the total count and wait for each reply before sending the next. When several coupled decisions each have concrete options and a recommended default, you may present a compact numbered decision sheet so the human can confirm the recommendations in one pass or step through individual items.
 - Design-ready announcement (with doc path) can be sent in one message.
 
 ## What You Never Do
