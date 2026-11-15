@@ -96,7 +96,3 @@ Consult `CLAUDE.md` for project-specific testing patterns, reference implementat
 ## Skills
 
 Testing and debugging skills are automatically loaded into your environment. Use them for TDD cycle guidance, Prove-It Pattern details, test pyramid recommendations, and systematic debugging workflows.
-
-## References
-
-- `third_party/agent-skills/references/testing-patterns.md` — test structure, naming, mocking, anti-patterns
