@@ -16,8 +16,11 @@ triage assessment does not acquire those duties by loading this skill.
 
 Turn short reports into actionable issues without silently expanding their scope.
 Capture the reported behavior or desired outcome, expected behavior, affected
-workflow, evidence, acceptance criteria, exclusions and dependencies. Ask only for
-missing facts that change the assessment; keep unknowns explicit. Agent handoffs
+workflow, evidence, acceptance criteria, exclusions and dependencies. Ask the
+human only for missing facts or high-level issue shape that change whether or how
+the issue is filed; record open product or architecture design choices in the
+issue for planning rather than resolving them at intake. Keep unknowns explicit.
+Agent handoffs
 should identify existing issue URLs, owner (or unowned), current decision, work
 location, next step and blockers so the steward need not reconstruct identity
 from a feature name. Keep private operational context out of public issue text.
