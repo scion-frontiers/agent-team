@@ -6,6 +6,9 @@ system_prompt: system-prompt.md
 skills:
   - uri: "gh://scion-frontiers/agent-team/artifact-durability"
   - uri: "gh://scion-frontiers/agent-team/agent-state-continuity"
+  # agents.md instructs the manager to follow software-engineering-process for
+  # the blind review cycle, dispositions, rebases, and manager lifecycle.
+  - uri: "gh://scion-frontiers/agent-team/software-engineering-process"
   - uri: "gh://addyosmani/agent-skills/context-engineering"
   - uri: "gh://addyosmani/agent-skills/planning-and-task-breakdown"
   - uri: "gh://addyosmani/agent-skills/shipping-and-launch"
