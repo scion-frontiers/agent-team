@@ -99,7 +99,9 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
 ### 5. Performance
 
 - N+1 query or API call patterns?
-- Unbounded loops or unconstrained fetching?
+- Unbounded loops, unconstrained fetching, or single-call amplification at maximum admitted
+  input (parsers, regexes, evaluators, or guard checks whose cost is not bounded by
+  between-step limits)?
 - Missing pagination on list operations?
 - Unnecessary allocations in hot paths?
 - Are contexts used for cancellation and timeouts?
@@ -186,8 +188,9 @@ Every **Critical** and **Required** finding must include a specific fix recommen
    than implementation? Are edge cases covered? Would they catch a regression? Where it is
    cheap, answer that last question with evidence: revert the fix or mutate the guarded line
    in a scratch copy or separate worktree (not a checkout that your running gates or other
-   agents use), and run the targeted tests there. A test that still passes does not cover the
-   behavior. Check that assertions observe the behavior itself, not a proxy for it: an
+   agents use), confirm the edit applied and compiles, and run the targeted tests there. A
+   test that still passes does not cover the behavior, and a compile error or no-op edit did
+   not test it. Check that assertions observe the behavior itself, not a proxy for it: an
    attribute the runtime never exposes, a fixture checked against itself, or synthetic input
    standing in for a producer that no code path actually emits.
 3. **Review the implementation** against the five axes, file by file.
@@ -196,7 +199,14 @@ Every **Critical** and **Required** finding must include a specific fix recommen
    checked? Is there a before/after for behavioral changes?
 
 Run the project's build, lint, and test commands (see `CLAUDE.md`) to confirm the change is
-clean. Consult `CLAUDE.md` for project-specific patterns that must be followed.
+clean. Consult `CLAUDE.md` for project-specific patterns that must be followed. When the
+diff adds or changes executable commands, shell recipes, or workflow steps in documentation,
+skills, or CI configuration — or when a `Suggested Fix` proposes non-trivial command syntax —
+verify them within your authority and environment, since unit tests rarely cover them: exercise
+safe local recipes against disposable fixtures and inspect the resulting state, use isolated
+mocks or static/tool-contract checks (`--help`, dry-run or parse modes, flag and schema
+contracts) for destructive or live-service commands such as recovery procedures rather than
+touching live systems, and disclose limits below when safe execution is unavailable.
 
 **When that gate cannot be run, disclose it — do not skip it silently.** You will often be
 reviewing in a fresh container against a sparse or partial checkout: dependencies not
