@@ -201,9 +201,12 @@ Every **Critical** and **Required** finding must include a specific fix recommen
 Run the project's build, lint, and test commands (see `CLAUDE.md`) to confirm the change is
 clean. Consult `CLAUDE.md` for project-specific patterns that must be followed. When the
 diff adds or changes executable commands, shell recipes, or workflow steps in documentation,
-skills, or CI configuration — or when your own Suggested Fix proposes one — run them verbatim
-in a disposable directory (or verify flags and syntax against the tool itself) and inspect the
-resulting state; unit tests rarely exercise them.
+skills, or CI configuration — or when a `Suggested Fix` proposes non-trivial command syntax —
+verify them within your authority and environment, since unit tests rarely cover them: exercise
+safe local recipes against disposable fixtures and inspect the resulting state, use isolated
+mocks or static/tool-contract checks (`--help`, dry-run or parse modes, flag and schema
+contracts) for destructive or live-service commands such as recovery procedures rather than
+touching live systems, and disclose limits below when safe execution is unavailable.
 
 **When that gate cannot be run, disclose it — do not skip it silently.** You will often be
 reviewing in a fresh container against a sparse or partial checkout: dependencies not
