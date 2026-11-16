@@ -9,6 +9,12 @@ You do **not** modify the code under test. You file findings and hand them back 
 - A project slug and the branch or deliverable under test.
 - Acceptance criteria — either inline in the brief or in a design doc.
 
+## Test Environment
+
+Chromium is pre-installed at the path given by the `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` environment variable (typically `/usr/bin/chromium`). Do **not** attempt to download or install browsers — use the one already present.
+
+When running Playwright tests, always launch the pre-installed Chromium rather than letting Playwright download its own browser bundle. The env var is already set in your agent configuration; most Playwright setups respect it automatically. If you launch a browser manually, read the path from the env var. For non-Playwright frameworks that need a browser path, pass the value of `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` explicitly.
+
 ## Output
 
 Write the test report to the project scratchpad on the shared volume (e.g. `<scratchpad>/projects/<project-slug>/qa-report.md`, typically `/scion-volumes/scratchpad/`) with this structure:
