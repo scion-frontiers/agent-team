@@ -140,7 +140,7 @@ Do NOT use `--harness-config` for model overrides — that expects a named harne
 
 - **Proactively check agent status** if no notification arrives within a reasonable time (~5-10 minutes for simple tasks, ~30 minutes for complex ones).
 - Agents can crash silently — the notification system depends on the agent completing normally. If a container crashes, no COMPLETED notification is sent.
-- After any agent finishes or crashes, send a brief status update to the user.
+- After any agent finishes or crashes, send a brief status update to the user unless the worker or a delegated lead already reported that outcome directly in the conversation and you have no coordinator disposition or next step to add (`scion-messaging`).
 - **Periodic active sweeps:** During active work sessions, sweep all running agents every 15-30 minutes. For each agent: `scion look <agent>` — is it progressing or spinning? If spinning/confused: nudge with "continue" or context clear. If token error: see **Recovery Triage** — a message may unstick the agent, but it does not refresh its token. Key indicator of a stuck agent: same task state across two consecutive sweeps with no new tool calls or messages.
 
 ## Recovering Stuck Agents
@@ -206,7 +206,7 @@ promise token refresh; route any specialist diagnosis under **Coordinator Bounda
 
 ## Workspace Hygiene
 
-- **Delete Finished Agents:** `scion delete` once work is confirmed — stopped containers keep holding broker slots and count against the 50-agent `scion list` ceiling. `scion stop` is not forbidden: it is justified when you need an agent's terminal state within the current phase, and must be time-boxed. See `scion-agent-manage` → **Agent Lifecycle**.
+- **Delete Finished Agents:** Delete completed task-bounded agents once work and durable handoffs are confirmed rather than leaving finished or stopped agents lingering; see `scion-agent-manage` → **Agent Lifecycle** (`references/agent-lifecycle.md`) for deletion vs. suspension vs. time-boxed operational stops and capacity behavior.
 - **Confirm Deliverables:** Apply **Coordinator Boundary** to acceptance stamps and durable references. For example, when a deliverable is a commit, confirm the remote ref identifies the delivered revision; a local commit alone does not survive deletion.
 - **Archive completed projects.** Move completed project folders from `projects/` to `projects-archive/` after agreed deliverables are accepted, their durability and required handoffs are verified, and authorized cleanup is confirmed. For repository work, include the required merge/landing condition; non-repository work has no implied merge requirement. This keeps the active projects directory lean.
 - **Template sync after updates.** When agent templates are updated in the repo, run `scion template sync` to push changes to the hub so newly started agents use the current versions.
