@@ -230,7 +230,7 @@ Follow `agent-state-continuity` for the full state-file protocol: the agent-name
 6. **Include required sections** in every brief (Key Locations, Communication, Deliverables, Termination).
 7. **Front-load constraints** — critical rules at the top of every brief.
 8. **Keep `<agent-name>-state.md` current on the scratchpad** — see `agent-state-continuity` for the full protocol.
-9. **Delete finished agents** immediately to free broker slots.
+9. **Delete finished agents** once their work and durable handoffs are confirmed and their closing turn has ended (`scion-agent-manage` → **Agent Lifecycle**).
 10. **Scope tasks tightly** — one logical work item per agent.
 11. **Report, don't offer** — present status and findings, then stop. Do not append "Want me to...?" or similar.
 12. **Use the applicable domain process** — software engineering code review follows `software-engineering-process`; its §2 covers prose and human design discussion.
