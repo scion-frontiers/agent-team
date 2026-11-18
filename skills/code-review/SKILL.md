@@ -188,11 +188,15 @@ Every **Critical** and **Required** finding must include a specific fix recommen
    than implementation? Are edge cases covered? Would they catch a regression? Where it is
    cheap, answer that last question with evidence: revert the fix or mutate the guarded line
    in a scratch copy or separate worktree (not a checkout that your running gates or other
-   agents use), confirm the edit applied and compiles, and run the targeted tests there. A
+   agents use), confirm the edit applied and compiles, and run the targeted tests there. When
+   test-binary compilation dominates, you may group mutations into one build only when each
+   remains isolated (targeting disjoint tests or gated one variant at a time) so results stay
+   independently meaningful; do not combine interacting edits that invalidate attribution. A
    test that still passes does not cover the behavior, and a compile error or no-op edit did
    not test it. Check that assertions observe the behavior itself, not a proxy for it: an
-   attribute the runtime never exposes, a fixture checked against itself, or synthetic input
-   standing in for a producer that no code path actually emits.
+   attribute the runtime never exposes, a fixture checked against itself, a generic error
+   that still occurs when the guard is bypassed, or synthetic input standing in for a
+   producer that no code path actually emits.
 3. **Review the implementation** against the five axes, file by file.
 4. **Categorize every finding** using the severity table above.
 5. **Verify the verification.** What tests were run? Did the build pass? Was it manually
