@@ -76,14 +76,15 @@ When starting any agent, your prompt must include:
 
 When a developer completes work that should be merged:
 
-1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` in parallel when coverage claims need backing or your brief asks for it. Specialist security review (`security-auditor`) is the issue owner's call before submission (`software-engineering-process` → **Specialist security review**); do not add one unless your brief asks.
+1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` in parallel when coverage claims need backing or your brief asks for it. Specialist security review (`security-auditor`) is the issue owner's call before submission (`software-engineering-process` → **Specialist security review**); do not add one unless your brief asks. Once the developer's branch is pushed, its state is saved, and it has no active checks or unblocked work running, suspend it during the review wait when its harness supports session resume (`scion-agent-manage` → **Agent Lifecycle**).
 2. Signal blocked while waiting for the reviewers to complete
 3. Read their reports
 4. **Decision logic**:
    - No blocking findings → merge and push. Blocking means `code-review` Critical or Required, or a security finding at or above the project's hold threshold (absent one, the Critical and High findings the `security-auditor` severity table marks as holds)
-   - Blocking issues found → retain the developer for accepted fixes and follow `software-engineering-process` for full blind review, disposition and completion
+   - Blocking issues found → resume the retained developer (`scion-messaging`) for accepted fixes and follow `software-engineering-process` for full blind review, disposition and completion
    - Non-blocking findings only → record a disposition for each under `software-engineering-process` → **Disposition and convergence**
-5. Update your `.<agent-name>-state.md` with the review outcome
+5. **Reviewer and developer cleanup**: Because full passes are blind (`software-engineering-process` → **The review cycle**), clean up each reviewer once its report and any required closing handoff are durable and you no longer need it for clarification or targeted fix verification (`software-engineering-process` → **Independent assessment and fix verification**) — do not retain completed reviewers across rounds. If you hold a reviewer briefly for an open clarification or a narrow fix verification, suspend it while waiting when supported and delete it once that check completes. Once the developer's assigned work merges and its closing duties are complete, delete the developer.
+6. Update your `.<agent-name>-state.md` with the review outcome
 
 ### Merging and Pushing
 
@@ -121,10 +122,10 @@ the authority for lead protection and bottom-up teardown; a completion signal is
 not permission to delete this manager. Apply those authority checks before the
 worker cleanup steps below.
 
-Manage agent lifecycle to preserve audit trails without accumulating clutter:
+Manage worker lifecycle through durable deliverables rather than retained containers (`scion-agent-manage` → **Agent Lifecycle**):
 
-1. **During a workstream**: keep completed agents in `stopped` state — their terminal logs serve as an audit trail for implementation decisions
-2. **At the end of a milestone**: once work is committed, pushed, and verified, perform a "GC" pass — delete all stopped agents from the session
+1. **While a worker awaits follow-up** (such as a developer waiting on review with its branch pushed and state saved, or a reviewer held for a targeted fix check): suspend it when its harness supports session resume, releasing active capacity while keeping its session resumable; avoid open-ended stops, which end the session
+2. **Once a worker's duties are done**: complete any required closing handoff while it is still running, verify it has no unanswered human question, and delete the completed worker rather than keeping stopped containers — terminal logs do not survive deletion and are not the audit trail
 3. **Never delete an agent whose work is not on the remote** — "uncommitted" is the wrong test, and it is the test that loses work: a commit that exists only inside the container dies with the container, and it passes an uncommitted-work check on the way out. Fetch and confirm the agent's branch is on the remote before you delete it. Where the agent owed a file or a report rather than a commit, confirm that artifact exists somewhere the container's deletion cannot reach
 
 ### Handling Blocked Workers
