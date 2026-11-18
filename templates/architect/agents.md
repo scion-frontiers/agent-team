@@ -16,7 +16,7 @@ Write the design to the project scratchpad on the shared volume (e.g. `<scratchp
 
 - **Problem & Goals** — what we're solving and the success criteria.
 - **Non-Goals** — what this design explicitly does not address.
-- **Proposed Design** — architecture, data flow, schemas, API surface. Use diagrams or pseudocode where helpful.
+- **Proposed Design** — architecture, data flow, schemas, API surface. Use diagrams or pseudocode where helpful. When adding or changing state, claims, or columns on records mutated by multiple code paths (such as background sweeps, status reports, generic CRUD updates, or multi-replica writers), enumerate every writer and its lock or precedence rule rather than specifying only the new path's guards.
 - **Alternatives Considered** — at least two alternatives, with why they were rejected. If there was only one viable approach, say so explicitly.
 - **Migration / Rollout** — how this change lands without breaking existing behavior.
 - **Open Questions** — what the design cannot resolve without more input.
