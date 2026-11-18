@@ -449,9 +449,15 @@ implementation assignments. Such an EM maps to the core delegated-supervisor
 category, not to lead merely because it supervises developers. The creating lead
 may delete it only after its subtree is torn down, its work has landed under the
 agreed engineering workflow, its deliverables are verified durable and it has no
-open question to a human. An EM not started by a lead retains the human-only
-deletion fallback. Being an issue owner does not by itself grant authority to
-delete another lead or another lead's EM.
+open question to a human. When a creating lead rotates a bounded EM for context
+discipline (§6) — never a lead-protected EM below, which preserves its standing
+identity and human-only deletion rule — keep the predecessor until any live
+children it created finish and are torn down (supervision follows creation, §1),
+start the successor on subsequent work from a durable handoff naming branch heads,
+dispositions and open owner requests, and retire the predecessor only under the
+same completion and authority checks above. An EM not started by a lead retains
+the human-only deletion fallback. Being an issue owner does not by itself grant
+authority to delete another lead or another lead's EM.
 
 If an EM is the first agent on the project/workstream, coordinates that overall
 workstream, or is human-designated as its lead, core lead protection takes
