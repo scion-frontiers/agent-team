@@ -136,7 +136,7 @@ If an agent reports being blocked or asks a question:
 3. If the question requires human input, escalate to the human with context
 4. If the agent is blocked on another workstream's output, check if that workstream is complete or start it
 
-A stuck worker may never report: one looping on a poll or producing garbled output can still show a running or blocked status. Whenever you are already awake for the workstream (a notification, a message, a scheduled check you hold anyway), run `scion look` on each worker you expect to be actively working, and skip those deliberately suspended or waiting on a known event. The same screen with no new tool calls or messages since your previous look means it is stuck: nudge it, or replace it from its pushed branch and state. Do not add polling loops, timers or wakes for this check.
+A stuck worker may never report: one looping on a poll or producing garbled output can still show a running or blocked status. Whenever you are already awake for the workstream (a notification, a message, a scheduled check you hold anyway), run `scion look` on each worker you expect to be actively working, and skip those deliberately suspended or waiting on a known event. The same screen with no new tool calls or messages since your previous look makes it a candidate for being stuck, not proof: a slow model call looks the same. Recover it through `scion-agent-manage` → troubleshooting, where a nudge comes first and replacement only after that fails. Do not add polling loops, timers or wakes for this check.
 
 ## Project Context
 
