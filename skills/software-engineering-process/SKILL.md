@@ -266,9 +266,10 @@ A whole-branch review may supplement, not replace, that scope.
 
 Start with a full blind independent review. Give the reviewer the exact base and
 head revisions, requirements, relevant project guidance and actual verification
-evidence. Do not supply previous findings, verdicts, author rebuttals or the
-owner's disposition history before the reviewer records its assessment, and do not
-leave earlier review records where the reviewer reads or writes its own. Blind does
+evidence, kept as factual outputs apart from any record of earlier findings. Do not
+supply previous findings, verdicts, author rebuttals or the owner's disposition
+history before the reviewer records its assessment, and do not leave earlier review
+records where the reviewer reads or writes its own. Blind does
 not mean deprived of requirements or code context. If prior review content is
 unavoidably visible, disclose that limit rather than claiming a blind pass.
 
@@ -307,9 +308,11 @@ change. Also independently verify the original failure is fixed; that check may
 occur after the blind assessment is recorded. A lower-priority fix that the owner
 chooses to include receives proportionate independent verification of the edit
 and its effects. It does not alone require another full pass. If the edit changes
-a contract, behavior or risk materially, treat it as a material change and obtain
-a full blind pass, subject to the rebase rule below. A human may request a full
-pass at any point.
+a contract, behavior, scope, required procedure or risk materially, treat it as a
+material change and obtain a full blind pass, subject to the rebase rule below.
+Judge that by what the edit changes, not by its size, by whether it adds a new flag
+or script, or by whether it follows a reviewer's suggested fix. A human may request
+a full pass at any point.
 
 ### Rebases
 
