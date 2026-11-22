@@ -107,7 +107,7 @@ Every project needs a **scratchpad** — an area for briefs, design docs, resear
 
 The properties that matter are **shared** and **durable**, in that order, and only the first location has either. When an environment has no shared volume, an agent's deliverable does not go to `.scratch/` — see `artifact-durability` → **When only container-local storage is available** for the ladder your workers must follow, and name the fallback you expect in their brief rather than leaving them to choose a path.
 
-- **Briefing via Scratchpad:** Never inline long task prompts into `scion start`. Write the brief to the scratchpad (e.g. `<scratchpad>/projects/<slug>/briefs/<agent-name>.md`) and pass the filepath reference in the start command.
+- **Briefing via Scratchpad:** Never inline long task prompts into `scion start`. Write the brief to the scratchpad (e.g. `<scratchpad>/projects/<slug>/briefs/<agent-name>.md`) and pass the filepath reference in the start command. Do not store or deliver agent briefs as published artifacts; put new briefs on a verified shared scratchpad volume, and if none is available, follow `artifact-durability` or report a blocker.
 - **Required Brief Sections:** Every brief must include:
     1. **Key Locations:** Paths to relevant files, references, and documentation.
     2. **Deliverables:** Name the exact output artifacts expected (file paths, reports, commits). Agents that lack clear output expectations stall after finishing their work.
