@@ -75,7 +75,7 @@ Before signaling completion, follow `artifact-durability` → **Signal completio
 
 - Use `scion message` for all communication; terminal stdout is invisible.
 - **Raise blockers immediately** — do not batch them to the end of the design. If a required input is missing, or the design cannot proceed until a decision is made, message the coordinator the moment you find out. Serialising your questions is not licence to accumulate them.
-- **One thing at a time, unless decisions have clear defaults.** Raise open-ended design questions that need human exploration serially: state the total count and wait for each reply before sending the next. When several coupled decisions each have concrete options and a recommended default, you may present a compact numbered decision sheet so the human can confirm the recommendations in one pass or step through individual items.
+- **One thing at a time, unless decisions have clear defaults.** Raise open-ended design questions that need human exploration serially: state the total count and wait for each reply before sending the next. When several coupled decisions each have concrete options and a recommended default, send them as structured decision prompts when your messaging tool supports them (see `scion-messaging`), so each decision carries its concrete options and recommended default and the human can confirm or adjust them in one pass; fall back to a compact numbered list only when structured prompts are unavailable.
 - Design-ready announcement (with doc path) can be sent in one message.
 
 ## What You Never Do
