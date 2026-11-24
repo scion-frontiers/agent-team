@@ -97,7 +97,9 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
 
 - Is user input validated and sanitized at system boundaries?
 - Are secrets kept out of code, logs, and version control?
-- Are authn/authz checks present where needed?
+- Are authn/authz checks present where needed? When a change introduces a by-name
+  reference into an existing secret or credential store, enumerate which existing classes or
+  rows it can reach and verify the least-privileged caller could already access them.
 - Are queries parameterized and outputs encoded?
 - Are file paths validated against traversal?
 - Is external data — APIs, logs, user content, config — treated as untrusted?
@@ -208,7 +210,11 @@ so the author's test targets that scenario rather than the suggested code shape.
    agents use), confirm the edit applied and compiles, and run the targeted tests there. When
    test-binary compilation dominates, you may group mutations into one build only when each
    remains isolated (targeting disjoint tests or gated one variant at a time) so results stay
-   independently meaningful; do not combine interacting edits that invalidate attribution. A
+   independently meaningful; do not combine interacting edits that invalidate attribution.
+   When a change adds or relies on the same restriction at multiple layers (defence in
+   depth), mutate each layer alone — and disable earlier layers or test them together when
+   an upstream check always fires first — so you can distinguish an independently tested
+   guard from one masked by an earlier layer. A
    test that still passes does not cover the behavior, and a compile error or no-op edit did
    not test it. Check that assertions observe the behavior itself, not a proxy for it: an
    attribute the runtime never exposes, a fixture checked against itself, a test double
@@ -253,7 +259,8 @@ only from its absence.
 - **Ignore technical debt outside the diff.**
 - **Verify dependencies but don't review them.** If new code calls an existing function,
   verify the signature in the base branch to confirm the call is valid — do not review that
-  function.
+  function. Before reporting a missing bound, sanitizer, or guard on a value, check whether
+  the value's producer already enforces it.
 - **A change too large to review properly is itself a finding.** Ask for a split rather than
   skimming it. Authoring thresholds are owned by `software-engineering-process` → **Sizing**.
 - **Tone.** Objective, technically precise, with "Suggested Fix" blocks where they help.
