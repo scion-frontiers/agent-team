@@ -258,7 +258,8 @@ deferred, and does not reopen the design or the scope.
 
 This cycle applies to code changes. Prose-only artifacts, including architecture
 planning, follow §2 without this cycle or its fresh-reviewer and round machinery.
-Run per pull request or per developer. The reviewer reviews the entire proposed change
+Run per pull request (or per developer handoff when work is not yet on a pull request),
+not per intermediate commit. The reviewer reviews the entire proposed change
 against its base and intended behavior and inspects surrounding code needed to assess effects.
 A whole-branch review may supplement, not replace, that scope.
 
@@ -325,8 +326,12 @@ require a separate reviewer, checklist, approval or permission to decide this qu
 When risk warrants re-review, obtain a fresh full blind assessment of the complete
 resulting change, then reconcile history. Do not turn it into fix-only review.
 Run relevant verification and required project checks when earlier evidence no
-longer applies. Record the resulting revision and verification limits in the
-existing handoff. Review, verification and human merge authority remain distinct.
+longer applies, including after a textually clean rebase or merge onto a sibling
+change that touched shared symbols or contracts. When auto-merge is enabled on
+the PR, verify non-mechanical rebases on a side branch before updating the PR
+branch so an unverified revision cannot auto-merge. Record the resulting revision
+and verification limits in the existing handoff. Review, verification and human
+merge authority remain distinct.
 
 ### Completion
 
@@ -374,6 +379,11 @@ briefs:
   mock scene ID and test names taken from the change. A paraphrase drifts from its source,
   and the recipient has to check it against that source anyway (`code-review` → Review
   Process).
+- **Use identifiers and contacts the recipient can resolve.** Give full commit SHAs
+  together with branch names (shallow clones cannot resolve short SHAs or unfetched
+  refs), verified file paths and stable test names rather than shifting shard or line
+  numbers, and a contact handle or shared channel the recipient actually belongs to
+  rather than a private conversation ID it cannot read or reply in.
 - **Use `code-review`'s severity labels** in code-review briefs rather than a different set.
 - **Mark where each review requirement comes from.** When a brief adds a reviewer or
   gate, say whether this process requires it, a human asked for it, or it is
