@@ -58,6 +58,13 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
 - Are error paths handled, not just the happy path?
 - Do the tests actually verify the behavior? Would they catch a regression?
 - Off-by-one errors, race conditions, state inconsistencies?
+- Does every non-terminal state the change can leave a record in (pending, retrying, in
+  progress) have a bound, in time or attempts, that still holds when the converging action
+  keeps failing? State the bound as the property the user sees, such as how long an item
+  stays undelivered, not only the row state.
+- Does each write touch only what the change owns? A whole-row update from a snapshot read
+  before a check can revert a concurrent writer's change; compare the write's footprint
+  with the other writers of that record.
 
 ### 2. Readability & Simplicity
 
