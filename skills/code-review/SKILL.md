@@ -148,7 +148,11 @@ In blind review, form and record your assessment before seeing past findings or
 verdicts. The owner then reconciles duplicates and settled dispositions. Once
 history is available, do not repeat a resolved finding or reopen a disposition
 without new evidence. Fix verification may use prior findings; it is a separate
-activity, not a substitute for the full blind assessment.
+activity, not a substitute for the full blind assessment. Verify a fix against the
+finding, not against the fix: re-run the finding's failing scenario and the input
+classes it named on the new head. A pin, guard or test that matches the suggested code
+shape, or that passes only on the inputs the new tests use, has not shown the failure
+is gone.
 
 ### Lead with what matters
 
@@ -175,6 +179,8 @@ Prefer the remedy that removes moving pieces over one that spreads the same comp
 around.
 
 Every **Critical** and **Required** finding must include a specific fix recommendation.
+When you suggest a fix, at any severity, also state the scenario or inputs it must defeat,
+so the author's test targets that scenario rather than the suggested code shape.
 
 ---
 
