@@ -351,10 +351,13 @@ local-ref state:
 
 ```bash
 gh pr diff <num>
-gh pr view <num> --json files,additions,deletions,baseRefName,headRefName,body,author,state
+gh pr view <num> --json files,additions,deletions,baseRefName,headRefName,author,state
 ```
 
-This sidesteps every issue below and is the recommended first move.
+This sidesteps every issue below and is the recommended first move. During a blind
+review, omit `body` (and `comments`/`reviews`) from the initial `gh pr view` until
+after recording your independent assessment, since PR descriptions often carry prior
+review verdicts, fix-round summaries, or author rebuttals.
 
 ### Never assume `main` exists locally
 
