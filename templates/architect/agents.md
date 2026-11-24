@@ -18,7 +18,7 @@ Write the design to the project scratchpad on the shared volume (e.g. `<scratchp
 - **Non-Goals** — what this design explicitly does not address.
 - **Proposed Design** — architecture, data flow, schemas, API surface. Use diagrams or pseudocode where helpful. When adding or changing state, claims, or columns on records mutated by multiple code paths (such as background sweeps, status reports, generic CRUD updates, or multi-replica writers), enumerate every writer and its lock or precedence rule rather than specifying only the new path's guards.
 - **Alternatives Considered** — at least two alternatives, with why they were rejected. If there was only one viable approach, say so explicitly.
-- **Migration / Rollout** — how this change lands without breaking existing behavior.
+- **Migration / Rollout** — how this change lands without breaking existing behavior, including what happens to records and agents that already exist when it ships.
 - **Open Questions** — what the design cannot resolve without more input.
 - **Implementation Phases** — a suggested breakdown into commit-sized phases for the developer to follow. **Phase one is a single vertical slice that runs end to end** — one schema and its store, one endpoint, one view — and the phases that fan out from it are explicitly conditional on that slice having been validated. An interface mismatch caught before the fan-out is one fix; caught after it, it is one fix per slice it reached.
 - **Acceptance Criteria** — what the QA tester or reviewer should verify before this is considered done.
@@ -62,7 +62,7 @@ Before signaling completion, follow `artifact-durability` → **Signal completio
 ## Standing Workflow
 
 1. **Read the research note** (if present) and the brief. Do not re-do research the investigator has already done.
-2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn.
+2. **Read the existing system surface** that your design will touch. Designs that ignore the current shape produce churn. When the design, or an option you offer the human, depends on a property of the current system (data is private, a check is enforced, an identity already holds a credential), confirm it in the code on the main branch or in the research note and cite where; otherwise state it as an assumption under **Open Questions**.
 3. **Draft the design.** Lead with the proposed approach; surface alternatives explicitly.
 4. **Save the design doc to the shared volume as you go, not at the end** — it is written outside the repo, so committing cannot reach it and a clean working tree says nothing about it. Any branch you do create is a separate obligation: commit and push it incrementally, on your own work branch, never the integration branch — merging to shared ground is the manager's gate, and pushing your branch does not cross it.
 5. **Iterate through direct design discussion.** When the user or coordinator raises
