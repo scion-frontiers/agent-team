@@ -55,6 +55,8 @@ Exactly three things survive your deletion:
 3. **The body of a message you have already sent.** Content inline in the message, not a
    filepath pointing at storage only you can see.
 
+**Do not store or deliver agent briefs as published artifacts.** Write new agent briefs to a verified shared scratchpad volume; if no shared scratchpad volume is available, use the fallback ladder below or report a blocker rather than publishing briefs through an artifact system. This applies to new briefs going forward — existing historical artifacts do not need retroactive cleanup or migration.
+
 Everything else dies with you: the working tree, an unpushed commit, `/tmp`, a gitignored
 file, and `/workspace/.scratch/`.
 
