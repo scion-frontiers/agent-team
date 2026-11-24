@@ -46,7 +46,11 @@ sub-issue support, construct the implementation issue hierarchy in that tracker:
   validation gates, including the first vertical slice before fan-out.
 
 Create the real tracker hierarchy, rather than suggesting someone else do it.
-Do not introduce a tracker where none is in use. If tracker access or hierarchy
+Do not introduce a tracker where none is in use. When a design is confidential
+(for example, a security fix before disclosure) or the brief restricts internal
+paths or public sub-issues on the tracker, keep the phase decomposition in the
+design document and any tracker entry self-contained without exposing restricted
+internal paths. If tracker access or hierarchy
 capability is unavailable, report the concrete limitation and preserve a usable
 decomposition with scope, outcomes and dependencies in the design document;
 do not claim items were created. This hierarchy records the design plan. The
