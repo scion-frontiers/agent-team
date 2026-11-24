@@ -183,7 +183,11 @@ Every **Critical** and **Required** finding must include a specific fix recommen
 1. **Understand the intent.** What is the change trying to accomplish? Read the spec, brief,
    or issue before the code. Where a brief restates its sources (requirements, mock copy or
    scene names, field lists, test names), check the restatement against the source it cites.
-   The source wins; report a mismatch rather than reviewing against the paraphrase.
+   The source wins; report a mismatch rather than reviewing against the paraphrase. Treat
+   the PR description as claims too: behavior it says the change delivers must be reachable
+   through the real entry point, not only through a test that bypasses a gate, and a change
+   it does not mention, especially to shared code that other features use, should be
+   disclosed there.
 2. **Review the tests first.** They reveal intent and coverage. Do they test behavior rather
    than implementation? Are edge cases covered? Would they catch a regression? Where it is
    cheap, answer that last question with evidence: revert the fix or mutate the guarded line
@@ -194,8 +198,9 @@ Every **Critical** and **Required** finding must include a specific fix recommen
    independently meaningful; do not combine interacting edits that invalidate attribution. A
    test that still passes does not cover the behavior, and a compile error or no-op edit did
    not test it. Check that assertions observe the behavior itself, not a proxy for it: an
-   attribute the runtime never exposes, a fixture checked against itself, a generic error
-   that still occurs when the guard is bypassed, or synthetic input standing in for a
+   attribute the runtime never exposes, a fixture checked against itself, a test double
+   that already performs the filtering or check under test, a generic error that still
+   occurs when the guard is bypassed, or synthetic input standing in for a
    producer that no code path actually emits.
 3. **Review the implementation** against the five axes, file by file.
 4. **Categorize every finding** using the severity table above.
