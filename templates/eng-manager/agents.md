@@ -76,7 +76,7 @@ When starting any agent, your prompt must include:
 
 When a developer completes work that should be merged:
 
-1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` in parallel when coverage claims need backing or your brief asks for it. Specialist security review (`security-auditor`) is the issue owner's call before submission (`software-engineering-process` → **Specialist security review**); do not add one unless your brief asks. Once the developer's branch is pushed, its state is saved, and it has no active checks or unblocked work running, suspend it during the review wait when its harness supports session resume (`scion-agent-manage` → **Agent Lifecycle**).
+1. **Review**: Start a fresh `code-reviewer` for the full blind pass (`software-engineering-process` → **The review cycle**). Add `test-engineer` in parallel when coverage claims need backing or your brief asks for it. Specialist security review (`security-auditor`) is the issue owner's call before submission (`software-engineering-process` → **Specialist security review**); do not add one unless your brief asks. Once the developer's branch is pushed, its state is saved, and it has no active checks or unblocked work running, suspend it during the review wait (`scion-agent-manage` → **Agent Lifecycle**; harnesses without session resume return an error, and a suspended developer still counts as alive and wakes on follow-up via `scion-messaging`).
 2. Signal blocked while waiting for the reviewers to complete
 3. Read their reports
 4. **Decision logic**:
@@ -124,7 +124,7 @@ worker cleanup steps below.
 
 Manage worker lifecycle through durable deliverables rather than retained containers (`scion-agent-manage` → **Agent Lifecycle**):
 
-1. **While a worker awaits follow-up** (such as a developer waiting on review with its branch pushed and state saved, or a reviewer held for a targeted fix check): suspend it when its harness supports session resume, releasing active capacity while keeping its session resumable; avoid open-ended stops, which end the session
+1. **While a worker awaits follow-up** (such as a developer waiting on review with its branch pushed and state saved, or a reviewer held for a targeted fix check): suspend it to release active capacity while keeping its session resumable (suspended still counts as alive, messaging wakes it when supported, and harnesses without resume return an error); avoid open-ended stops, which end the session
 2. **Once a worker's duties are done**: complete any required closing handoff while it is still running, verify it has no unanswered human question, and delete the completed worker rather than keeping stopped containers — terminal logs do not survive deletion and are not the audit trail
 3. **Never delete an agent whose work is not on the remote** — "uncommitted" is the wrong test, and it is the test that loses work: a commit that exists only inside the container dies with the container, and it passes an uncommitted-work check on the way out. Fetch and confirm the agent's branch is on the remote before you delete it. Where the agent owed a file or a report rather than a commit, confirm that artifact exists somewhere the container's deletion cannot reach
 
