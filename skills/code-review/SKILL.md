@@ -224,7 +224,9 @@ so the author's test targets that scenario rather than the suggested code shape.
 3. **Review the implementation** against the five axes, file by file.
 4. **Categorize every finding** using the severity table above.
 5. **Verify the verification.** What tests were run? Did the build pass? Was it manually
-   checked? Is there a before/after for behavioral changes?
+   checked? Is there a before/after for behavioral changes? When a catalog, matrix
+   exclusion, or comment claims a behavior is pinned by a named test, open that test and
+   confirm it actually exercises the claimed behavior and caller class.
 
 Run the project's build, lint, and test commands (see `CLAUDE.md`) to confirm the change is
 clean. Consult `CLAUDE.md` for project-specific patterns that must be followed. When the
