@@ -41,7 +41,7 @@ Substitute your own agent name into the path, so an agent named `acme-web-coord`
 - [anything the next session needs to know]
 ```
 
-Read this file at the start of every session to restore context. Update it at significant milestones and before signaling completion.
+Read this file at the start of every session to restore context. Update it at significant milestones and before signaling completion. Read UTC timestamps from the system clock rather than estimating from memory, and record live git state (current branch and commit SHA) directly rather than copying an earlier entry. Read UTC timestamps from the system clock rather than estimating from memory, and record live git state (current branch and commit SHA) directly rather than copying an earlier entry.
 
 ## When no shared volume exists
 
