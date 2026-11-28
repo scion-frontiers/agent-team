@@ -57,14 +57,20 @@ Sycophancy is a failure mode in review, and it is the one you are most likely to
 - Are edge cases handled — null, empty, boundary values?
 - Are error paths handled, not just the happy path?
 - Do the tests actually verify the behavior? Would they catch a regression?
-- Off-by-one errors, race conditions, state inconsistencies?
+- Off-by-one errors, race conditions, state inconsistencies? When the change adds a lock or
+  row lock, list the acquisition order on every path that also takes another lock, and give
+  concurrency probes a per-iteration timeout so a deadlock is distinguishable from slowness.
 - Does every non-terminal state the change can leave a record in (pending, retrying, in
   progress) have a bound, in time or attempts, that still holds when the converging action
   keeps failing? State the bound as the property the user sees, such as how long an item
   stays undelivered, not only the row state.
 - Does each write touch only what the change owns? A whole-row update from a snapshot read
-  before a check can revert a concurrent writer's change; compare the write's footprint
-  with the other writers of that record.
+  before a check can revert a concurrent writer's change. For a shared record, value, flag
+  or guard that the change writes, validates, derives from or tightens, list its other
+  writers, producers, readers and callers, including sibling paths to the same sink, and
+  check each one: a value rejected at load but accepted by an admin write, a label derived
+  from a field another writer changes, a gate keyed on a flag nothing writes, or an
+  existing caller that a tightened guard now rejects.
 
 ### 2. Readability & Simplicity
 
@@ -159,9 +165,12 @@ history is available, do not repeat a resolved finding or reopen a disposition
 without new evidence. Fix verification may use prior findings; it is a separate
 activity, not a substitute for the full blind assessment. Verify a fix against the
 finding, not against the fix: re-run the finding's failing scenario and the input
-classes it named on the new head. A pin, guard or test that matches the suggested code
+classes it named on the new head, in the configuration where it failed (for example,
+with the feature flag on). A pin, guard or test that matches the suggested code
 shape, or that passes only on the inputs the new tests use, has not shown the failure
 is gone.
+When a fix newly calls or widens a state-changing operation, also probe that operation's
+invariants on the new head.
 
 ### Lead with what matters
 
@@ -200,14 +209,18 @@ so the author's test targets that scenario rather than the suggested code shape.
    scene names, field lists, test names), check the restatement against the source it cites.
    The source wins; report a mismatch rather than reviewing against the paraphrase. Treat
    the PR description as claims too: behavior it says the change delivers must be reachable
-   through the real entry point, not only through a test that bypasses a gate, and a change
+   through the real entry point in each gate or flag state it can run under, not only through
+   a test that bypasses a gate, and a change
    it does not mention, especially to shared code that other features use, should be
-   disclosed there.
+   disclosed there. When the change reverses documented behavior, search the docs for the
+   old claim.
 2. **Review the tests first.** They reveal intent and coverage. Do they test behavior rather
    than implementation? Are edge cases covered? Would they catch a regression? Where it is
    cheap, answer that last question with evidence: revert the fix or mutate the guarded line
    in a scratch copy or separate worktree (not a checkout that your running gates or other
-   agents use), confirm the edit applied and compiles, and run the targeted tests there. When
+   agents use), confirm the edit applied only where intended and compiles, restore the exact
+   base between mutants, run mutants of code that signals or kills processes in a new
+   session (for example `setsid -w`), and run the targeted tests there. When
    test-binary compilation dominates, you may group mutations into one build only when each
    remains isolated (targeting disjoint tests or gated one variant at a time) so results stay
    independently meaningful; do not combine interacting edits that invalidate attribution.
@@ -218,9 +231,11 @@ so the author's test targets that scenario rather than the suggested code shape.
    test that still passes does not cover the behavior, and a compile error or no-op edit did
    not test it. Check that assertions observe the behavior itself, not a proxy for it: an
    attribute the runtime never exposes, a fixture checked against itself, a test double
-   that already performs the filtering or check under test, a generic error that still
-   occurs when the guard is bypassed, or synthetic input standing in for a
-   producer that no code path actually emits.
+   that already performs the filtering or check under test or skips a precondition the real
+   service enforces, a denial that some other check would also produce (assert a permitted
+   case first), a negative test whose gate was never on or that has a single actor, a
+   generic error that still occurs when the guard is bypassed, or synthetic input standing
+   in for a producer that no code path actually emits.
 3. **Review the implementation** against the five axes, file by file.
 4. **Categorize every finding** using the severity table above.
 5. **Verify the verification.** What tests were run? Did the build pass? Was it manually
@@ -423,6 +438,22 @@ BASE_REF=$(gh pr view <num> --json baseRefName --jq .baseRefName)
 git fetch origin "$BASE_REF"
 BASE=$(git merge-base "origin/$BASE_REF" HEAD)
 ```
+
+### Rebase-only deltas
+
+When a change you already reviewed was only rebased, compare the two versions before
+re-reading the whole diff, then check the new head against the current base without a
+checkout. Both need the commits present locally: fetch the old and new base and head by
+full SHA, and in a shallow clone deepen first or pass `--merge-base` (`git-operations` →
+**Shallow Clones**).
+
+```bash
+git range-diff <old-base>..<old-head> <new-base>..<new-head>
+git merge-tree --write-tree origin/main HEAD   # 0 clean; 1 with CONFLICT lines
+```
+
+This informs whether `software-engineering-process` → **Rebases** calls for a fresh pass;
+it does not replace one.
 
 ### One-liner to start any PR review
 

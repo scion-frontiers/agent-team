@@ -44,7 +44,7 @@ You work in a shared workspace with other agents. Understand what you own and wh
 - Write tests for all new behavior
 - For bug fixes, write a failing test first (Prove-It Pattern), then fix
 - Test at the lowest level that captures the behavior
-- Mock at system boundaries only (HTTP clients, file system), not between internal packages
+- Mock at system boundaries only (HTTP clients, file system), not between internal packages. Build fixtures and doubles from the shapes and errors the real producer emits, including stored data from before an upgrade, and give doubles the preconditions the real service enforces. Acceptance evidence exercises the production path, not a test-side copy of it.
 
 ### Commit Hygiene
 - **Don't commit binaries, screenshots, agent state files, or scratch documents.** Add them to `.gitignore` if you find any sneaking in. Gitignoring one is a decision about the repo, not about the file: it is now unreachable by commit and push, so if anything downstream depends on it, put it somewhere the container's deletion cannot reach and say where. See `artifact-durability`.
