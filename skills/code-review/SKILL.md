@@ -442,15 +442,23 @@ BASE=$(git merge-base "origin/$BASE_REF" HEAD)
 ### Rebase-only deltas
 
 When a change you already reviewed was only rebased, compare the two versions before
-re-reading the whole diff, then check the new head against the current base without a
-checkout. Both need the commits present locally: fetch the old and new base and head by
-full SHA, and in a shallow clone deepen first or pass `--merge-base` (`git-operations` →
-**Shallow Clones**).
+re-reading the whole diff, then check the new head against the PR's current base without a
+checkout. Fetch the old and new base and head by full SHA, and refresh the current base
+(`BASE_REF` from the section above) as below. `range-diff` needs each base reachable from
+its head: in a shallow clone, deepen until
+`git merge-base --is-ancestor <old-base> <old-head>` and the same check for the new pair
+succeed (`git-operations` → **Shallow Clones**). Otherwise it exits 0 with a truncated
+comparison.
 
 ```bash
+git fetch origin "+refs/heads/$BASE_REF:refs/remotes/origin/$BASE_REF"
 git range-diff <old-base>..<old-head> <new-base>..<new-head>
-git merge-tree --write-tree origin/main HEAD   # 0 clean; 1 with CONFLICT lines
+git merge-tree --write-tree "origin/$BASE_REF" <new-head>   # 0 clean; 1 conflicts; other: error
 ```
+
+Without deepening, `merge-tree` can take `--merge-base=<new-base>` instead, provided the PR
+was rebased onto `<new-base>` and `<new-base>` is an ancestor of the current base.
+`--write-tree` needs git 2.38 or later, and `--merge-base` needs 2.40.
 
 This informs whether `software-engineering-process` → **Rebases** calls for a fresh pass;
 it does not replace one.
