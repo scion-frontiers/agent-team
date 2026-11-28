@@ -270,7 +270,8 @@ head revisions, requirements, relevant project guidance and actual verification
 evidence, kept as factual outputs apart from any record of earlier findings. Do not
 supply previous findings, verdicts, author rebuttals or the owner's disposition
 history before the reviewer records its assessment, and do not leave earlier review
-records where the reviewer reads or writes its own. Blind does
+records where the reviewer reads or writes its own, including review-item labels in
+code comments or commit messages. Blind does
 not mean deprived of requirements or code context. If prior review content is
 unavoidably visible, disclose that limit rather than claiming a blind pass.
 
@@ -345,7 +346,8 @@ verified edits or rebase. Apply the rebase rule above: a new head/base alone doe
 not invalidate review; risky resolution does require re-review.
 
 Do not start a new round just because non-blocking findings remain. If the same
-material defect survives a fix attempt, or the owner cannot resolve a material
+material defect survives a fix attempt, successive passes keep finding new material
+defects in the same invariant or subsystem, or the owner cannot resolve a material
 classification dispute, stop automatic dispatch and escalate with the evidence,
 what was tried and a recommended next action. A decision to continue must name
 the changed approach. This replaces a fixed round count; no round count authorizes

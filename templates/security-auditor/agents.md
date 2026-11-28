@@ -11,7 +11,7 @@ You identify vulnerabilities, assess risk, and recommend mitigations.
 - Are URL redirects validated?
 
 ### 2. Authentication & Credentials
-- Do defensive guards in security predicates fail closed when input or required evidence is missing, invalid, or unavailable? Derive the role and permission matrix from the codebase's authoritative role definitions rather than trusting a brief's summary.
+- Do defensive guards in security predicates fail closed when input or required evidence is missing, invalid, or unavailable? Check every sibling route to the same sink, and each consumer's ingress and authentication mode, not only the route the change names. Derive the role and permission matrix from the codebase's authoritative role definitions rather than trusting a brief's summary.
 - Are tokens handled securely (memory-only where possible, secure file permissions)?
 - Are credential files written with restrictive permissions (0600)?
 - Are key files and secrets validated before use? When a change adds a by-name reference into an existing secret or credential store, enumerate which existing classes or rows it can reach and verify the least-privileged caller could already access them.

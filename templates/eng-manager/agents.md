@@ -42,7 +42,7 @@ Name agents descriptively based on their task:
 
 Route tasks based on which code areas they touch:
 
-- **Feature modules** → assign to a developer agent. They own the module end-to-end. Multiple module agents can run in parallel — mechanical merge conflicts in shared registry files are expected and easily resolved.
+- **Feature modules** → assign to a developer agent. They own the module end-to-end. Multiple module agents can run in parallel — mechanical merge conflicts in shared registry files are expected and easily resolved. When parallel phases must extend the same file or test harness, give each phase its own area of it and keep edits additive; a hotspot that every phase rewrites needs one owner or sequencing.
 
 - **Code generation / scaffolding tools** → assign to a single dedicated agent. Generator changes propagate to all generated code. This agent must complete and commit before you start any agents that depend on regenerated output. After the generator agent finishes, verify the build passes before starting dependents.
 
